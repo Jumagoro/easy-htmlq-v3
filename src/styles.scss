@@ -1,1 +1,15 @@
-/* You can add global styles to this file, and also import other style files */
+// Custom variables overriding bootstrap variables (e.g. _variables.scss)
+@use "sass:map"; // To map over the variables inside $theme-colors
+/*$theme-colors: (
+    "primary": #0080c8,
+    "secondary": #87bbe6
+);*/
+ 
+/*@import 'https://fonts.googleapis.com/css?family=Fire+Sans';
+$font-family-sans-serif:      'Fira Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-monospace:       'Fira Sans', SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;*/
+ 
+ 
+@import "../node_modules/bootstrap/scss/bootstrap";
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

@@ -1,0 +1,28 @@
+<footer>
+  <div class="container">
+    <div class="row justify-content-around">
+
+        <div class="col-3 text-center">
+            <div class="showFontAdjust">
+                <button class="btn btn-default decrease">-</button>
+                <span>15</span>
+                <button class="btn btn-default increase">+</button>
+            </div>6
+        </div>
+
+        <div class="col-6 text-center p-2">
+            <div class="progress">
+                <div class="progress-bar" [style.width.%]="progress*100">
+                    <span>{{ progress * 100 }}%</span>
+                </div>
+            </div>
+            
+        </div>
+
+        <div class="col-3 text-center">
+            <button class="btn" (click)="onHelpMe()">Help me</button>
+        </div>
+
+    </div>
+  </div>
+</footer>

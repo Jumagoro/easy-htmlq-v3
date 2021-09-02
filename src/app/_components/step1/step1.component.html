@@ -1,0 +1,52 @@
+<app-modal></app-modal>
+
+<div class="container-fluid" cdkDropListGroup>
+
+  <!-- First row containing the statements -->
+  <div class="row justify-content-center">
+    <div id="statements" class="col-12 col-md-8 p-0" style="border: 1px solid blue;">
+        <div
+            cdkDropList
+            [cdkDropListData]="statements"
+            class="statement-container mx-auto"
+            (cdkDropListDropped)="drop($event)">
+            <div class="statement-card" *ngFor="let statement of statements" cdkDrag>{{statement}}</div>
+        </div>
+    </div>
+  </div>
+
+  <!-- Second row containing disagree, neutral, agree-->
+  <div class="row justify-content-center">
+    <div class="col p-0">
+        <p class="text-center">Disagree #3</p>
+        <div
+            cdkDropList
+            [cdkDropListData]="disagrees"
+            class="statement-container mx-auto"
+            (cdkDropListDropped)="drop($event)">
+            <div class="statement-card" *ngFor="let disagree of disagrees" cdkDrag>{{disagree}}</div>
+        </div>
+    </div>
+    <div class="col p-0">
+        <p class="text-center">Neutral #2</p>
+        <div
+            cdkDropList
+            [cdkDropListData]="neutrals"
+            class="statement-container mx-auto"
+            (cdkDropListDropped)="drop($event)">
+            <div class="statement-card" *ngFor="let neutral of neutrals" cdkDrag>{{neutral}}</div>
+        </div>
+    </div>
+    <div class="col p-0">
+        <p class="text-center">Agree #1</p>
+        <div
+            cdkDropList
+            [cdkDropListData]="agrees"
+            class="statement-container mx-auto"
+            (cdkDropListDropped)="drop($event)">
+            <div class="statement-card" *ngFor="let agree of agrees" cdkDrag>{{agree}}</div>
+        </div>
+    </div>
+  </div>
+
+</div>

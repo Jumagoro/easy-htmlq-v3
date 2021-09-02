@@ -1,0 +1,17 @@
+<div id="modal-container" *ngIf="isVisible()">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 class="modal-title">{{ messageHead }}</h3>
+            </div>
+            <div class="modal-body">
+                <p>{{ message }}</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" (click)="ok()">{{ okButton }}</button>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
