@@ -9,8 +9,8 @@
             cdkDropList
             [cdkDropListData]="statements"
             class="statement-container mx-auto"
-            (cdkDropListDropped)="drop($event)">
-            <div class="statement-card" *ngFor="let statement of statements" cdkDrag>{{statement}}</div>
+            >
+            <div class="statement-card" *ngFor="let statement of statements" cdkDrag >{{statement}}</div>
         </div>
     </div>
   </div>
@@ -24,7 +24,7 @@
             [cdkDropListData]="disagrees"
             class="statement-container mx-auto"
             (cdkDropListDropped)="drop($event)">
-            <div class="statement-card" *ngFor="let disagree of disagrees" cdkDrag>{{disagree}}</div>
+            <div class="list-card disagree-card" *ngFor="let disagree of disagrees" cdkDrag>{{disagree}}</div>
         </div>
     </div>
     <div class="col p-0">
@@ -34,7 +34,7 @@
             [cdkDropListData]="neutrals"
             class="statement-container mx-auto"
             (cdkDropListDropped)="drop($event)">
-            <div class="statement-card" *ngFor="let neutral of neutrals" cdkDrag>{{neutral}}</div>
+            <div class="list-card neutral-card" *ngFor="let neutral of neutrals" cdkDrag>{{neutral}}</div>
         </div>
     </div>
     <div class="col p-0">
@@ -44,7 +44,7 @@
             [cdkDropListData]="agrees"
             class="statement-container mx-auto"
             (cdkDropListDropped)="drop($event)">
-            <div class="statement-card" *ngFor="let agree of agrees" cdkDrag>{{agree}}</div>
+            <div class="list-card agree-card" *ngFor="let agree of agrees" cdkDrag>{{agree}}</div>
         </div>
     </div>
   </div>

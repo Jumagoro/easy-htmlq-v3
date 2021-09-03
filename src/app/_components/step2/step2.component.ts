@@ -17,4 +17,8 @@ export class Step2Component implements OnInit {
     this.stepService.setCurrentStep(2);
   }
 
+  counter(i: number) {
+    return new Array(i);
+}
+
 }

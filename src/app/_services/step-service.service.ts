@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { StorageService } from './storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -23,14 +24,13 @@ export class StepService {
 
   public setCurrentStep(step: number): void {
     StepService.currentStep = step;
+    this.storage.set('currentStep', StepService.currentStep); // Store currentStep in the browser storage
   }
 
   // Increments the step counter by one and routes to the next component
   public nextStep(): void {
 
-    StepService.currentStep++;
-
-    console.log(this.getCurrentStep());
+    this.setCurrentStep(this.getCurrentStep() + 1);
 
     if(this.getCurrentStep() == -1)
       this.router.navigate(['/home']);
@@ -59,6 +59,7 @@ export class StepService {
   }
 
   constructor(
-    private router: Router
+    private router: Router,
+    private storage: StorageService
   ) { }
 }

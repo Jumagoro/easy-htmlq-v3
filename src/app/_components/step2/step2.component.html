@@ -1,1 +1,66 @@
-<p>step2 works!</p>
+<div class="container-fluid">
+  <!-- First row containing disagree, heading and agree -->
+  <div class="row justify-content-between">
+    <div class="col-3 text-start">
+        <span>Disagree</span>
+    </div>
+    <div class="col-6 text-center">
+        <span>Sort the cards according to your experience with the iPads this semester</span>
+    </div>
+    <div class="col-3 text-end">
+        <span>Agree</span>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-12">
+        <table class="table">
+            <thead>
+              <tr>
+                <th class="text-center" scope="col">-4</th>
+                <th class="text-center" scope="col">-3</th>
+                <th class="text-center" scope="col">-2</th>
+                <th class="text-center" scope="col">-1</th>
+                <th class="text-center" scope="col">0</th>
+                <th class="text-center" scope="col">1</th>
+                <th class="text-center" scope="col">2</th>
+                <th class="text-center" scope="col">3</th>
+                <th class="text-center" scope="col">4</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Columns holding the cardholders -->
+              <tr>
+                <td>
+                    <div class="cell text-center" *ngFor="let in of counter(2); let i = index">Col 1</div>
+                </td>
+                <td>
+                    <div class="cell text-center" *ngFor="let in of counter(3); let i = index">Col 2</div>
+                </td>
+                <td>
+                    <div class="cell text-center" *ngFor="let in of counter(4); let i = index">Col 3</div>
+                </td>
+                <td>
+                    <div class="cell text-center" *ngFor="let in of counter(5); let i = index">Col 4</div>
+                </td>
+                <td>
+                    <div class="cell text-center" *ngFor="let in of counter(5); let i = index">Col 6</div>
+                </td>
+                <td>
+                    <div class="cell text-center" *ngFor="let in of counter(5); let i = index">Col 7</div>
+                </td>
+                <td>
+                    <div class="cell text-center" *ngFor="let in of counter(4); let i = index">Col 8</div>
+                </td>
+                <td>
+                    <div class="cell text-center" *ngFor="let in of counter(3); let i = index">Col 9</div>
+                </td>
+                <td>
+                    <div class="cell text-center" *ngFor="let in of counter(2); let i = index">Col 10</div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+    </div>
+  </div>
+</div>
