@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<div class="container-fluid" cdkDropListGroup>
   <!-- First row containing disagree, heading and agree -->
   <div class="row justify-content-between">
     <div class="col-3 text-start">
@@ -17,50 +17,58 @@
         <table class="table">
             <thead>
               <tr>
-                <th class="text-center" scope="col">-4</th>
-                <th class="text-center" scope="col">-3</th>
-                <th class="text-center" scope="col">-2</th>
-                <th class="text-center" scope="col">-1</th>
-                <th class="text-center" scope="col">0</th>
-                <th class="text-center" scope="col">1</th>
-                <th class="text-center" scope="col">2</th>
-                <th class="text-center" scope="col">3</th>
-                <th class="text-center" scope="col">4</th>
+                <th class="text-center" scope="col" [style.background-color]="'#'+colColors[i]"
+                    *ngFor="let heading of colHeadings; let i = index" >{{ heading }}</th>
               </tr>
             </thead>
             <tbody>
               <!-- Columns holding the cardholders -->
               <tr>
-                <td>
-                    <div class="cell text-center" *ngFor="let in of counter(2); let i = index">Col 1</div>
-                </td>
-                <td>
-                    <div class="cell text-center" *ngFor="let in of counter(3); let i = index">Col 2</div>
-                </td>
-                <td>
-                    <div class="cell text-center" *ngFor="let in of counter(4); let i = index">Col 3</div>
-                </td>
-                <td>
-                    <div class="cell text-center" *ngFor="let in of counter(5); let i = index">Col 4</div>
-                </td>
-                <td>
-                    <div class="cell text-center" *ngFor="let in of counter(5); let i = index">Col 6</div>
-                </td>
-                <td>
-                    <div class="cell text-center" *ngFor="let in of counter(5); let i = index">Col 7</div>
-                </td>
-                <td>
-                    <div class="cell text-center" *ngFor="let in of counter(4); let i = index">Col 8</div>
-                </td>
-                <td>
-                    <div class="cell text-center" *ngFor="let in of counter(3); let i = index">Col 9</div>
-                </td>
-                <td>
-                    <div class="cell text-center" *ngFor="let in of counter(2); let i = index">Col 10</div>
+                <td class="p-0 column" *ngFor="let col of cols; let c = index"> <!-- Create all cols -->
+                    <div class="cell text-center" *ngFor="let cell of cols[c]; let i = index"
+                        cdkDropList [cdkDropListData]="cols[c][i]" (cdkDropListDropped)="drop($event)"> <!-- Create all cells in a col -->
+                        <div class="cell-item" cdkDrag>{{ cols[c][i][0] }}</div>  <!-- First elements of the cell's array -->
+                    </div>
                 </td>
               </tr>
             </tbody>
           </table>
+    </div>
+  </div>
+
+  <!-- Second row containing the pre sorted statements -->
+  <div class="row justify-content-center">
+    <div class="col p-0">
+        <p class="text-center">Disagree #3</p>
+        <div
+            cdkDropList
+            [cdkDropListData]="disagrees"
+            class="statement-container mx-auto"
+            (cdkDropListDropped)="drop($event)">
+            <div class="list-card disagree-card" *ngFor="let disagree of disagrees" cdkDrag>{{disagree}}</div>
+        </div>
+    </div>
+
+    <div class="col p-0">
+        <p class="text-center">Neutral #2</p>
+        <div
+            cdkDropList
+            [cdkDropListData]="neutrals"
+            class="statement-container mx-auto"
+            (cdkDropListDropped)="drop($event)">
+            <div class="list-card neutral-card" *ngFor="let neutral of neutrals" cdkDrag>{{neutral}}</div>
+        </div>
+    </div>
+
+    <div class="col p-0">
+        <p class="text-center">Agree #1</p>
+        <div
+            cdkDropList
+            [cdkDropListData]="agrees"
+            class="statement-container mx-auto"
+            (cdkDropListDropped)="drop($event)">
+            <div class="list-card agree-card" *ngFor="let agree of agrees" cdkDrag>{{agree}}</div>
+        </div>
     </div>
   </div>
 </div>
