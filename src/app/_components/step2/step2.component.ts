@@ -33,9 +33,11 @@ export class Step2Component implements OnInit {
     // When /step-2 is accessed directly by url the stepService wouldn't know that
     this.stepService.setCurrentStep(2);
 
+    // Load step2-Storage and quit when successfull
     if(this.checkStep2Storage())
       return;
 
+    // Load step1-storage if no step2-storage is found
     this.checkStep1Storage();
     
   }
@@ -54,6 +56,8 @@ export class Step2Component implements OnInit {
       this.neutrals = currentStorage.neutrals;
     if(currentStorage.disagrees)
       this.disagrees = currentStorage.disagrees;
+    if(currentStorage.cols)
+      this.cols = currentStorage.cols;
 
     return true;
   }
@@ -90,22 +94,26 @@ export class Step2Component implements OnInit {
     }
 
     if(this.agrees.length <= 0 && this.neutrals.length <= 0 && this.disagrees.length <= 0) {
-      //this.stepService.nextStep();
+      this.stepService.nextStep();
     }
   }
 
 
   storeProgress() {
-    let colCounter = 0;
-    let cellCounter = 0;
-    for(let col of this.cols) {
-      for(let cell of col) {
-        console.log('Col: ' + colCounter + ' Cell: ' + cellCounter + ': ' +cell[0]);
-        cellCounter++;
-      }
-      colCounter++;
-      cellCounter = 0;
-    }
+    // Load current storage to append the changed array
+    let currentStorage = this.storageService.get('step2');
+
+    // If nothing is in the storage, create an empty object
+    if(!currentStorage)
+      currentStorage = {};
+
+    currentStorage.agrees = this.agrees;
+    currentStorage.neutrals = this.neutrals;
+    currentStorage.disagrees = this.disagrees;
+    currentStorage.cols = this.cols;
+
+    // Write the storage object into the storage
+    this.storageService.set('step2', currentStorage);
   }
 
   counter(i: number) {
