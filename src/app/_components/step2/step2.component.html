@@ -14,7 +14,7 @@
 
   <div class="row">
     <div class="col-12">
-        <table class="table">
+        <table class="table my-0">
             <thead>
               <tr>
                 <th class="text-center" scope="col" [style.background-color]="'#'+colColors[i]"
@@ -27,7 +27,8 @@
                 <td class="p-0 column" *ngFor="let col of cols; let c = index"> <!-- Create all cols -->
                     <div class="cell text-center" *ngFor="let cell of cols[c]; let i = index"
                         cdkDropList [cdkDropListData]="cols[c][i]" (cdkDropListDropped)="drop($event)"> <!-- Create all cells in a col -->
-                        <div class="cell-item" cdkDrag>{{ cols[c][i][0] }}</div>  <!-- First elements of the cell's array -->
+                        <!-- Statement in a cell (if exists) -->
+                        <app-statement *ngIf="cols[c][i][0]" [statement]="cols[c][i][0]" cdkDrag></app-statement>
                     </div>
                 </td>
               </tr>
@@ -36,15 +37,21 @@
     </div>
   </div>
 
+  <div class="row py-3" style="background-color: #ced4da;" *ngIf="nextStepAvailable">
+    <div class="col-12 text-center">
+      <button class="btn btn-primary" (click)="stepService.nextStep()">Continue</button>
+    </div>
+  </div>
+
   <!-- Second row containing the pre sorted statements -->
-  <div class="row justify-content-center">
+  <div *ngIf="!nextStepAvailable" class="row justify-content-center">
     <div class="col p-0">
         <p class="text-center">Disagree #3</p>
         <div
             cdkDropList
             [cdkDropListData]="disagrees"
             class="statement-container mx-auto">
-            <div class="list-card disagree-card" *ngFor="let disagree of disagrees" cdkDrag>{{disagree}}</div>
+            <app-statement *ngFor="let disagree of disagrees" [statement]="disagree" cdkDrag></app-statement>
         </div>
     </div>
 
@@ -54,7 +61,7 @@
             cdkDropList
             [cdkDropListData]="neutrals"
             class="statement-container mx-auto">
-            <div class="list-card neutral-card" *ngFor="let neutral of neutrals" cdkDrag>{{neutral}}</div>
+            <app-statement *ngFor="let neutral of neutrals" [statement]="neutral" cdkDrag></app-statement>
         </div>
     </div>
 
@@ -64,7 +71,7 @@
             cdkDropList
             [cdkDropListData]="agrees"
             class="statement-container mx-auto">
-            <div class="list-card agree-card" *ngFor="let agree of agrees" cdkDrag>{{agree}}</div>
+            <app-statement *ngFor="let agree of agrees" [statement]="agree" cdkDrag></app-statement>
         </div>
     </div>
   </div>

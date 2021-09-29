@@ -1,0 +1,55 @@
+.cell {
+    border: 1px solid gainsboro;
+    //padding: 3px;
+    height: 120px;
+    overflow: hidden;
+}
+
+.cell-item {
+    height: 100%;
+}
+
+.column {
+    width: 100px;
+    min-width: 100px;
+}
+
+.statement-container {
+    width: 300px;
+    min-height: 200px;
+  
+    border: solid 1px #ccc;
+    border-radius: 4px;
+    overflow: hidden;
+    display: block;
+  }
+
+// List elements in agree, neutral or disagree
+.list-card {
+    padding: 10px 5px;
+    border-bottom: solid 1px #ccc;
+    color: rgba(0, 0, 0, 0.87);
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    box-sizing: border-box;
+    cursor: move;
+    background: white;
+    font-size: 14px;
+  }
+
+// Styling of the drag items
+.cdk-drag-preview { // Item that is hold in the hand
+    
+}
+
+.cdk-drag-placeholder {
+    //background-color: rgb(223, 223, 223);
+    height: 100%;
+}
+
+// Statement card only big inside the cell
+.cell app-statement {
+    height: auto !important;
+}

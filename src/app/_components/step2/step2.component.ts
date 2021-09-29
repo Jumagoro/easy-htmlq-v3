@@ -1,7 +1,9 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { StepService } from 'src/app/_services/step-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { Statement } from '../statement/statement';
+import { StatementComponent } from '../statement/statement.component';
 
 const xmlConverter = require('xml-js');
 
@@ -13,18 +15,19 @@ const xmlConverter = require('xml-js');
 export class Step2Component implements OnInit {
 
   constructor(
-    private stepService: StepService,
+    public stepService: StepService,
     private storageService: StorageService
   ) {}
 
-  disagrees: string[] = [];
-  neutrals: string[] = [];
-  agrees: string[] = [];
+  disagrees: Statement[] = [];
+  neutrals: Statement[] = [];
+  agrees: Statement[] = [];
 
-  cols: string[][][] = [[[]]];  // Array with the cells holding the statements
+  cols: Statement[][][] = [[[]]];  // Array with the cells holding the statements
   colColors: string[] = []; // Array with the color for each column
   colHeadings: string[] = [];   // Array with the cols headlines
 
+  nextStepAvailable: boolean = false;
 
   ngOnInit(): void {
 
@@ -59,6 +62,10 @@ export class Step2Component implements OnInit {
     if(currentStorage.cols)
       this.cols = currentStorage.cols;
 
+    // Check if next step should be available
+    if(this.agrees.length <= 0 && this.neutrals.length <= 0 && this.disagrees.length <= 0)
+      this.nextStepAvailable = true;
+
     return true;
   }
 
@@ -81,23 +88,25 @@ export class Step2Component implements OnInit {
   }
 
   
-  drop(/*event: CdkDragDrop<string[]>*/ event: any) {
+  drop(event: CdkDragDrop<Statement[]>) {
 
     if (event.previousContainer === event.container) {  // Same Container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } // Abort if there's already a statement in the cell
+    else if(event.container.data.length > 0) {
+      return;
     } else { // Different container
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
-      this.storeProgress();
     }
+    this.storeProgress();
 
     if(this.agrees.length <= 0 && this.neutrals.length <= 0 && this.disagrees.length <= 0) {
-      this.stepService.nextStep();
+      this.nextStepAvailable = true;
     }
   }
-
 
   storeProgress() {
     // Load current storage to append the changed array
@@ -140,8 +149,9 @@ export class Step2Component implements OnInit {
     })
 
   }
-
 }
+
+
 
 const xml =
 `

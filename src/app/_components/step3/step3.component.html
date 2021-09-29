@@ -1,1 +1,46 @@
-<p>step3 works!</p>
+<div class="container-fluid" cdkDropListGroup>
+    <!-- First row containing disagree, heading and agree -->
+    <div class="row justify-content-between">
+      <div class="col-3 text-start">
+          <span>Disagree</span>
+      </div>
+      <div class="col-6 text-center">
+          <span>Sort the cards according to your experience with the iPads this semester</span>
+      </div>
+      <div class="col-3 text-end">
+          <span>Agree</span>
+      </div>
+    </div>
+  
+    <div class="row">
+      <div class="col-12">
+          <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-center" scope="col" [style.background-color]="'#'+colColors[i]"
+                      *ngFor="let heading of colHeadings; let i = index" >{{ heading }}</th>
+                </tr>
+              </thead>
+              <tbody>
+                <!-- Columns holding the cardholders -->
+                <tr>
+                  <td class="p-0 column" *ngFor="let col of cols; let c = index"> <!-- Create all cols -->
+                      <div class="cell text-center position-relative" *ngFor="let cell of cols[c]; let i = index"
+                          cdkDropList [cdkDropListData]="cols[c][i]" (cdkDropListDropped)="drop($event)"> <!-- Create all cells in a col -->
+                          <!-- Statement in a cell (if exists) -->
+                          <app-statement *ngIf="cols[c][i][0]" [statement]="cols[c][i][0]" cdkDrag></app-statement>
+                      </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+      </div>
+    </div>
+
+    <div class="row py-3" style="background-color: #ced4da;">
+        <div class="col-12 text-center">
+          <button class="btn btn-primary" (click)="stepService.nextStep()">Continue</button>
+        </div>
+    </div>
+
+</div>

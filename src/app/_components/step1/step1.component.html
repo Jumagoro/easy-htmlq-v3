@@ -8,9 +8,10 @@
         <div
             cdkDropList
             [cdkDropListData]="statements"
-            class="statement-container mx-auto"
+            class="statement-container mx-auto h-100"
+            [cdkDropListEnterPredicate]="noReturnPredicate"
             >
-            <div class="statement-card" *ngFor="let statement of statements" cdkDrag >{{statement}}</div>
+            <app-statement *ngFor="let statement of statements" [statement]="statement" cdkDrag></app-statement>
         </div>
     </div>
   </div>
@@ -24,7 +25,7 @@
             [cdkDropListData]="disagrees"
             class="statement-container mx-auto"
             (cdkDropListDropped)="drop($event)">
-            <div class="list-card disagree-card" *ngFor="let disagree of disagrees" cdkDrag>{{disagree}}</div>
+            <app-statement *ngFor="let disagree of disagrees" [statement]="disagree" cdkDrag></app-statement>
         </div>
     </div>
     <div class="col p-0">
@@ -34,7 +35,7 @@
             [cdkDropListData]="neutrals"
             class="statement-container mx-auto"
             (cdkDropListDropped)="drop($event)">
-            <div class="list-card neutral-card" *ngFor="let neutral of neutrals" cdkDrag>{{neutral}}</div>
+            <app-statement *ngFor="let neutral of neutrals" [statement]="neutral" cdkDrag></app-statement>
         </div>
     </div>
     <div class="col p-0">
@@ -44,7 +45,7 @@
             [cdkDropListData]="agrees"
             class="statement-container mx-auto"
             (cdkDropListDropped)="drop($event)">
-            <div class="list-card agree-card" *ngFor="let agree of agrees" cdkDrag>{{agree}}</div>
+            <app-statement *ngFor="let agree of agrees" [statement]="agree" cdkDrag></app-statement>
         </div>
     </div>
   </div>

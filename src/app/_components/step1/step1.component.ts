@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { StepService } from 'src/app/_services/step-service.service';
 import { CdkDragDrop, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { StorageService } from 'src/app/_services/storage.service';
+import { Statement } from '../statement/statement';
+import { COLOR_AGREE, COLOR_DISAGREE, COLOR_NEUTRAL } from 'src/app/_config/global';
 
 @Component({
   selector: 'app-step1',
@@ -15,16 +17,18 @@ export class Step1Component implements OnInit {
     private storageService: StorageService
   ) {}
 
-  statements = [
-    'Get to work',
-    'Pick up groceries',
-    'Go home',
-    'Fall asleep'
+  statements: Statement[] = [
+    {
+      statement: 'Pickup groceries'
+    },
+    {
+      statement: 'Found company'
+    }
   ];
 
-  disagrees: string[] = [];
-  neutrals: string[] = [];
-  agrees: string[] = [];
+  disagrees: Statement[] = [];
+  neutrals: Statement[] = [];
+  agrees: Statement[] = [];
 
   // When /step-1 is accessed directly by url the stepService wouldn't know that
   ngOnInit(): void {
@@ -47,17 +51,25 @@ export class Step1Component implements OnInit {
     
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    console.log(this.statements);
+  drop(event: CdkDragDrop<Statement[]>) {
     if (event.previousContainer === event.container) {  // Same Container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } else { // Different container
+
+      // Change color of statement in different stacks
+      if(event.container.data == this.agrees)
+        event.previousContainer.data[event.previousIndex].color = COLOR_AGREE;
+      else if(event.container.data == this.neutrals)
+        event.previousContainer.data[event.previousIndex].color = COLOR_NEUTRAL;
+      else if(event.container.data == this.disagrees)
+        event.previousContainer.data[event.previousIndex].color = COLOR_DISAGREE;
+
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
-      this.storeProgress();
     }
+    this.storeProgress();
 
     if(this.statements.length <= 0) {
       this.stepService.nextStep();
@@ -87,4 +99,8 @@ export class Step1Component implements OnInit {
     this.storageService.set('step1', currentStorage);
   }
 
+  /** Predicate function that doesn't allow items to be dropped into a list. */
+  noReturnPredicate() {
+    return false;
+  }
 }

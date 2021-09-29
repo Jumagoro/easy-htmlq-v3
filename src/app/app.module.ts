@@ -15,6 +15,7 @@ import { IntroductionComponent } from './_components/introduction/introduction.c
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FooterComponent } from './_components/footer/footer.component';
+import { StatementComponent } from './_components/statement/statement.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { FooterComponent } from './_components/footer/footer.component';
     ModalComponent,
     HomeComponent,
     IntroductionComponent,
-    FooterComponent
+    FooterComponent,
+    StatementComponent
   ],
   imports: [
     BrowserModule,
