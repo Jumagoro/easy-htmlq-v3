@@ -16,6 +16,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FooterComponent } from './_components/footer/footer.component';
 import { StatementComponent } from './_components/statement/statement.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -30,13 +31,15 @@ import { StatementComponent } from './_components/statement/statement.component'
     HomeComponent,
     IntroductionComponent,
     FooterComponent,
-    StatementComponent
+    StatementComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    DragDropModule
+    DragDropModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

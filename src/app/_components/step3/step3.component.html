@@ -17,7 +17,7 @@
           <table class="table">
               <thead>
                 <tr>
-                  <th class="text-center" scope="col" [style.background-color]="'#'+colColors[i]"
+                  <th class="text-center" scope="col" [style.background-color]="colColors[i]"
                       *ngFor="let heading of colHeadings; let i = index" >{{ heading }}</th>
                 </tr>
               </thead>
@@ -37,10 +37,11 @@
       </div>
     </div>
 
-    <div class="row py-3" style="background-color: #ced4da;">
-        <div class="col-12 text-center">
-          <button class="btn btn-primary" (click)="stepService.nextStep()">Continue</button>
-        </div>
+    <!-- Continue button-->
+    <div class="row py-3 mt-5">
+      <div class="col-12 text-center">
+        <button class="btn btn-primary rounded-pill fs-4 px-4" (click)="stepService.nextStep()">Continue</button>
+      </div>
     </div>
 
 </div>

@@ -1,1 +1,15 @@
-<p>step5 works!</p>
+<div class="container-fluid py-3 px-5">
+    <!-- Mandatory advice -->
+    <div class="row bg-yellow">
+        <div class="col-12 p-2 ps-4">
+            <h1 class="mb-0">All fields marked with an <span class="text-red">*</span> are mandatory</h1>
+        </div>
+    </div>
+
+    <form   [formGroup]="form"
+            (ngSubmit)="onSubmit()"
+            novalidate>
+
+    </form>
+    
+</div>

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
 import { StepService } from 'src/app/_services/step-service.service';
 
 @Component({
@@ -8,6 +9,9 @@ import { StepService } from 'src/app/_services/step-service.service';
 })
 export class Step5Component implements OnInit {
 
+  // Form stuff
+  form!: FormGroup;
+
   constructor(
     private stepService: StepService
   ) {}
@@ -16,4 +20,9 @@ export class Step5Component implements OnInit {
   ngOnInit(): void {
     this.stepService.setCurrentStep(5);
   }
+
+  onSubmit() {
+    
+  }
+
 }
