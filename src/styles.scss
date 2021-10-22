@@ -19,11 +19,6 @@ $theme-colors: (
     --disagree: #{map.get($theme-colors, "disagree")};
 }
  
-/*@import 'https://fonts.googleapis.com/css?family=Fire+Sans';
-$font-family-sans-serif:      'Fira Sans', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Liberation Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
-$font-family-monospace:       'Fira Sans', SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace !default;*/
- 
- 
 @import "../node_modules/bootstrap/scss/bootstrap";
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

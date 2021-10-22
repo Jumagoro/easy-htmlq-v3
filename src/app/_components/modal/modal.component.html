@@ -1,14 +1,14 @@
 <div id="modal-container" *ngIf="isVisible()">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <h3 class="modal-title">{{ messageHead }}</h3>
-            </div>
+            <!--<div class="modal-header">
+                <h3 class="modal-title mb-0">{{ modal.messageHead }}</h3>
+            </div>-->
             <div class="modal-body">
-                <p>{{ message }}</p>
+                <div [innerHTML]="modal.message"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" (click)="ok()">{{ okButton }}</button>
+                <button class="btn btn-primary" (click)="ok()">{{ modal.okButton }}</button>
             </div>
         </div>
     </div>

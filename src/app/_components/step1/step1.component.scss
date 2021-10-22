@@ -1,53 +1,32 @@
 .statement-container {
+  position: relative;
   width: 300px;
   min-height: 200px;
+  max-height: 200px;
 
   border: solid 1px #ccc;
   border-radius: 4px;
-  overflow: hidden;
+  overflow: auto;
   display: block;
 }
 
-// Big cards in the statement stack
-.statement-card {  
-  background-color: white;
-  border: 1px solid black;
-  width: 300px;
-  min-height: 200px;
+// Stack statements in the "statements"-container (list in other containers)
+#statements > .statement-container > app-statement {
   position: absolute;
-
-  padding: 10px 20px;
-  font-size: 1.3rem;
-
-  -webkit-box-shadow: 3px 5px 14px 5px rgba(136,136,136,0.68); 
-  box-shadow: 3px 5px 14px 5px rgba(136,136,136,0.68);
-}
-
-  // List elements in agree, neutral or disagree
-.list-card {
-  padding: 10px 5px;
-  border-bottom: solid 1px #ccc;
-  color: rgba(0, 0, 0, 0.87);
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-  cursor: move;
-  background: white;
-  font-size: 14px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
   
+// Item that is beeing dragged
 .cdk-drag-preview {
   box-sizing: border-box;
   border-radius: 4px;
   box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
               0 8px 10px 1px rgba(0, 0, 0, 0.14),
               0 3px 14px 2px rgba(0, 0, 0, 0.12);
-}
-  
-.cdk-drag-placeholder {
-  opacity: 0;
+  height: auto !important;    // Full height on drag
 }
   
 .cdk-drag-animating {

@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ModalService } from 'src/app/_services/modal-service.service';
 import { StepService } from 'src/app/_services/step-service.service';
+import { Modal } from './modal';
 
 @Component({
   selector: 'app-modal',
@@ -9,16 +11,7 @@ import { StepService } from 'src/app/_services/step-service.service';
 })
 export class ModalComponent implements OnInit {
 
-  messageHead: string = 'Welcome!';
-  message: string = `
-    This is a demo project on iPad use in the classroom.
-
-    ** Important Information **
-    For this survey you will need as much screen space as possible!
-    
-    If necessary, please MAXIMIZE the size of your browser window, reload this web page, and click on the "Continue" button to start the survey.
-  `;
-  okButton: string = 'Continue...';
+  @Input() modal!: Modal; // decorate the property with @Input()
 
   constructor(
     private stepService: StepService,

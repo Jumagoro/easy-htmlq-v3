@@ -1,4 +1,4 @@
 export interface Statement {
-    statement: String;
-    color?: String;
+    statement: string;
+    color?: string;
 }

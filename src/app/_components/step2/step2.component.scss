@@ -1,12 +1,18 @@
 .cell {
+    position: relative;
     border: 1px solid gainsboro;
     //padding: 3px;
     height: 120px;
-    overflow: hidden;
+    overflow: auto;
 }
 
-.cell-item {
-    height: 100%;
+.cell > app-statement {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
 }
 
 .column {
@@ -15,34 +21,15 @@
 }
 
 .statement-container {
+    position: relative;
     width: 300px;
     min-height: 200px;
+    max-height: 200px;
   
     border: solid 1px #ccc;
     border-radius: 4px;
-    overflow: hidden;
+    overflow: auto;
     display: block;
-  }
-
-// List elements in agree, neutral or disagree
-.list-card {
-    padding: 10px 5px;
-    border-bottom: solid 1px #ccc;
-    color: rgba(0, 0, 0, 0.87);
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    box-sizing: border-box;
-    cursor: move;
-    background: white;
-    font-size: 14px;
-  }
-
-// Styling of the drag items
-.cdk-drag-preview { // Item that is hold in the hand
-    //background-color: red;
-    //max-width: 100px;
 }
 
 .cdk-drag-placeholder {
@@ -50,7 +37,17 @@
     height: 100%;
 }
 
-// Statement card only big inside the cell
-.cell app-statement {
-    height: auto !important;
-}
+
+// Item that is beeing dragged
+.cdk-drag-preview {
+    box-sizing: border-box;
+    border-radius: 4px;
+    box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+                0 8px 10px 1px rgba(0, 0, 0, 0.14),
+                0 3px 14px 2px rgba(0, 0, 0, 0.12);
+    height: auto !important;    // Full height on drag
+  }
+  
+  .cdk-drag-preview > .statement {
+    height: auto !important;    // Full height on drag
+  }
