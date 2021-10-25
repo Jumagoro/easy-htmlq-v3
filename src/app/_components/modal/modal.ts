@@ -1,5 +1,5 @@
 export interface Modal {
     //messageHead: string;
-    message: string;
-    okButton: string;
+    message?: string;
+    okButton?: string;
 }

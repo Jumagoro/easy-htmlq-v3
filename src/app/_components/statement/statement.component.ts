@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Statement } from './statement';
+import { Statement, Type } from './statement';
 
 @Component({
   selector: 'app-statement',
@@ -8,13 +8,16 @@ import { Statement } from './statement';
 })
 export class StatementComponent implements OnInit {
 
+  // Reference to statement.ts Type enum for template
+  Type = Type;
+  
   @Input() statement!: Statement;
 
   ngOnInit(): void {
 
     // Card default color is grey
-    if(this.statement && (!this.statement.color || this.statement.color===''))
-      this.statement.color='#e9e9e9';
+    if(this.statement && !this.statement.type)
+      this.statement.type = Type.NEUTRAL;
   }
 
 }

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StepService } from 'src/app/_services/step-service.service';
+import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'app-introduction',
@@ -7,6 +8,12 @@ import { StepService } from 'src/app/_services/step-service.service';
   styleUrls: ['./introduction.component.scss']
 })
 export class IntroductionComponent implements OnInit {
+
+  introductionModal: Modal = {
+    //messageHead: 'Welcome!',
+    message: undefined,
+    okButton: undefined
+  }
 
   constructor(
     private stepService: StepService

@@ -1,1 +1,6 @@
-<div class="statement p-2" [style.background-color]="statement?.color">{{ statement.statement }}</div>
+<div class="statement p-2"
+    [class.bg-agree]="statement?.type === Type.AGREE"
+    [class.bg-neutral]="statement?.type === Type.NEUTRAL"
+    [class.bg-disagree]="statement?.type === Type.DISAGREE">
+    {{ statement.statement }}
+</div>

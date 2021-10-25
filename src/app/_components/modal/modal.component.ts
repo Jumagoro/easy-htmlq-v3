@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { ModalService } from 'src/app/_services/modal-service.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { Modal } from './modal';
@@ -19,7 +18,12 @@ export class ModalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.modalService.setVisible(true);
+    if(!this.modal || !this.modal.message) {
+      this.ok();
+    } else {
+      this.modalService.setVisible(true);
+    }
+    
   }
 
   ok(): void {

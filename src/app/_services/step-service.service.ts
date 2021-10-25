@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { GlobalVars } from '../_config/global';
+import { ExchangeService } from './exchange.service';
 import { StorageService } from './storage.service';
 
 @Injectable({
@@ -44,22 +46,28 @@ export class StepService {
     else if(this.getCurrentStep() == 2)
       this.router.navigate(['/step-2']);
 
-    else if(this.getCurrentStep() == 3)
-      this.router.navigate(['/step-3']);
-
-    else if(this.getCurrentStep() == 4)
-      this.router.navigate(['/step-4']);
+    else if(this.getCurrentStep() == 3) {
+      if(GlobalVars.CONF.structure.enableStep3)
+        this.router.navigate(['/step-3']);
+      else
+        this.nextStep();
+    }
+      
+    else if(this.getCurrentStep() == 4) {
+      if(GlobalVars.CONF.structure.enableStep4)
+        this.router.navigate(['/step-4']);
+      else
+        this.nextStep();
+    }
 
     else if(this.getCurrentStep() == 5)
-      this.router.navigate(['/step-5']);
-
-    else if(this.getCurrentStep() == 6)
-      this.router.navigate(['/submit']);
+      this.exchange.onComplete();
     
   }
 
   constructor(
     private router: Router,
-    private storage: StorageService
+    private storage: StorageService,
+    private exchange: ExchangeService
   ) { }
 }

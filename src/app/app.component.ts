@@ -1,4 +1,6 @@
 import { Component } from '@angular/core';
+import { GlobalVars } from './_config/global';
+import { ExchangeService } from './_services/exchange.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +8,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+
   title = 'easy-htmlq-v3';
+
+  constructor(
+    private exchange: ExchangeService,
+  ) { }
+
+  ngAfterViewInit() {
+
+    this.exchange.onViewReady();
+    
+  }
+
+  
 }

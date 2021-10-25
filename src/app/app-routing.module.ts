@@ -6,7 +6,6 @@ import { Step1Component } from './_components/step1/step1.component';
 import { Step2Component } from './_components/step2/step2.component';
 import { Step3Component } from './_components/step3/step3.component';
 import { Step4Component } from './_components/step4/step4.component';
-import { Step5Component } from './_components/step5/step5.component';
 import { SubmitComponent } from './_components/submit/submit.component';
 
 const routes: Routes = [
@@ -16,7 +15,6 @@ const routes: Routes = [
   { path: 'step-2', component: Step2Component },
   { path: 'step-3', component: Step3Component },
   { path: 'step-4', component: Step4Component },
-  { path: 'step-5', component: Step5Component },
   { path: 'submit', component: SubmitComponent },
   //{ path: 'profile', component: ProfileComponent, canActivate: [AuthGuard] },
   //{ path: 'detail/:bookID', component: DetailComponent },

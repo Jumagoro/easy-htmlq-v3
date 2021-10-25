@@ -20,7 +20,31 @@
   
   <script>
     document.getElementById('sosci-wrapper').addEventListener(
-      'init', function() { alert('init'); }
+      'ehq3_init', function() {
+        document.getElementById('ehq3_conf').value =
+        `{
+          "structure":{ },
+          "design":{ },
+          "instructions":{ },
+          "statements":[
+              {
+                "id":1,
+                "statement":"Statement 1 from config"
+              },
+              {
+                "id":2,
+                "statement":"Statement 2 from config"
+              },
+              {
+                "id":3,
+                "statement":"Statement 3 from config"
+              }
+          ],
+          "progressBar":{ }
+        }`;
+        document.getElementById('ehq3_data').value = "{}";
+        document.getElementById('sosci-wrapper').dispatchEvent(new Event("ehq3_input_set"));
+      }
     );
   </script>
 </body>
