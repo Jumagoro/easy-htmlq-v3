@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ExchangeService } from 'src/app/_services/exchange.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
-import { Statement } from '../statement/statement';
+import { Statement, Type } from '../statement/statement';
 
 @Component({
   selector: 'app-step4',
@@ -12,7 +13,8 @@ export class Step4Component implements OnInit {
 
   constructor(
     private stepService: StepService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private exchangeService: ExchangeService
   ) {}
 
   commentsAgree: [Statement, string][] = [];
@@ -24,33 +26,33 @@ export class Step4Component implements OnInit {
     this.stepService.setCurrentStep(4);
 
     // Load step4-Storage and quit when successfull
-    if(this.checkStep4Storage())
+    if(this.checkStage3Storage())
       return;
 
     // Load step3-storage if no step4-storage is found
-    this.checkStep3Storage();
+    this.checkStage2Storage();
   }
 
 
-  checkStep4Storage(): boolean {
+  checkStage3Storage(): boolean {
     // Check if something is stored in the storage from step3
-    let currentStorage = this.storageService.get('step4');
+    let currentStorage = this.exchangeService.get('stage3');
+
     if(!currentStorage)
       return false;
 
     // Load the storage if not empty
-    if(currentStorage) {
-      this.commentsAgree = currentStorage.agree;
-      this.commentsDisagree = currentStorage.disagree;
-    }
+    this.commentsAgree = currentStorage.agree;
+    this.commentsDisagree = currentStorage.disagree;
 
     return true;
   }
 
 
-  checkStep3Storage(): boolean {
-    // Check if something is stored in the storage from step2
-    let currentStorage = this.storageService.get('step3');
+  checkStage2Storage(): boolean {
+    // Check if something is stored in the storage from stage2
+    let currentStorage = this.exchangeService.get('stage2');
+
     if(!currentStorage)
       return false;
 
@@ -62,7 +64,7 @@ export class Step4Component implements OnInit {
       for(let cell of firstCol) {
 
         if(cell && cell.length > 0) {  // Dont push empty col 
-          cell[0].color="#ffffff";
+          cell[0].type = Type.WHITE;
           this.commentsDisagree.push([cell[0], ""]);
         }
         
@@ -74,7 +76,7 @@ export class Step4Component implements OnInit {
       for(let cell of lastCol) {
 
         if(cell && cell.length > 0) {  // Dont push empty col
-          cell[0].color="#ffffff";
+          cell[0].type = Type.WHITE;
           this.commentsAgree.push([cell[0], ""]);
         }
         
@@ -86,7 +88,7 @@ export class Step4Component implements OnInit {
 
   onContinue() {
     // Load current storage to append the changed array
-    let currentStorage = this.storageService.get('step4');
+    let currentStorage = this.exchangeService.get('stage3');
 
     // If nothing is in the storage, create an empty object
     if(!currentStorage)
@@ -96,7 +98,7 @@ export class Step4Component implements OnInit {
     currentStorage.disagree = this.commentsDisagree;
 
     // Write the storage object into the storage
-    this.storageService.set('step4', currentStorage);
+    this.exchangeService.set('stage3', currentStorage);
 
     this.stepService.nextStep();
   }

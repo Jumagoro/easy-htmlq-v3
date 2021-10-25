@@ -4,6 +4,7 @@ import { CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray, transferArra
 import { StorageService } from 'src/app/_services/storage.service';
 import { Statement, Type } from '../statement/statement';
 import { GlobalVars } from 'src/app/_config/global';
+import { ExchangeService } from 'src/app/_services/exchange.service';
 
 @Component({
   selector: 'app-step1',
@@ -14,7 +15,8 @@ export class Step1Component implements OnInit {
 
   constructor(
     public stepService: StepService,
-    private storageService: StorageService
+    private storageService: StorageService,
+    private exchangeService: ExchangeService
   ) {}
 
   statements: Statement[] = [];
@@ -28,14 +30,15 @@ export class Step1Component implements OnInit {
     this.stepService.setCurrentStep(1);
 
     // Check if something is stored in the storage
-    let currentStorage = this.storageService.get('step1');
+    //let currentStorage = this.storageService.get('step1');
+
+    let currentStorage = this.exchangeService.get('stage1');
+
     if(!currentStorage) {
       this.initStatements();
       return;
     }
-      
 
-    // Load the storage if not empty
     if(currentStorage.statements)
       this.statements = currentStorage.statements;
     if(currentStorage.agrees)
@@ -89,7 +92,7 @@ export class Step1Component implements OnInit {
   private storeProgress() {
 
     // Load current storage to append the changed array
-    let currentStorage = this.storageService.get('step1');
+    let currentStorage = this.exchangeService.get('stage1');
 
     // If nothing is in the storage, create an empty object
     if(!currentStorage)
@@ -102,7 +105,7 @@ export class Step1Component implements OnInit {
     currentStorage.disagrees = this.disagrees;
 
     // Write the storage object into the storage
-    this.storageService.set('step1', currentStorage);
+    this.exchangeService.set('stage1', currentStorage);
   }
 
   /** Predicate function that doesn't allow items to be dropped into a list. */
@@ -141,7 +144,6 @@ export class Step1Component implements OnInit {
 
     // Move the statement to the new stack
     transferArrayItem(this.statements, targetStack, this.statements.length-1, 0);
-    console.log(targetStack);
 
     this.storeProgress();
 

@@ -9,5 +9,6 @@ export interface Statement {
 export enum Type {
     AGREE = 1,
     NEUTRAL,
-    DISAGREE
+    DISAGREE,
+    WHITE
 }

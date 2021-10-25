@@ -5,7 +5,7 @@
         <span>Disagree</span>
     </div>
     <div class="col-6 text-center">
-        <span>Sort the cards according to your experience with the iPads this semester</span>
+        <span>{{ getTableLabel() }}</span>
     </div>
     <div class="col-3 text-end">
         <span>Agree</span>
@@ -17,7 +17,7 @@
         <table class="table my-0">
             <thead>
               <tr>
-                <th class="text-center" scope="col" [style.background-color]="'#'+colColors[i]"
+                <th class="text-center" scope="col" [style.background-color]="colColors[i]"
                     *ngFor="let heading of colHeadings; let i = index" >{{ heading }}</th>
               </tr>
             </thead>

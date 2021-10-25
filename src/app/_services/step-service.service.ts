@@ -47,17 +47,17 @@ export class StepService {
       this.router.navigate(['/step-2']);
 
     else if(this.getCurrentStep() == 3) {
-      if(GlobalVars.CONF.structure.enableStep3)
-        this.router.navigate(['/step-3']);
-      else
+      if(GlobalVars.CONF.structure.disableStep3 === true)
         this.nextStep();
+      else
+        this.router.navigate(['/step-3']);
     }
       
     else if(this.getCurrentStep() == 4) {
-      if(GlobalVars.CONF.structure.enableStep4)
-        this.router.navigate(['/step-4']);
-      else
+      if(GlobalVars.CONF.structure.disableStep4 === true)
         this.nextStep();
+      else
+        this.router.navigate(['/step-4']);
     }
 
     else if(this.getCurrentStep() == 5)
