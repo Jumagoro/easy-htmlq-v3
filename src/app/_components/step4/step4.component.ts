@@ -148,4 +148,18 @@ export class Step4Component implements OnInit {
     this.progressService.setProgress( (2/3) + (commentsFilled / this.totalComments) * (1/3) );
 
   }
+
+  getLabelAgree() {
+    if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelAgree)
+      return GlobalVars.CONF.getValue().design.labelAgree;
+
+    return "Agree";
+  }
+
+  getLabelDisagree() {
+    if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelDisagree)
+      return GlobalVars.CONF.getValue().design.labelDisagree;
+
+    return "Disagree";
+  }
 }

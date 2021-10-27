@@ -144,9 +144,30 @@ export class Step3Component implements OnInit {
 
   // Reads the label / title for the table from the config
   getTableLabel() {
-    if(GlobalVars.CONF.getValue().structure.stage2TableName)
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.stage2TableName)
       return GlobalVars.CONF.getValue().structure.stage2TableName;
     else
       return 'Sort the cards according to your valuation'
+  }
+
+  getLabelNeutral() {
+    if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelNeutral)
+      return GlobalVars.CONF.getValue().design.labelNeutral;
+
+    return "Neutral";
+  }
+
+  getLabelAgree() {
+    if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelAgree)
+      return GlobalVars.CONF.getValue().design.labelAgree;
+
+    return "Agree";
+  }
+
+  getLabelDisagree() {
+    if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelDisagree)
+      return GlobalVars.CONF.getValue().design.labelDisagree;
+
+    return "Disagree";
   }
 }

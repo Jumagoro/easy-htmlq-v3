@@ -179,6 +179,26 @@ export class Step1Component implements OnInit {
     transferArrayItem(this.statements, targetStack, this.statements.length-1, 0);
 
     this.storeProgress();
+  }
 
+  getLabelNeutral() {
+    if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelNeutral)
+      return GlobalVars.CONF.getValue().design.labelNeutral;
+
+    return "Neutral";
+  }
+
+  getLabelAgree() {
+    if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelAgree)
+      return GlobalVars.CONF.getValue().design.labelAgree;
+
+    return "Agree";
+  }
+
+  getLabelDisagree() {
+    if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelDisagree)
+      return GlobalVars.CONF.getValue().design.labelDisagree;
+
+    return "Disagree";
   }
 }

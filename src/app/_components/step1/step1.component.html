@@ -19,7 +19,7 @@
   <!-- Second row containing disagree, neutral, agree-->
   <div class="row justify-content-center mt-4">
     <div class="col p-0">
-        <p class="text-center mb-1">Disagree #1</p>
+        <p class="text-center mb-1">{{ getLabelDisagree() }} #1</p>
         <div
             cdkDropList
             [cdkDropListData]="disagrees"
@@ -29,7 +29,7 @@
         </div>
     </div>
     <div class="col p-0">
-        <p class="text-center mb-1">Neutral #2</p>
+        <p class="text-center mb-1">{{ getLabelNeutral() }} #2</p>
         <div
             cdkDropList
             [cdkDropListData]="neutrals"
@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="col p-0">
-        <p class="text-center mb-1">Agree #3</p>
+        <p class="text-center mb-1">{{ getLabelAgree() }} #3</p>
         <div
             cdkDropList
             [cdkDropListData]="agrees"

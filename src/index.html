@@ -22,60 +22,65 @@
     document.getElementById('sosci-wrapper').addEventListener(
       'ehq3_init', function() {
         console.log('init caught');
+        setTimeout(function (){
         document.getElementById('ehq3_conf').value =
         `{
           "structure":{
-              "step2Columns":[
-                {
-                    "id":-4,
-                    "color":"#FFD5D5",
-                    "amountCells":2
-                },
-                {
-                    "id":-3,
-                    "color":"#FFD5D5",
-                    "amountCells":3
-                },
-                {
-                    "id":-2,
-                    "color":"#FFD5D5",
-                    "amountCells":4
-                },
-                {
-                    "id":-1,
-                    "color":"#FFD5D5",
-                    "amountCells":5
-                },
-                {
-                    "id":0,
-                    "color":"#E9E9E9",
-                    "amountCells":5
-                },
-                {
-                    "id":1,
-                    "color":"#9FDFBF",
-                    "amountCells":5
-                },
-                {
-                    "id":2,
-                    "color":"#9FDFBF",
-                    "amountCells":4
-                },
-                {
-                    "id":3,
-                    "color":"#9FDFBF",
-                    "amountCells":3
-                },
-                {
-                    "id":4,
-                    "color":"#9FDFBF",
-                    "amountCells":2
-                }
-              ],
-              "stage2TableName": "Sort the cards according to your experience with the iPads this semester"
+            "disableStep3": false,
+            "disableStep4": false,
+            "step2Columns":[
+              {
+                  "id":-4,
+                  "color":"#FFD5D5",
+                  "amountCells":2
+              },
+              {
+                  "id":-3,
+                  "color":"#FFD5D5",
+                  "amountCells":3
+              },
+              {
+                  "id":-2,
+                  "color":"#FFD5D5",
+                  "amountCells":4
+              },
+              {
+                  "id":-1,
+                  "color":"#FFD5D5",
+                  "amountCells":5
+              },
+              {
+                  "id":0,
+                  "color":"#E9E9E9",
+                  "amountCells":5
+              },
+              {
+                  "id":1,
+                  "color":"#9FDFBF",
+                  "amountCells":5
+              },
+              {
+                  "id":2,
+                  "color":"#9FDFBF",
+                  "amountCells":4
+              },
+              {
+                  "id":3,
+                  "color":"#9FDFBF",
+                  "amountCells":3
+              },
+              {
+                  "id":4,
+                  "color":"#9FDFBF",
+                  "amountCells":2
+              }
+            ],
+            "stage2TableName": "Sort the cards according to your experience with the iPads this semester"
           },
           "design":{
-              
+              "labelAgree": "Ja",
+              "labelNeutral": "OKE",
+              "labelDisagree": "NO"
           },
           "instructions":{
               
@@ -103,6 +108,7 @@
         
         document.getElementById('ehq3_data').value = "{}";
         document.getElementById('sosci-wrapper').dispatchEvent(new Event("ehq3_input_set"));
+      }, 5000);
       }
     );
 
