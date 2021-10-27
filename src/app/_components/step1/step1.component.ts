@@ -5,6 +5,8 @@ import { StorageService } from 'src/app/_services/storage.service';
 import { Statement, Type } from '../statement/statement';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
+import { takeWhile } from 'rxjs/operators';
+import { ProgressService } from 'src/app/_services/progress.service';
 
 @Component({
   selector: 'app-step1',
@@ -16,7 +18,8 @@ export class Step1Component implements OnInit {
   constructor(
     public stepService: StepService,
     private storageService: StorageService,
-    private exchangeService: ExchangeService
+    private exchangeService: ExchangeService,
+    private progressService: ProgressService
   ) {}
 
   statements: Statement[] = [];
@@ -25,28 +28,52 @@ export class Step1Component implements OnInit {
   neutrals: Statement[] = [];
   agrees: Statement[] = [];
 
+  totalStatements: number = 0;
+
+  dataLoaded: boolean = false;
+
   // When /step-1 is accessed directly by url the stepService wouldn't know that
   ngOnInit(): void {
+
     this.stepService.setCurrentStep(1);
 
-    // Check if something is stored in the storage
-    //let currentStorage = this.storageService.get('step1');
+    // Initialise with data 
+    GlobalVars.DATA.pipe(
+      takeWhile( (data:any) => (Object.keys(data).length === 0), true)
+    ).subscribe(
+      data => {
+        if((Object.keys(data).length === 0))
+          return;
+           
+        let currentStorage = this.exchangeService.get('stage1');
 
-    let currentStorage = this.exchangeService.get('stage1');
+        this.dataLoaded = true;
 
-    if(!currentStorage) {
-      this.initStatements();
-      return;
-    }
+        if(currentStorage.statements)
+          this.statements = currentStorage.statements;
+        if(currentStorage.agrees)
+          this.agrees = currentStorage.agrees;
+        if(currentStorage.neutrals)
+          this.neutrals = currentStorage.neutrals;
+        if(currentStorage.disagrees)
+          this.disagrees = currentStorage.disagrees;
 
-    if(currentStorage.statements)
-      this.statements = currentStorage.statements;
-    if(currentStorage.agrees)
-      this.agrees = currentStorage.agrees;
-    if(currentStorage.neutrals)
-      this.neutrals = currentStorage.neutrals;
-    if(currentStorage.disagrees)
-      this.disagrees = currentStorage.disagrees;
+        this.totalStatements = this.statements.length + this.agrees.length + this.neutrals.length + this.disagrees.length;
+      }
+    );
+    
+    // Initialise with config if no data is provided (data may override later) 
+    GlobalVars.CONF.pipe(
+      takeWhile( (conf:any) => ((Object.keys(conf).length === 0) && !this.dataLoaded), true)
+    ).subscribe(
+      conf => {
+        if((Object.keys(conf).length === 0) || this.dataLoaded)
+          return;
+           
+        this.initStatements();
+      }
+    );
+    
     
   }
 
@@ -77,12 +104,14 @@ export class Step1Component implements OnInit {
     //let mapJSON = JSON.parse(xmlConverter.xml2json(xml, {compact: true, spaces: 4}));
 
     // Store all xml statements into the statements array
-    for(let statement of GlobalVars.CONF.statements) {
+    for(let statement of GlobalVars.CONF.getValue().statements) {
       this.statements.push({
         id: statement.id,
         statement: statement.statement
       });
     }
+
+    this.totalStatements = this.statements.length + this.agrees.length + this.neutrals.length + this.disagrees.length;
   }
 
 
@@ -106,6 +135,10 @@ export class Step1Component implements OnInit {
 
     // Write the storage object into the storage
     this.exchangeService.set('stage1', currentStorage);
+
+    // Refresh progress
+    let totalStatementsSorted = this.agrees.length + this.neutrals.length + this.disagrees.length;
+    this.progressService.setProgress(totalStatementsSorted / this.totalStatements * (1/3)); // Total of the first of three stages
   }
 
   /** Predicate function that doesn't allow items to be dropped into a list. */

@@ -1,5 +1,6 @@
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
 import { StepService } from 'src/app/_services/step-service.service';
@@ -26,13 +27,34 @@ export class Step3Component implements OnInit {
 
 
   ngOnInit(): void {
-    this.initCols();
 
-    // When /step-2 is accessed directly by url the stepService wouldn't know that
+    // When /step-3 is accessed directly by url the stepService wouldn't know that
     this.stepService.setCurrentStep(3);
 
-    // Load step2-storage if no step3-storage is found
-    this.checkStage2Storage();
+    // Init cols if data is ready
+    GlobalVars.CONF.pipe(
+      takeWhile( (conf:any) => (Object.keys(conf).length === 0), true)
+    ).subscribe(
+      conf => {
+        if((Object.keys(conf).length === 0))
+          return;
+           
+        this.initCols();
+      }
+    );
+
+    // Load data if ready
+    GlobalVars.DATA.pipe(
+      takeWhile( (data:any) => (Object.keys(data).length === 0), true)
+    ).subscribe(
+      data => {
+        if((Object.keys(data).length === 0))
+          return;
+
+        // Load already sorted statements from stage2
+        this.checkStage2Storage();
+      }
+    );
     
   }
 
@@ -107,7 +129,7 @@ export class Step3Component implements OnInit {
     this.cols = [];
     this.colColors = [];
 
-    GlobalVars.CONF.structure.step2Columns.forEach((value:any, index:any) => {
+    GlobalVars.CONF.getValue().structure.step2Columns.forEach((value:any, index:any) => {
 
       this.cols[index] = [];
       this.colColors[index] = value.color;
@@ -122,8 +144,8 @@ export class Step3Component implements OnInit {
 
   // Reads the label / title for the table from the config
   getTableLabel() {
-    if(GlobalVars.CONF.structure.stage2TableName)
-      return GlobalVars.CONF.structure.stage2TableName;
+    if(GlobalVars.CONF.getValue().structure.stage2TableName)
+      return GlobalVars.CONF.getValue().structure.stage2TableName;
     else
       return 'Sort the cards according to your valuation'
   }

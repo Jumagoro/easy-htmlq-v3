@@ -21,6 +21,7 @@
   <script>
     document.getElementById('sosci-wrapper').addEventListener(
       'ehq3_init', function() {
+        console.log('init caught');
         document.getElementById('ehq3_conf').value =
         `{
           "structure":{
@@ -94,9 +95,12 @@
               }
           ],
           "progressBar":{
-              
+              "progress": 0.0,
+              "startDecimal": 0.3,
+              "endDecimal": 0.7
           }
         }`;
+        
         document.getElementById('ehq3_data').value = "{}";
         document.getElementById('sosci-wrapper').dispatchEvent(new Event("ehq3_input_set"));
       }

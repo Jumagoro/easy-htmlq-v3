@@ -10,10 +10,10 @@
     <!-- Agree statement comments -->
     <div class="row p-2 bg-muted" *ngFor="let comment of commentsAgree; index as i">
         <div class="col-12 col-md-4">
-            <app-statement [statement]="comment[0]" cdkDrag></app-statement>
+            <app-statement [statement]="comment[0]"></app-statement>
         </div>
         <div class="col-12 col-md-8">
-            <textarea [(ngModel)]="comment[1]" class="form-control" id="{{'agreeTextarea' + i}}" rows="3"></textarea>
+            <textarea [(ngModel)]="comment[1]" (change)="commentChange($event)" class="form-control" id="{{'agreeTextarea' + i}}" rows="3"></textarea>
         </div>
     </div>
 
@@ -30,7 +30,7 @@
             <app-statement [statement]="comment[0]" cdkDrag></app-statement>
         </div>
         <div class="col-12 col-md-8">
-            <textarea [(ngModel)]="comment[1]" class="form-control" id="{{'disagreeTextarea' + i}}" rows="3"></textarea>
+            <textarea [(ngModel)]="comment[1]" (change)="commentChange($event)" class="form-control" id="{{'disagreeTextarea' + i}}" rows="3"></textarea>
         </div>
     </div>
 

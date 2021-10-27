@@ -15,10 +15,9 @@ export class AppComponent {
     private exchange: ExchangeService,
   ) { }
 
-  ngAfterViewInit() {
-
+  ngOnInit() {
+    console.log('ngOnInit')
     this.exchange.onViewReady();
-    
   }
 
   

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ModalService } from 'src/app/_services/modal-service.service';
+import { ProgressService } from 'src/app/_services/progress.service';
 
 @Component({
   selector: 'app-footer',
@@ -9,17 +10,19 @@ import { ModalService } from 'src/app/_services/modal-service.service';
 export class FooterComponent implements OnInit {
 
   constructor(
-    private modalService: ModalService
+    private modalService: ModalService,
+    public progressService: ProgressService
   ) { }
 
-  // Shows the progress in the bar
-  progress: number = 0.4;
-
   ngOnInit(): void {
+    
   }
 
   onHelpMe() {
     this.modalService.setVisible(true);
   }
 
+  round(toRound: number): number {
+    return Math.round(toRound);
+  }
 }

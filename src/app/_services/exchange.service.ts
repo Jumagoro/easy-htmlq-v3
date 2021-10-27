@@ -10,7 +10,7 @@ export class ExchangeService {
 
   // Gets the data / conf from the input
   private getInput() {
-
+    console.log('read input');
     let dataInput = document.getElementById('ehq3_data');
     let confInput = document.getElementById('ehq3_conf');
 
@@ -19,7 +19,7 @@ export class ExchangeService {
     } else {
       let data = dataInput.getAttribute("value");
       if(data)
-        GlobalVars.DATA = JSON.parse(data);
+        GlobalVars.DATA.next(JSON.parse(data));
       else
         console.log('Missing data!');
     }
@@ -29,7 +29,7 @@ export class ExchangeService {
     } else {
       let conf = confInput.getAttribute("value");
       if(conf)
-        GlobalVars.CONF = JSON.parse(conf);
+        GlobalVars.CONF.next(JSON.parse(conf));
       else
         console.log('Missing conf!');
     }
@@ -56,14 +56,14 @@ export class ExchangeService {
     if(!dataInput) {
       console.log('Missing data input!');
     } else {
-      dataInput.setAttribute("value", JSON.stringify(GlobalVars.DATA));
+      dataInput.setAttribute("value", JSON.stringify(GlobalVars.DATA.getValue()));
     }
   }
 
 
   /** Data storage operations */
   get(key: string): any {
-    let data = GlobalVars.DATA;
+    let data = GlobalVars.DATA.getValue();
     if(data[key]) {
       return data[key];
     }
@@ -71,14 +71,14 @@ export class ExchangeService {
   }
 
   set(key: string, value: any): void {
-    let data = GlobalVars.DATA;
+    let data = GlobalVars.DATA.getValue();
     data[key] = value;
 
     this.updateDataInput();
   }
 
   remove(key: string): boolean {
-    let data = GlobalVars.DATA;
+    let data = GlobalVars.DATA.getValue();
     if(data[key]) {
       delete data[key];
       this.updateDataInput();

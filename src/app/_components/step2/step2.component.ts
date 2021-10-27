@@ -1,7 +1,9 @@
 import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
+import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
+import { ProgressService } from 'src/app/_services/progress.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
 import { Statement } from '../statement/statement';
@@ -17,7 +19,8 @@ export class Step2Component implements OnInit {
   constructor(
     public stepService: StepService,
     private storageService: StorageService,
-    private exchangeService: ExchangeService
+    private exchangeService: ExchangeService,
+    private progressService: ProgressService
   ) {}
 
   disagrees: Statement[] = [];
@@ -30,20 +33,61 @@ export class Step2Component implements OnInit {
 
   nextStepAvailable: boolean = false;
 
-  ngOnInit(): void {
+  totalCols: number = 0;
 
-    this.initCols();
+  ngOnInit(): void {
 
     // When /step-2 is accessed directly by url the stepService wouldn't know that
     this.stepService.setCurrentStep(2);
 
-    // Load remaining statements from stage1
-    this.checkStage1Storage();
+    // Init cols if data is ready
+    GlobalVars.CONF.pipe(
+      takeWhile( (conf:any) => (Object.keys(conf).length === 0), true)
+    ).subscribe(
+      conf => {
+        if((Object.keys(conf).length === 0))
+          return;
+           
+        this.initCols();
+      }
+    );
 
-    // Load already sorted statements from stage2
-    this.checkStage2Storage();
-    
-    
+    // Load data if ready
+    GlobalVars.DATA.pipe(
+      takeWhile( (data:any) => (Object.keys(data).length === 0), true)
+    ).subscribe(
+      data => {
+        if((Object.keys(data).length === 0))
+          return;
+           
+        // Load remaining statements from stage1
+        this.checkStage1Storage();
+
+        // Load already sorted statements from stage2
+        this.checkStage2Storage();
+      }
+    );
+
+  }
+
+
+  private initCols() {
+
+    this.cols = [];
+    this.colColors = [];
+
+    GlobalVars.CONF.getValue().structure.step2Columns.forEach((value:any, index:any) => {
+
+      this.cols[index] = [];
+      this.colColors[index] = value.color;
+      this.colHeadings[index] = value.id;
+
+      for(let i = 0; i < value.amountCells; i++) {
+        this.cols[index][i] = [];
+        this.totalCols++;
+      }
+
+    });
   }
 
 
@@ -145,34 +189,21 @@ export class Step2Component implements OnInit {
     currentStorage.disagrees = this.disagrees;
 
     this.exchangeService.set('stage1', currentStorage);
+
+    // Refresh progress
+    let unsortedStatementsLeft = this.agrees.length + this.neutrals.length + this.disagrees.length;
+    //this.progressService.setProgress( 1/3 + (this.totalCols - unsortedStatementsLeft) * (1/3) );
+    this.progressService.setProgress( (1/3) + ((3 - unsortedStatementsLeft) / 3) * (1/3) );
   }
 
   counter(i: number) {
     return new Array(i);
   }
 
-  private initCols() {
-
-    this.cols = [];
-    this.colColors = [];
-
-    GlobalVars.CONF.structure.step2Columns.forEach((value:any, index:any) => {
-
-      this.cols[index] = [];
-      this.colColors[index] = value.color;
-      this.colHeadings[index] = value.id;
-
-      for(let i = 0; i < value.amountCells; i++) {
-        this.cols[index][i] = [];
-      }
-
-    });
-  }
-
   // Reads the label / title for the table from the config
   getTableLabel() {
-    if(GlobalVars.CONF.structure.stage2TableName)
-      return GlobalVars.CONF.structure.stage2TableName;
+    if(GlobalVars.CONF.getValue().structure.stage2TableName)
+      return GlobalVars.CONF.getValue().structure.stage2TableName;
     else
       return 'Sort the cards according to your valuation'
   }

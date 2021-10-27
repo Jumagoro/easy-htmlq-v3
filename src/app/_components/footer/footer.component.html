@@ -12,8 +12,8 @@
 
         <div class="col-5 text-center p-2">
             <div class="progress">
-                <div class="progress-bar" [style.width.%]="progress*100">
-                    <span>{{ progress * 100 }}%</span>
+                <div class="progress-bar" [style.width.%]="progressService.getTotalProgress() * 100">
+                    <span>{{ round(progressService.getTotalProgress() * 100) }}%</span>
                 </div>
             </div>
             
