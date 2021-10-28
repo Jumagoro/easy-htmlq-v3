@@ -21,8 +21,6 @@
   <script>
     document.getElementById('sosci-wrapper').addEventListener(
       'ehq3_init', function() {
-        console.log('init caught');
-        setTimeout(function (){
         document.getElementById('ehq3_conf').value =
         `{
           "structure":{
@@ -32,7 +30,7 @@
               {
                   "id":-4,
                   "color":"#FFD5D5",
-                  "amountCells":2
+                  "amountCells":1
               },
               {
                   "id":-3,
@@ -83,7 +81,24 @@
               "labelDisagree": "NO"
           },
           "instructions":{
-              
+              "homeInstruction": "This is a demo project on iPad use in the classroom.<br><br><b>** Important Information **</b><br>For this survey you will need as much screen space as possible!<br><br>If necessary, please <b>MAXIMIZE</b> the size of your browser window, reload this web page, and click on the \\"Continue\\" button to start the survey.",
+              "homeButton": "Butt",
+
+              "introductionInstruction": "Second instr",
+              "introductionButton": "Batt",
+
+              "step1Instruction": "Nun kommt Step 1",
+              "step1Button": "Step 1 starten",
+
+              "step2Instruction": "Nun kommt Step 2",
+              "step2Button": "Step 2 starten",
+
+              "step3Instruction": "Nun kommt Step 3",
+              "step3Button": "Step 3 starten",
+
+              "step4Instruction": "Nun kommt Step 4",
+              "step4Button": "Step 4 starten"
+
           },
           "statements":[
               {
@@ -100,21 +115,20 @@
               }
           ],
           "progressBar":{
-              "progress": 0.0,
               "startDecimal": 0.3,
               "endDecimal": 0.7
           }
         }`;
         
-        document.getElementById('ehq3_data').value = "{}";
+        document.getElementById('ehq3_data').value = '{}';
         document.getElementById('sosci-wrapper').dispatchEvent(new Event("ehq3_input_set"));
-      }, 5000);
+      //}, 5000);
       }
     );
 
     document.getElementById('sosci-wrapper').addEventListener(
       'ehq3_onComplete', function() {
-        alert(document.getElementById('ehq3_data').value);
+        //alert(document.getElementById('ehq3_data').value);
       }
     );
   </script>

@@ -6,6 +6,7 @@ import { ExchangeService } from 'src/app/_services/exchange.service';
 import { ProgressService } from 'src/app/_services/progress.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { Modal } from '../modal/modal';
 import { Statement } from '../statement/statement';
 import { StatementComponent } from '../statement/statement.component';
 
@@ -22,6 +23,9 @@ export class Step2Component implements OnInit {
     private exchangeService: ExchangeService,
     private progressService: ProgressService
   ) {}
+
+  step2Modal!: Modal;
+  modalLoaded: boolean = false;
 
   disagrees: Statement[] = [];
   neutrals: Statement[] = [];
@@ -49,6 +53,14 @@ export class Step2Component implements OnInit {
           return;
            
         this.initCols();
+
+        this.step2Modal = {
+          message: conf.instructions.step2Instruction,
+          okButton: conf.instructions.step2Button
+        }
+
+        // Hide modal until config is loaded (otherwise modal fires next and later loaded modal is skipped)
+        this.modalLoaded = true;
       }
     );
 
@@ -174,6 +186,9 @@ export class Step2Component implements OnInit {
 
     currentStorage.cols = this.cols;
 
+    // Set timestamp
+    currentStorage.timestamp = new Date().toISOString();
+
     // Write the storage object into the storage
     this.exchangeService.set('stage2', currentStorage);
 
@@ -187,6 +202,9 @@ export class Step2Component implements OnInit {
     currentStorage.agrees = this.agrees;
     currentStorage.neutrals = this.neutrals;
     currentStorage.disagrees = this.disagrees;
+
+    // Set timestamp
+    currentStorage.timestamp = new Date().toISOString();
 
     this.exchangeService.set('stage1', currentStorage);
 

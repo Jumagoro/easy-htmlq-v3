@@ -37,4 +37,11 @@ export class ModalComponent implements OnInit {
     return this.modalService.getVisible();
   }
 
+  getButtonText() {
+    if(this.modal.okButton && this.modal.okButton !== '')
+      return this.modal.okButton;
+    else
+      return "Continue";
+  }
+
 }

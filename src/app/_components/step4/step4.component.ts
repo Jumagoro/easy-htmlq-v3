@@ -5,6 +5,7 @@ import { ExchangeService } from 'src/app/_services/exchange.service';
 import { ProgressService } from 'src/app/_services/progress.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { Modal } from '../modal/modal';
 import { Statement, Type } from '../statement/statement';
 
 @Component({
@@ -20,6 +21,9 @@ export class Step4Component implements OnInit {
     private exchangeService: ExchangeService,
     private progressService: ProgressService
   ) {}
+
+  step4Modal!: Modal;
+  modalLoaded: boolean = false;
 
   commentsAgree: [Statement, string][] = [];
   commentsDisagree: [Statement, string][] = [];
@@ -47,6 +51,24 @@ export class Step4Component implements OnInit {
         this.checkStage2Storage();
       }
     );
+
+    // Initialise with config if no data is provided (data may override later) 
+    GlobalVars.CONF.pipe(
+      takeWhile( (conf:any) => ((Object.keys(conf).length === 0)), true)
+    ).subscribe(
+      conf => {
+        if((Object.keys(conf).length === 0))
+          return;
+
+        this.step4Modal = {
+          message: conf.instructions.step4Instruction,
+          okButton: conf.instructions.step4Button
+        }
+
+        // Hide modal until config is loaded (otherwise modal fires next and later loaded modal is skipped)
+        this.modalLoaded = true;
+      }
+    );
     
   }
 
@@ -57,6 +79,17 @@ export class Step4Component implements OnInit {
 
     if(!currentStorage)
       return false;
+
+    // Check if stage 3 storage is newer that stage 2 (load stage 2 if stage 2 is newer)
+    let stage2Storage = this.exchangeService.get('stage2');
+    if(stage2Storage && stage2Storage.timestamp && currentStorage.timestamp) {
+      let stage2Update = new Date(stage2Storage.timestamp);
+      let stage3Update = new Date(currentStorage.timestamp);
+
+      // Stage 2 is newer than stage 3 -> Abort and load stage 2
+      if(stage2Update > stage3Update)
+        return false;
+    }
 
     // Load the storage if not empty
     this.commentsAgree = currentStorage.agree;
@@ -128,6 +161,9 @@ export class Step4Component implements OnInit {
     currentStorage.agree = this.commentsAgree;
     currentStorage.disagree = this.commentsDisagree;
 
+    // Set timestamp
+    currentStorage.timestamp = new Date().toISOString();
+
     // Write the storage object into the storage
     this.exchangeService.set('stage3', currentStorage);
   }
@@ -144,7 +180,6 @@ export class Step4Component implements OnInit {
         commentsFilled++;
     }
 
-    console.log((commentsFilled / this.totalComments) )
     this.progressService.setProgress( (2/3) + (commentsFilled / this.totalComments) * (1/3) );
 
   }

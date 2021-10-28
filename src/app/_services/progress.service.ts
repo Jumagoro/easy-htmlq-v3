@@ -37,7 +37,7 @@ export class ProgressService {
         if((Object.keys(data).length === 0))
           return;
            
-          this.progress.next(data.progressBar.progress);
+          this.progress.next(data.progress.progress);
       }
     );
 
@@ -53,7 +53,7 @@ export class ProgressService {
   
     // STORE PROGRESS IN
     // Load current storage to append the changed array
-    let currentStorage = this.exchangeService.get('progressBar');
+    let currentStorage = this.exchangeService.get('progress');
 
     // If nothing is in the storage, create an empty object
     if(!currentStorage)
@@ -62,7 +62,7 @@ export class ProgressService {
     currentStorage.progress = progress;
 
     // Write the storage object into the storage
-    this.exchangeService.set('progressBar', currentStorage);
+    this.exchangeService.set('progress', currentStorage);
   }
 
   public getTotalProgress(): number {

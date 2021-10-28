@@ -8,7 +8,7 @@
                 <div [innerHTML]="modal.message"></div>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" (click)="ok()">{{ modal.okButton }}</button>
+                <button class="btn btn-primary" (click)="ok()">{{ getButtonText() }}</button>
             </div>
         </div>
     </div>

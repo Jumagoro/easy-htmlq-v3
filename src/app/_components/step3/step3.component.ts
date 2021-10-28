@@ -5,6 +5,7 @@ import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { Modal } from '../modal/modal';
 import { Statement } from '../statement/statement';
 import { StatementComponent } from '../statement/statement.component';
 
@@ -20,6 +21,9 @@ export class Step3Component implements OnInit {
     private storageService: StorageService,
     private exchangeService: ExchangeService
   ) {}
+
+  step3Modal!: Modal;
+  modalLoaded: boolean = false;
 
   cols: Statement[][][] = [[[]]];  // Array with the cells holding the statements
   colColors: string[] = []; // Array with the color for each column
@@ -40,6 +44,14 @@ export class Step3Component implements OnInit {
           return;
            
         this.initCols();
+
+        this.step3Modal = {
+          message: conf.instructions.step3Instruction,
+          okButton: conf.instructions.step3Button
+        }
+  
+        // Hide modal until config is loaded (otherwise modal fires next and later loaded modal is skipped)
+        this.modalLoaded = true;
       }
     );
 
@@ -115,6 +127,9 @@ export class Step3Component implements OnInit {
       currentStorage = {};
 
     currentStorage.cols = this.cols;
+
+    // Set timestamp
+    currentStorage.timestamp = new Date().toISOString();
 
     // Write the storage object into the storage
     this.exchangeService.set('stage2', currentStorage);

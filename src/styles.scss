@@ -3,22 +3,34 @@
 // Custom variables overriding bootstrap variables (e.g. _variables.scss)
 $theme-colors: (
     "primary": #0d6efd,
-    "yellow": #e9e633,
-    "red": #dc3545,
-    "agree": #9fdfbf,
-    "neutral": #e9e9e9,
-    "disagree": #ffd5d5,
-    "muted": #ced4da,
+    //"yellow": #e9e633,
+    //"red": #dc3545,
+    //"agree": #9fdfbf,
+    //"neutral": #e9e9e9,
+    //"disagree": #ffd5d5,
+    //"muted": #ced4da,
 );
 :root {
     --primary: #{map.get($theme-colors, "primary")};
-    --yellow: #{map.get($theme-colors, "yellow")};
-    --red: #{map.get($theme-colors, "red")};
-    --agree: #{map.get($theme-colors, "agree")};
-    --neutral: #{map.get($theme-colors, "neutral")};
-    --disagree: #{map.get($theme-colors, "disagree")};
+    //--yellow: #{map.get($theme-colors, "yellow")};
+    //--red: #{map.get($theme-colors, "red")};
+    //--agree: #{map.get($theme-colors, "agree")};
+    //--neutral: #{map.get($theme-colors, "neutral")};
+    //--disagree: #{map.get($theme-colors, "disagree")};
 }
  
 @import "../node_modules/bootstrap/scss/bootstrap";
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+.bg-agree {
+    background-color: #9fdfbf;
+}
+
+.bg-neutral {
+    background-color: #e9e9e9;
+}
+
+.bg-disagree {
+    background-color: #ffd5d5;
+}

@@ -7,6 +7,7 @@ import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
 import { takeWhile } from 'rxjs/operators';
 import { ProgressService } from 'src/app/_services/progress.service';
+import { Modal } from '../modal/modal';
 
 @Component({
   selector: 'app-step1',
@@ -21,6 +22,10 @@ export class Step1Component implements OnInit {
     private exchangeService: ExchangeService,
     private progressService: ProgressService
   ) {}
+
+
+  step1Modal!: Modal;
+  modalLoaded: boolean = false;
 
   statements: Statement[] = [];
 
@@ -47,6 +52,9 @@ export class Step1Component implements OnInit {
            
         let currentStorage = this.exchangeService.get('stage1');
 
+        if(!currentStorage)
+          return;
+
         this.dataLoaded = true;
 
         if(currentStorage.statements)
@@ -71,6 +79,14 @@ export class Step1Component implements OnInit {
           return;
            
         this.initStatements();
+
+        this.step1Modal = {
+          message: conf.instructions.step1Instruction,
+          okButton: conf.instructions.step1Button
+        }
+
+        // Hide modal until config is loaded (otherwise modal fires next and later loaded modal is skipped)
+        this.modalLoaded = true;
       }
     );
     
@@ -132,6 +148,9 @@ export class Step1Component implements OnInit {
     currentStorage.agrees = this.agrees; 
     currentStorage.neutrals = this.neutrals;
     currentStorage.disagrees = this.disagrees;
+
+    // Set timestamp
+    currentStorage.timestamp = new Date().toISOString();
 
     // Write the storage object into the storage
     this.exchangeService.set('stage1', currentStorage);

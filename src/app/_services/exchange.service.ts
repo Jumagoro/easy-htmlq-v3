@@ -1,37 +1,46 @@
 import { Injectable } from '@angular/core';
 import { GlobalVars } from '../_config/global';
+import { StepService } from './step-service.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ExchangeService {
 
-  constructor() { }
+  constructor(  ) { }
 
   // Gets the data / conf from the input
   private getInput() {
-    console.log('read input');
+
     let dataInput = document.getElementById('ehq3_data');
     let confInput = document.getElementById('ehq3_conf');
+
+    // IMPORTANT: Config has to be loaded first
+    if(!confInput) {
+      console.log('Missing conf input!');
+    } else {
+      let conf = confInput.getAttribute("value");
+      if(conf) {
+        GlobalVars.CONF.next(JSON.parse(conf));
+      }
+        
+      else
+        console.log('Missing conf!');
+    }
+
 
     if(!dataInput) {
       console.log('Missing data input!');
     } else {
       let data = dataInput.getAttribute("value");
-      if(data)
-        GlobalVars.DATA.next(JSON.parse(data));
+      if(data) {
+
+        GlobalVars.DATA.next(JSON.parse(data));       
+       
+      }
+        
       else
         console.log('Missing data!');
-    }
-
-    if(!confInput) {
-      console.log('Missing conf input!');
-    } else {
-      let conf = confInput.getAttribute("value");
-      if(conf)
-        GlobalVars.CONF.next(JSON.parse(conf));
-      else
-        console.log('Missing conf!');
     }
   }
 

@@ -1,4 +1,6 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { takeWhile } from 'rxjs/operators';
+import { GlobalVars } from 'src/app/_config/global';
 import { StepService } from 'src/app/_services/step-service.service';
 import { Modal } from '../modal/modal';
 
@@ -10,25 +12,35 @@ import { Modal } from '../modal/modal';
 })
 export class HomeComponent implements OnInit {
 
-  startModal: Modal = {
-    //messageHead: 'Welcome!',
-    message: `
-      This is a demo project on iPad use in the classroom.<br>
-      <br>
-      <b>** Important Information **</b><br>
-      For this survey you will need as much screen space as possible!<br>
-      <br>
-      If necessary, please <b>MAXIMIZE</b> the size of your browser window, reload this web page, and click on the "Continue" button to start the survey.
-    `,
-    okButton: 'Continue...'
-  }
+  startModal!: Modal;
+
+  modalLoaded: boolean = false;
 
   constructor(
     private stepService: StepService
   ) { }
 
   ngOnInit(): void {
+
     this.stepService.setCurrentStep(-1);
+
+    GlobalVars.CONF.pipe(
+      takeWhile( (conf:any) => ((Object.keys(conf).length === 0)), true)
+    ).subscribe(
+      conf => {
+        if((Object.keys(conf).length === 0))
+          return;
+           
+          this.startModal = {
+            message: conf.instructions.homeInstruction,
+            okButton: conf.instructions.homeButton
+          }
+
+          // Hide modal until config is loaded (otherwise modal fires next and later loaded modal is skipped)
+          this.modalLoaded = true;
+      }
+    );
+    
   }
 
 }
