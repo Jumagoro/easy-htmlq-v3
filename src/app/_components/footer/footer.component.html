@@ -2,15 +2,19 @@
   <div class="container">
     <div class="row justify-content-around">
 
-        <div class="col-3 text-center">
+        <div class="col-4 col-md-3 px-0 text-center">
+            <button class="btn" (click)="onHelpMe()">Help me</button>
+        </div>
+
+        <!--<div class="col-3 text-center">
             <div class="showFontAdjust">
                 <button class="btn btn-default decrease">-</button>
                 <span>15</span>
                 <button class="btn btn-default increase">+</button>
             </div>
-        </div>
+        </div>-->
 
-        <div class="col-5 text-center p-2">
+        <div class="col-4 col-md-6 px-0 text-center p-2">
             <div class="progress">
                 <div class="progress-bar" [style.width.%]="progressService.getTotalProgress() * 100">
                     <span>{{ round(progressService.getTotalProgress() * 100) }}%</span>
@@ -19,8 +23,9 @@
             
         </div>
 
-        <div class="col-4 text-center">
-            <button class="btn" (click)="onHelpMe()">Help me</button>
+        <div class="col-4 col-md-3 px-0 text-center">
+            <button *ngIf="getContinueEnabled" type="button" class="btn btn-primary rounded-pill fs-6 fw-bold" (click)="onContinue()">Continue</button>
+            <button *ngIf="!getContinueEnabled" type="button" class="btn rounded-pill fs-6 fw-bold disabled" style="background-color: #bebebe;">Continue</button>
         </div>
 
     </div>

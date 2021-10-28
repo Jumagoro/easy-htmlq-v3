@@ -6,6 +6,7 @@ import { ExchangeService } from 'src/app/_services/exchange.service';
 import { ProgressService } from 'src/app/_services/progress.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { FooterComponent } from '../footer/footer.component';
 import { Modal } from '../modal/modal';
 import { Statement } from '../statement/statement';
 import { StatementComponent } from '../statement/statement.component';
@@ -79,6 +80,12 @@ export class Step2Component implements OnInit {
         this.checkStage2Storage();
       }
     );
+
+    // Check if already finished
+    let unsortedStatementsLeft = this.agrees.length + this.neutrals.length + this.disagrees.length;
+
+    if(unsortedStatementsLeft <= 0)
+      FooterComponent.continueEnabled = true;
 
   }
 
@@ -212,6 +219,9 @@ export class Step2Component implements OnInit {
     let unsortedStatementsLeft = this.agrees.length + this.neutrals.length + this.disagrees.length;
     //this.progressService.setProgress( 1/3 + (this.totalCols - unsortedStatementsLeft) * (1/3) );
     this.progressService.setProgress( (1/3) + ((3 - unsortedStatementsLeft) / 3) * (1/3) );
+
+    if(unsortedStatementsLeft <= 0)
+      FooterComponent.continueEnabled = true;
   }
 
   counter(i: number) {

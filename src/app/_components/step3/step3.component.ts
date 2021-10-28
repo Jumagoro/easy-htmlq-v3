@@ -5,6 +5,7 @@ import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { FooterComponent } from '../footer/footer.component';
 import { Modal } from '../modal/modal';
 import { Statement } from '../statement/statement';
 import { StatementComponent } from '../statement/statement.component';
@@ -68,6 +69,8 @@ export class Step3Component implements OnInit {
       }
     );
     
+    
+    FooterComponent.continueEnabled = true;
   }
 
 

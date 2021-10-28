@@ -17,7 +17,7 @@
   </div>
 
   <!-- Second row containing disagree, neutral, agree-->
-  <div class="row justify-content-center mt-4">
+  <div class="row justify-content-center mt-4 bottom-statements-row" >
     <div class="col p-0">
         <p class="text-center mb-1">{{ getLabelDisagree() }} #1</p>
         <div
@@ -47,13 +47,6 @@
             (cdkDropListDropped)="drop($event)">
             <app-statement *ngFor="let agree of agrees" [statement]="agree" cdkDrag></app-statement>
         </div>
-    </div>
-  </div>
-
-  <!-- Continue button-->
-  <div class="row py-3 mt-5" *ngIf="statements.length <= 0">
-    <div class="col-12 text-center">
-      <button class="btn btn-primary rounded-pill fs-4 px-4" (click)="stepService.nextStep()">Continue</button>
     </div>
   </div>
 

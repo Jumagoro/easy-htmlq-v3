@@ -5,6 +5,7 @@ import { ExchangeService } from 'src/app/_services/exchange.service';
 import { ProgressService } from 'src/app/_services/progress.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { StorageService } from 'src/app/_services/storage.service';
+import { FooterComponent } from '../footer/footer.component';
 import { Modal } from '../modal/modal';
 import { Statement, Type } from '../statement/statement';
 
@@ -70,6 +71,7 @@ export class Step4Component implements OnInit {
       }
     );
     
+    FooterComponent.continueEnabled = true;
   }
 
 

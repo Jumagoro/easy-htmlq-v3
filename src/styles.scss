@@ -34,3 +34,11 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 .bg-disagree {
     background-color: #ffd5d5;
 }
+
+@include media-breakpoint-down(md) {
+    .bottom-statements-row {
+        overflow-y: scroll;
+        height: 50vh;
+    }
+ }
+

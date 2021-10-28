@@ -8,6 +8,7 @@ import { ExchangeService } from 'src/app/_services/exchange.service';
 import { takeWhile } from 'rxjs/operators';
 import { ProgressService } from 'src/app/_services/progress.service';
 import { Modal } from '../modal/modal';
+import { FooterComponent } from '../footer/footer.component';
 
 @Component({
   selector: 'app-step1',
@@ -90,6 +91,9 @@ export class Step1Component implements OnInit {
       }
     );
     
+    // Check if already finished
+    if(this.statements.length <= 0)
+      FooterComponent.continueEnabled = true;
     
   }
 
@@ -158,6 +162,9 @@ export class Step1Component implements OnInit {
     // Refresh progress
     let totalStatementsSorted = this.agrees.length + this.neutrals.length + this.disagrees.length;
     this.progressService.setProgress(totalStatementsSorted / this.totalStatements * (1/3)); // Total of the first of three stages
+
+    if(this.statements.length <= 0)
+      FooterComponent.continueEnabled = true;
   }
 
   /** Predicate function that doesn't allow items to be dropped into a list. */
