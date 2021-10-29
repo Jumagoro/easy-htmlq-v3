@@ -1,31 +1,183 @@
-# EasyHtmlqV3
+# Easy HTMLQ V3
+## Ablauf
+Interviewer erhalten eine Liste von Statements (Kombination aus einer ID und einem Text), z.B.:
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.1.0.
+    {
+	    "id": 1,
+	    "statement":"Pizza Hawaii ist eine valide Pizza",
+	    "type": 1 // Optional: 1 (Agree), 2 (Neutral), 3 (Disagree)
+    }
+Sie sehen jedoch nur das eigentliche Statement, nicht, ob die Reihenfolge vom Ursprung variiert.
 
-Important:
-Statement amount has to be equal to amount of cols in stage 2!
-CONF has to be loaded before DATA (only relevant for developer, because done in code)
+## Schritt 1 ("/step-1"):
+Im ersten Schritt werden die unsortierten Statements nacheinander den Stapeln "Agree", "Neutral" oder "Disagree" zugeordnet. Diese drei Stapel sind im Speicher (Javascript **DATA** bzw. HTML Input **ehq3_data**) unter **stage1** zu finden. (siehe Abschnitt "*Daten / Konfiguration*"). Sobald alle Statements vom ursprünglichen Stapel einsortiert sind, wird der Weiter / "Continue" Button freigeschaltet.
 
-## Development server
+## Schritt 2 ("/step-2"):
+Im zweiten Schritt sieht der Interviewer in der oberen Hälfte eine Tabelle (**Aufbau**: siehe Abschnitt "*Daten / Konfiguration*") und in der unteren Hälfte wieder die drei Stapel "Agree", "Neutral" oder "Disagree", welche die zuvor sortierten Statements enthalten. Der Interviewer soll nun seine Einordnung der Statements verfeinern, indem er die einzelnen Statements von -4 (absolute Ablehnung) bis +4 (absolute Zustimmung) abstuft. Die gesamte Tabelle wird im Speicher (Javascript **DATA** bzw. HTML Input **ehq3_data**) unter **stage2** abgespeichert. Sobald alle Statements aus "stage1" (den ursprünglichen Stapeln) einsortiert wurden, wird der Weiter / "Continue" Button freigeschaltet.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+## Schritt 3 ("/step-3"):
+Der dritte Schritt ähnelt dem zweiten und legt den Fokus lediglich auf mögliche Umsortierungen. Interviewte sehen nun lediglich die Tabelle (wie aus Schritt 2) und können Ihre Statements, falls nötig, neu anordnen. Dieser Schritt beschreibt dabei ebenfalls komplett den **stage2**-Abschnitts im Speicher (Javascript **DATA** bzw. HTML Input **ehq3_data**).
+Dieser Schritt ist optional und kann über die Konfiguration (siehe Abschnitt "*Daten / Konfiguration*") übersprungen werden.
 
-## Code scaffolding
+## Schritt 4 ("/step-4"):
+Dieser letzte Schritt nimmt alle Statements aus den Extrema des vorherigen Schrittes (Schritt 2 / Schritt 3), also den Spalten "absolute Ablehnung" (-4) und "absolute Zustimmung" (+4) und gibt nun die Möglichkeit, einen Kommentar zu den jeweiligen Statements zu fassen. Schritt 4 verwendet im Speicher (Javascript **DATA** bzw. HTML Input **ehq3_data**) den Bereich **stage3** (genaueres siehe Abschnitt "*Daten / Konfiguration*").
+Die Kommentarfelder können dabei jedoch auch leer bleiben, der Weiter / "Continue" Button ist stets vorhanden und beendet zugleich auf die Umfrage (siehe Abschnitt "*Events*").
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Events
+Um mit dem Sosci-Wrapper zu kommunizieren werden **Javascript-Events** verwendet, die wiederum auf dem umliegenden **div** mit der **ID** "**sosci-wrapper**" abgehört / dispatched werden (siehe Abschnitt "*Aufbau*").
+|Abfolge|Name|Quelle|Funktion|
+|--|--|--|--|
+|1|ehq3_init|EHQ3|Signalisiert SoSci, dass EHQ3 bereit für die Daten-/Konfigurationsaufnahme ist|
+|2|ehq3_input_set|SoSci|Signalisiert EHQ3, dass die Daten in den Inputs liegen (siehe Abschnitt "*Aufbau*")|
+|3|ehq3_onComplete|EHQ3|Signalisiert SoSci, dass der Interviewer den letzten Schritt abgeschlossen hat und die Daten abgerufen werden können|
 
-## Build
+## Aufbau
+EHQ3 wird wie folgt auf der Website eingebunden. Die eigentliche Angular Anwendung befindet sich dabei jedoch innerhalb des Tags `<app-root></app-root>`.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+    ...
+    <form>
+		<div  id="sosci-wrapper">
+			<app-root></app-root>
+		</div>
 
-## Running unit tests
+		<input  id="ehq3_data"  type="hidden"  value="">
+		<input  id="ehq3_conf"  type="hidden"  value="">
+	</form>
+	...
+Die beiden Input-Felder dienen dem Informationsaustausch zwischen SoSci und EHQ3.
+Die **Anfangskonfiguration** wird dabei in `<input  id="ehq3_conf"  type="hidden"  value="">` abgelegt.
+Die **Daten** (Zwischengespeicherte von SoSci), wie anschließende Nutzereingaben, befinden sich (stets synchronisiert) in `<input  id="ehq3_data"  type="hidden"  value="">`.
+Der umliegende **div** mit der **ID** "**sosci-wrapper**" dient der Kommunikation über Events (siehe Abschnitt "*Events*").
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Daten / Konfiguration
+Die Daten und die Anfangskonfiguration von EHQ3 werden über Inputs ausgetauscht, die sich außerhalb der eigentlichen Angular Anwendung befinden (siehe Abschnitt "*Aufbau*").
+Die Daten werden dabei stets mit dem Datenformat **JSON** formatiert.
 
-## Running end-to-end tests
+### Konfiguration
+Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration gesetzt werden können.
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+    {
+	    "structure": {
+	     	"disableStep3": false,
+	     	"disableStep4": false,
+	     	"step2Columns": [
+			  	{
+		  		   	"id": -4,    
+		  			"color": "#FFD5D5",    
+		  			"amountCells": 2    
+		  		},
+		  		...
+		  		{
+			  		"id": 0,    
+		  			"color": "#E9E9E9",    
+		  			"amountCells": 5    
+		  		},
+		  		...
+		  		{
+			  		"id":-4,    
+		  			"color":"#9FDFBF",    
+		  			"amountCells":1    
+		  		},
+		  	],      
+		    "stage2TableName": "Titel über Schritt 2 / 3 Tabelle"
+		},
+	      
+	    "design": {
+		    "labelAgree": "Zustimmungstext",
+		    "labelNeutral": "Neutraltext",
+		    "labelDisagree": "Ablehnungstext"
+	    },
+	      
+	    "instructions": {
+	      
+		    "homeInstruction": "<b>Home Instruction</b><br>Try Html here",
+		    "homeButton": "Continue",
+	      
+		    "introductionInstruction": "<b>Second Instruction</b><br>Try Html here",
+		    "introductionButton": "Continue",
+	      
+		    "step1Instruction": "<b>Step 1 Instruction</b><br>Try Html here",
+		    "step1Button": "Continue",
+	      
+		    "step2Instruction": "<b>Step 2 Instruction</b><br>Try Html here",
+		    "step2Button": "Continue",
+	      
+		    "step3Instruction": "<b>Step 3 Instruction</b><br>Try Html here",
+		    "step3Button": "Continue",
+	      
+		    "step4Instruction": "<b>Step 4 Instruction</b><br>Try Html here",
+		    "step4Button": "Continue"
+	    },
+	      
+	    "statements": [
+		    {
+		      "id":1,
+		      "statement":"Statement 1 from config"
+		    },
+		    ...      
+	    ],
+	      
+	    "progressBar": {
+		    "startDecimal": 0.3,
+		    "endDecimal": 0.7
+	    }
+    }
 
-## Further help
+## Daten
+Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert werden.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+ 
+
+    {
+	    "progress": {
+		    "currentStep": 3,
+	        "progress": 1
+	    },
+	    
+	    "stage1":{
+	        "statements": [ {}, ... ],
+	        
+	        "agrees":[ {}, ... ],
+	        "neutrals":[ {}, ... ],
+	        "disagrees":[ {}, ... ],
+	        
+	        "timestamp":"2021-10-29T11:58:59.207Z"
+	    },
+	    
+	    "stage2":{
+          "cols":[
+             [ [{}], [{}], ],
+             [ [{}], [{}], [{}] ],
+             [ [{}], [{}], [{}], [{}] ],
+             [ [{}], [{}], [{}], [{}], [{}] ],
+             [ [{}], [{}], [{}], [{}], [{}] ],
+             [ [{}], [{}], [{}], [{}], [{}] ],
+             [ [{}], [{}], [{}], [{}] ],
+             [ [{}], [{}], [{}] ],
+             [ [{}], [{}] ]
+          ],
+          "timestamp":"2021-10-29T11:58:59.207Z"
+       },
+       
+       "stage3":{
+          "agree":[ [{}, "Kommentar zu statement"], ... ],
+          "disagree":[ [{}, ""], ... ],
+          "timestamp":"2021-10-29T11:59:10.835Z"
+       }
+    }
+    
+ Dabei steht `{}` jeweils für ein (mögliches) Statement-Objekt, `{}, ...` für ein (mögliches) Statement-Objekt oder auch mehrere.
+Unter *stage2* -> *cols*: Jedes äußere Array (in dem ersten Array), steht jeweils für eine Spalte, mit der jeweiligen Anzahl an Zellen (z.B. 5). Diese Zellen jedoch sind auch wiederum ein Array, was jedoch i. d. R. nur ein Objekt enthalten soll. Jede Zelle ist hier jedoch ein Array, da aus technischer Sicht jeder Ablagestapel (was eine Zelle hier ist) als ein Array realisiert werden muss. Daher das drei dimensionale Array (obwohl eigentlich nur zwei dimensional benötigt).
+
+## Farben / Styles / CSS:
+Die Farbe von "Agree", "Neutral" und "Disagree" wird unterschiedlich festgelegt.
+Die Farbe der Spaltenbeschriftung aus **Stage2** wird beispielsweise direkt über die Konfiguration erledigt.
+Die Farben der Statement Karten an sich wird jedoch über folgende CSS-Klassen geregelt:
+
+ - `.bg-agree { background-color: #9fdfbf; }`
+ - `.bg-neutral { background-color: #e9e9e9; }`
+ - `.bg-disagree { background-color: #ffd5d5; }`
+
+Diese Standardwerte sollten jedoch über ein eigenes CSS (eventuell `!important`benötigt) überschreibbar sein.
+Ein Statement erhält diese Klassen abhängig von seinem Typ (1=Agree, 2=Neutral, 3=Disagree).
+
