@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { GlobalVars } from '../_config/global';
-import { takeUntil, takeWhile} from 'rxjs/operators';
+import { takeWhile} from 'rxjs/operators';
 import { BehaviorSubject } from 'rxjs';
 import { ExchangeService } from './exchange.service';
 

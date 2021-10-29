@@ -1,15 +1,13 @@
-import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
 import { ProgressService } from 'src/app/_services/progress.service';
 import { StepService } from 'src/app/_services/step-service.service';
-import { StorageService } from 'src/app/_services/storage.service';
 import { FooterComponent } from '../footer/footer.component';
 import { Modal } from '../modal/modal';
 import { Statement } from '../statement/statement';
-import { StatementComponent } from '../statement/statement.component';
 
 @Component({
   selector: 'app-step2',
@@ -20,7 +18,6 @@ export class Step2Component implements OnInit {
 
   constructor(
     public stepService: StepService,
-    private storageService: StorageService,
     private exchangeService: ExchangeService,
     private progressService: ProgressService
   ) {}
@@ -111,8 +108,7 @@ export class Step2Component implements OnInit {
 
 
   checkStage1Storage(): boolean {
-    // Check if something is stored in the storage from step2
-    //let currentStorage = this.storageService.get('step1');
+    // Check if something is stored in the storage from stage1
     let currentStorage = this.exchangeService.get('stage1');
     if(!currentStorage)
       return false;
@@ -217,8 +213,8 @@ export class Step2Component implements OnInit {
 
     // Refresh progress
     let unsortedStatementsLeft = this.agrees.length + this.neutrals.length + this.disagrees.length;
-    //this.progressService.setProgress( 1/3 + (this.totalCols - unsortedStatementsLeft) * (1/3) );
-    this.progressService.setProgress( (1/3) + ((3 - unsortedStatementsLeft) / 3) * (1/3) );
+    this.progressService.setProgress( 1/3 + (this.totalCols - unsortedStatementsLeft) * (1/3) );
+    //this.progressService.setProgress( (1/3) + ((3 - unsortedStatementsLeft) / 3) * (1/3) ); // FOR TESTING ONLY
 
     if(unsortedStatementsLeft <= 0)
       FooterComponent.continueEnabled = true;

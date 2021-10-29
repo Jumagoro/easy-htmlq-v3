@@ -1,14 +1,12 @@
-import { CdkDrag, CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
 import { StepService } from 'src/app/_services/step-service.service';
-import { StorageService } from 'src/app/_services/storage.service';
 import { FooterComponent } from '../footer/footer.component';
 import { Modal } from '../modal/modal';
 import { Statement } from '../statement/statement';
-import { StatementComponent } from '../statement/statement.component';
 
 @Component({
   selector: 'app-step3',
@@ -19,7 +17,6 @@ export class Step3Component implements OnInit {
 
   constructor(
     public stepService: StepService,
-    private storageService: StorageService,
     private exchangeService: ExchangeService
   ) {}
 

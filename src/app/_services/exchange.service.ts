@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { GlobalVars } from '../_config/global';
-import { StepService } from './step-service.service';
 
 @Injectable({
   providedIn: 'root'

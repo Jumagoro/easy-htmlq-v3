@@ -4,10 +4,9 @@ import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
 import { ProgressService } from 'src/app/_services/progress.service';
 import { StepService } from 'src/app/_services/step-service.service';
-import { StorageService } from 'src/app/_services/storage.service';
 import { FooterComponent } from '../footer/footer.component';
 import { Modal } from '../modal/modal';
-import { Statement, Type } from '../statement/statement';
+import { Statement } from '../statement/statement';
 
 @Component({
   selector: 'app-step4',
@@ -18,7 +17,6 @@ export class Step4Component implements OnInit {
 
   constructor(
     private stepService: StepService,
-    private storageService: StorageService,
     private exchangeService: ExchangeService,
     private progressService: ProgressService
   ) {}
@@ -44,11 +42,11 @@ export class Step4Component implements OnInit {
         if((Object.keys(data).length === 0))
           return;
            
-        // Load step4-Storage and quit when successfull
+        // Load stage3-Storage and quit when successfull
         if(this.checkStage3Storage())
           return;
 
-        // Load step3-storage if no step4-storage is found
+        // Load stage2-storage if no stage3-storage is found
         this.checkStage2Storage();
       }
     );

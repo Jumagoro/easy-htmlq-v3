@@ -34,8 +34,6 @@ export class StepService {
   // Increments the step counter by one and routes to the next component
   public nextStep(): void {
 
-    console.log('Next step');
-
     // Sets the current step
     this.setCurrentStep(this.getCurrentStep() + 1);
 

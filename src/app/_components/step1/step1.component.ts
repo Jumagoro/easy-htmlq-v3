@@ -1,7 +1,6 @@
 import { Component, HostListener, OnInit } from '@angular/core';
 import { StepService } from 'src/app/_services/step-service.service';
-import { CdkDragDrop, CdkDropList, DragDropModule, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { StorageService } from 'src/app/_services/storage.service';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Statement, Type } from '../statement/statement';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
@@ -19,7 +18,6 @@ export class Step1Component implements OnInit {
 
   constructor(
     public stepService: StepService,
-    private storageService: StorageService,
     private exchangeService: ExchangeService,
     private progressService: ProgressService
   ) {}
