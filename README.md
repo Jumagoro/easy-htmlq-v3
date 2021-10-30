@@ -1,4 +1,6 @@
 # Easy HTMLQ V3
+## Download
+[First Release](https://github.com/Jumagoro/easy-htmlq-v3/releases/tag/v0.1.0)
 ## Ablauf
 Interviewer erhalten eine Liste von Statements (Kombination aus einer ID und einem Text), z.B.:
 
