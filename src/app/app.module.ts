@@ -14,6 +14,7 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FooterComponent } from './_components/footer/footer.component';
 import { StatementComponent } from './_components/statement/statement.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { APP_BASE_HREF } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,9 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     FormsModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    { provide: APP_BASE_HREF, useValue : '/' }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
