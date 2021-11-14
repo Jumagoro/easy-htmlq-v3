@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
@@ -12,7 +12,8 @@ import { Statement } from '../statement/statement';
 @Component({
   selector: 'app-step2',
   templateUrl: './step2.component.html',
-  styleUrls: ['./step2.component.scss']
+  styleUrls: ['./step2.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class Step2Component implements OnInit {
 
@@ -113,13 +114,18 @@ export class Step2Component implements OnInit {
     if(!currentStorage)
       return false;
 
-    // Copy the storage if not empty (otherwise step1 storage gets overwritten)
+    // Copy the storage if not empty (so step1 doesn't get overwritten)
     if(currentStorage.agrees)
-      this.agrees = currentStorage.agrees;
+      this.agrees = [];
+      currentStorage.agrees.forEach( (val:any) => this.agrees.push(Object.assign({}, val)));
+
     if(currentStorage.neutrals)
-      this.neutrals = currentStorage.neutrals;
+      this.neutrals = [];
+      currentStorage.neutrals.forEach( (val:any) => this.neutrals.push(Object.assign({}, val)));
+
     if(currentStorage.disagrees)
-      this.disagrees = currentStorage.disagrees;
+      this.disagrees = [];
+      currentStorage.disagrees.forEach( (val:any) => this.disagrees.push(Object.assign({}, val)));
 
     return true;
   }
@@ -192,28 +198,30 @@ export class Step2Component implements OnInit {
     // Set timestamp
     currentStorage.timestamp = new Date().toISOString();
 
-    // Write the storage object into the storage
-    this.exchangeService.set('stage2', currentStorage);
+    if(this.agrees.length > 0)
+      currentStorage.agrees = this.agrees;
+    else
+      delete currentStorage.agrees;
 
+    if(this.neutrals.length > 0)
+      currentStorage.neutrals = this.neutrals;
+    else
+      delete currentStorage.neutrals;
 
-    // Store stage 1 as well
-    currentStorage = this.exchangeService.get('stage1');
-
-    if(!currentStorage)
-    currentStorage = {};
-
-    currentStorage.agrees = this.agrees;
-    currentStorage.neutrals = this.neutrals;
-    currentStorage.disagrees = this.disagrees;
+    if(this.disagrees.length > 0)
+      currentStorage.disagrees = this.disagrees;
+    else
+      delete currentStorage.disagrees;
 
     // Set timestamp
     currentStorage.timestamp = new Date().toISOString();
 
-    this.exchangeService.set('stage1', currentStorage);
+    // Write the storage object into the storage
+    this.exchangeService.set('stage2', currentStorage);
 
     // Refresh progress
     let unsortedStatementsLeft = this.agrees.length + this.neutrals.length + this.disagrees.length;
-    this.progressService.setProgress( 1/3 + (this.totalCols - unsortedStatementsLeft) * (1/3) );
+    this.progressService.setProgress( 1/3 + ((this.totalCols - unsortedStatementsLeft) / this.totalCols) * (1/3) );
     //this.progressService.setProgress( (1/3) + ((3 - unsortedStatementsLeft) / 3) * (1/3) ); // FOR TESTING ONLY
 
     if(unsortedStatementsLeft <= 0)
@@ -226,8 +234,8 @@ export class Step2Component implements OnInit {
 
   // Reads the label / title for the table from the config
   getTableLabel() {
-    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.stage2TableName)
-      return GlobalVars.CONF.getValue().structure.stage2TableName;
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.step2TableName)
+      return GlobalVars.CONF.getValue().structure.step2TableName;
     else
       return 'Sort the cards according to your valuation'
   }

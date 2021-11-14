@@ -1,4 +1,4 @@
 <div id="content-wrap" style="padding-bottom: 100px;">
     <router-outlet></router-outlet>
+    <app-footer [hidden]="stepService.getCurrentStep() == -1"></app-footer>
 </div>
-<app-footer></app-footer>

@@ -3,7 +3,7 @@
     <div class="row justify-content-around">
 
         <div class="col-4 col-md-3 px-0 text-center">
-            <button class="btn" (click)="onHelpMe()">Help me</button>
+            <button class="btn" type="button" (click)="onHelpMe()">Help me</button>
         </div>
 
         <!--<div class="col-3 text-center">
@@ -14,7 +14,7 @@
             </div>
         </div>-->
 
-        <div class="col-4 col-md-6 px-0 text-center p-2">
+        <div class="col-4 col-md-6 px-0 text-center p-2" *ngIf="progressService.getProgressBarEnabled">
             <div class="progress">
                 <div class="progress-bar" [style.width.%]="progressService.getTotalProgress() * 100">
                     <span>{{ round(progressService.getTotalProgress() * 100) }}%</span>

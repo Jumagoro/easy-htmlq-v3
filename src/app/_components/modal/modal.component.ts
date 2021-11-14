@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
 import { ModalService } from 'src/app/_services/modal-service.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { Modal } from './modal';
@@ -6,7 +6,8 @@ import { Modal } from './modal';
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
-  styleUrls: ['./modal.component.scss']
+  styleUrls: ['./modal.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class ModalComponent implements OnInit {
 

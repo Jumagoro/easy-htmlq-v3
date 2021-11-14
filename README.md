@@ -1,6 +1,7 @@
 # Easy HTMLQ V3
 ## Download
 [First Release](https://github.com/Jumagoro/easy-htmlq-v3/releases/tag/v0.1.0)
+
 ## Ablauf
 Interviewer erhalten eine Liste von Statements (Kombination aus einer ID und einem Text), z.B.:
 
@@ -31,7 +32,9 @@ Um mit dem Sosci-Wrapper zu kommunizieren werden **Javascript-Events** verwendet
 |--|--|--|--|
 |1|ehq3_init|EHQ3|Signalisiert SoSci, dass EHQ3 bereit für die Daten-/Konfigurationsaufnahme ist|
 |2|ehq3_input_set|SoSci|Signalisiert EHQ3, dass die Daten in den Inputs liegen (siehe Abschnitt "*Aufbau*")|
-|3|ehq3_onComplete|EHQ3|Signalisiert SoSci, dass der Interviewer den letzten Schritt abgeschlossen hat und die Daten abgerufen werden können|
+|3|ehq3_complete|EHQ3|Signalisiert SoSci, dass der Interviewer den letzten Schritt abgeschlossen hat und die Daten abgerufen werden können|
+Seit v0.2.0:
+- *ehq3_complete* statt *ehq3_onComplete*
 
 ## Aufbau
 EHQ3 wird wie folgt auf der Website eingebunden. Die eigentliche Angular Anwendung befindet sich dabei jedoch innerhalb des Tags `<app-root></app-root>`.
@@ -45,7 +48,8 @@ EHQ3 wird wie folgt auf der Website eingebunden. Die eigentliche Angular Anwendu
 		<input  id="ehq3_data"  type="hidden"  value="">
 		<input  id="ehq3_conf"  type="hidden"  value="">
 	</form>
-	...
+	...	
+**Wichtig**: Es müssen alle *.js* und *.css* der Angular Anwendung geladen sein. Welche dies sind lässt sich aus den eingebetteten *.js* und *.css* Dateien aus der index.html entnehmen, die in jedem Release enthalten ist.
 Die beiden Input-Felder dienen dem Informationsaustausch zwischen SoSci und EHQ3.
 Die **Anfangskonfiguration** wird dabei in `<input  id="ehq3_conf"  type="hidden"  value="">` abgelegt.
 Die **Daten** (Zwischengespeicherte von SoSci), wie anschließende Nutzereingaben, befinden sich (stets synchronisiert) in `<input  id="ehq3_data"  type="hidden"  value="">`.
@@ -76,7 +80,7 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 		  		},
 		  		...
 		  		{
-			  		"id":-4,    
+			  		"id": 4,    
 		  			"color":"#9FDFBF",    
 		  			"amountCells":1    
 		  		},
@@ -93,22 +97,22 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 	    "instructions": {
 	      
 		    "homeInstruction": "<b>Home Instruction</b><br>Try Html here",
-		    "homeButton": "Continue",
+		    "homeButton": "Instruction button",
 	      
 		    "introductionInstruction": "<b>Second Instruction</b><br>Try Html here",
-		    "introductionButton": "Continue",
+		    "introductionButton": "Introduction button",
 	      
 		    "step1Instruction": "<b>Step 1 Instruction</b><br>Try Html here",
-		    "step1Button": "Continue",
+		    "step1Button": "Instruction button",
 	      
 		    "step2Instruction": "<b>Step 2 Instruction</b><br>Try Html here",
-		    "step2Button": "Continue",
+		    "step2Button": "Instruction button",
 	      
 		    "step3Instruction": "<b>Step 3 Instruction</b><br>Try Html here",
-		    "step3Button": "Continue",
+		    "step3Button": "Instruction button",
 	      
 		    "step4Instruction": "<b>Step 4 Instruction</b><br>Try Html here",
-		    "step4Button": "Continue"
+		    "step4Button": "Instruction button"
 	    },
 	      
 	    "statements": [
@@ -122,8 +126,11 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 	    "progressBar": {
 		    "startDecimal": 0.3,
 		    "endDecimal": 0.7
-	    }
+	    } | null
     }
+
+Seit v0.2.0:
+- *"progressBar": null* Deaktiviert die Progressbar
 
 ## Daten
 Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert werden.
@@ -147,6 +154,11 @@ Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert wer
 	    },
 	    
 	    "stage2":{
+			
+		  "agrees":[ {}, ... ],
+		  "neutrals":[ {}, ... ],
+		  "disagrees":[ {}, ... ],
+		
           "cols":[
              [ [{}], [{}], ],
              [ [{}], [{}], [{}] ],
@@ -160,6 +172,12 @@ Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert wer
           ],
           "timestamp":"2021-10-29T11:58:59.207Z"
        },
+
+	   "step3swap": [
+		   [[1,2], [4,3]],
+		   [[8,0], [8,1]],
+		   ...
+	   ],
        
        "stage3":{
           "agree":[ [{}, "Kommentar zu statement"], ... ],
@@ -170,6 +188,10 @@ Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert wer
     
  Dabei steht `{}` jeweils für ein (mögliches) Statement-Objekt, `{}, ...` für ein (mögliches) Statement-Objekt oder auch mehrere.
 Unter *stage2* -> *cols*: Jedes äußere Array (in dem ersten Array), steht jeweils für eine Spalte, mit der jeweiligen Anzahl an Zellen (z.B. 5). Diese Zellen jedoch sind auch wiederum ein Array, was jedoch i. d. R. nur ein Objekt enthalten soll. Jede Zelle ist hier jedoch ein Array, da aus technischer Sicht jeder Ablagestapel (was eine Zelle hier ist) als ein Array realisiert werden muss. Daher das drei dimensionale Array (obwohl eigentlich nur zwei dimensional benötigt).
+
+Seit v0.2.0:
+- *step3swap* enthält die Indizes der in Schritt 3 getauschten Statements
+- *stage2* enthält nun eine Kopie der in stage1 sortierten Statements, sodass stage1 bis zum Ende erhalten bleibt (Kopien werden gelöscht, wenn leer)
 
 ## Farben / Styles / CSS:
 Die Farbe von "Agree", "Neutral" und "Disagree" wird unterschiedlich festgelegt.
@@ -182,4 +204,20 @@ Die Farben der Statement Karten an sich wird jedoch über folgende CSS-Klassen g
 
 Diese Standardwerte sollten jedoch über ein eigenes CSS (eventuell `!important`benötigt) überschreibbar sein.
 Ein Statement erhält diese Klassen abhängig von seinem Typ (1=Agree, 2=Neutral, 3=Disagree).
+
+## Dateien
+Die Anwendung besteht aus folgenden Dateien (nach dem Kompilieren):
+- index.html
+- main.js
+- polyfills.js
+- runtime.js
+- scripts.js
+- styles.css
+
+Weniger relevante Dateien (nach dem Kompilieren):
+- favicon.ico
+- 3rdpartylicenses.txt
+
+Der Output erfolgt ohne Hashes in der Namensgebung, dazu folgendes Kommando verwenden:
+	ng build --prod --output-hashing none
 

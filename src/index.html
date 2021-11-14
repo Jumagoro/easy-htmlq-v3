@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="icon" type="image/x-icon" href="favicon.ico">
 </head>
-<body class="mat-typography">
+<body>
 
   <form>
     <div id="sosci-wrapper">
@@ -73,7 +73,8 @@
                   "amountCells":2
               }
             ],
-            "stage2TableName": "Sort the cards according to your experience with the iPads this semester"
+            "step2TableName": "<b>Sort the cards according to your experience with the iPads this semester2</b>",
+            "step3TableName": "<b>Sort the cards according to your experience with the iPads this semester3</b>"
           },
           "design":{
               "labelAgree": "Ja",
@@ -81,29 +82,29 @@
               "labelDisagree": "NO"
           },
           "instructions":{
-              "homeInstruction": "This is a demo project on iPad use in the classroom.<br><br><b>** Important Information **</b><br>For this survey you will need as much screen space as possible!<br><br>If necessary, please <b>MAXIMIZE</b> the size of your browser window, reload this web page, and click on the \\"Continue\\" button to start the survey.",
+              "homeInstruction": "<b>This</b> is a demo project on iPad use in the classroom.<br><br><b>** Important Information **</b><br>For this survey you will need as much screen space as possible!<br><br>If necessary, please <b>MAXIMIZE</b> the size of your browser window, reload this web page, and click on the \\"Continue\\" button to start the survey.",
               "homeButton": "Butt",
 
-              "introductionInstruction": "Second instr",
+              "introductionInstruction": "<b>Second instr</b>",
               "introductionButton": "Batt",
 
-              "step1Instruction": "Nun kommt Step 1",
+              "step1Instruction": "<b>Nun kommt Step 1</b>",
               "step1Button": "Step 1 starten",
 
-              "step2Instruction": "Nun kommt Step 2",
+              "step2Instruction": "<b>Nun kommt Step 2</b>",
               "step2Button": "Step 2 starten",
 
-              "step3Instruction": "Nun kommt Step 3",
+              "step3Instruction": "<b>Nun kommt Step 3</b>",
               "step3Button": "Step 3 starten",
 
-              "step4Instruction": "Nun kommt Step 4",
+              "step4Instruction": "<b>Nun kommt Step 4</b>",
               "step4Button": "Step 4 starten"
 
           },
           "statements":[
               {
                 "id":1,
-                "statement":"Statement 1 from config"
+                "statement":"Statement 1 from config langer teeeexxxxttttt"
               },
               {
                 "id":2,
@@ -114,9 +115,9 @@
                 "statement":"Statement 3 from config"
               }
           ],
-          "progressBar":{
-              "startDecimal": 0.3,
-              "endDecimal": 0.7
+          "progressBar": {
+            "startDecimal": 0,
+            "endDecimal": 0.7
           }
         }`;
         
@@ -127,7 +128,7 @@
     );
 
     document.getElementById('sosci-wrapper').addEventListener(
-      'ehq3_onComplete', function() {
+      'ehq3_complete', function() {
         //alert(document.getElementById('ehq3_data').value);
       }
     );

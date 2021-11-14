@@ -15,7 +15,7 @@ export class AppComponent {
 
   constructor(
     private exchangeService: ExchangeService,
-    private stepService: StepService
+    public stepService: StepService
   ) { }
 
   ngOnInit() {

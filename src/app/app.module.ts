@@ -9,7 +9,6 @@ import { Step3Component } from './_components/step3/step3.component';
 import { Step4Component } from './_components/step4/step4.component';
 import { ModalComponent } from './_components/modal/modal.component';
 import { HomeComponent } from './_components/home/home.component';
-import { IntroductionComponent } from './_components/introduction/introduction.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { FooterComponent } from './_components/footer/footer.component';
@@ -25,7 +24,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     Step4Component,
     ModalComponent,
     HomeComponent,
-    IntroductionComponent,
     FooterComponent,
     StatementComponent,
   ],

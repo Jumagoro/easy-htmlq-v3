@@ -1,10 +1,12 @@
-<app-modal *ngIf="modalLoaded" [modal]="step1Modal"></app-modal>
+<app-modal *ngIf="modalLoaded && stepService.getCurrentStep() == 0" [modal]="introductionModal"></app-modal>
+
+<app-modal *ngIf="modalLoaded && stepService.getCurrentStep() == 1" [modal]="step1Modal"></app-modal>
 
 <div class="container-fluid" cdkDropListGroup>
 
   <!-- First row containing the statements -->
   <div class="row justify-content-center">
-    <div id="statements" class="col-12 col-md-8 p-0" style="border: 1px solid blue;">
+    <div id="statements" class="col-12 col-md-8 p-0">
         <div
             cdkDropList
             [cdkDropListData]="statements"
@@ -19,7 +21,7 @@
   <!-- Second row containing disagree, neutral, agree-->
   <div class="row justify-content-center mt-4 bottom-statements-row" >
     <div class="col p-0">
-        <p class="text-center mb-1">{{ getLabelDisagree() }} #1</p>
+        <p class="text-center mb-1">{{ getLabelDisagree() }}</p>
         <div
             cdkDropList
             [cdkDropListData]="disagrees"
@@ -29,7 +31,7 @@
         </div>
     </div>
     <div class="col p-0">
-        <p class="text-center mb-1">{{ getLabelNeutral() }} #2</p>
+        <p class="text-center mb-1">{{ getLabelNeutral() }}</p>
         <div
             cdkDropList
             [cdkDropListData]="neutrals"
@@ -39,7 +41,7 @@
         </div>
     </div>
     <div class="col p-0">
-        <p class="text-center mb-1">{{ getLabelAgree() }} #3</p>
+        <p class="text-center mb-1">{{ getLabelAgree() }}</p>
         <div
             cdkDropList
             [cdkDropListData]="agrees"

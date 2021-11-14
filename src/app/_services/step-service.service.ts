@@ -49,7 +49,7 @@ export class StepService {
     }
       
     else if(this.getCurrentStep() == 0) {
-      this.router.navigate(['/introduction']);
+      this.router.navigate(['/step-1']);
     }
     
     else if(this.getCurrentStep() == 1) {

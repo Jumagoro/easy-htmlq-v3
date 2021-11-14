@@ -31,15 +31,18 @@ export class ExchangeService {
     if(!dataInput) {
       console.log('Missing data input!');
     } else {
-      let data = dataInput.getAttribute("value");
-      if(data) {
 
-        GlobalVars.DATA.next(JSON.parse(data));       
-       
-      }
-        
-      else
-        console.log('Missing data!');
+      let data = dataInput.getAttribute("value");
+
+      if(data) {
+        try { // Set data if input is valid json
+          GlobalVars.DATA.next(JSON.parse(data));
+        } catch (e) { // Set empty if not in json format
+          GlobalVars.DATA.next({});
+        }
+      }   
+      else  // Set empty if no data is given
+        GlobalVars.DATA.next({}); 
     }
   }
 
@@ -54,7 +57,7 @@ export class ExchangeService {
   onComplete() {
 
     let sosci = document.getElementById('sosci-wrapper');
-    sosci?.dispatchEvent(new Event('ehq3_onComplete'));
+    sosci?.dispatchEvent(new Event('ehq3_complete'));
   }
 
   // Updates the input value given by sosci

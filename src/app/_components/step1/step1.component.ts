@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
 import { StepService } from 'src/app/_services/step-service.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Statement, Type } from '../statement/statement';
@@ -12,7 +12,8 @@ import { FooterComponent } from '../footer/footer.component';
 @Component({
   selector: 'app-step1',
   templateUrl: './step1.component.html',
-  styleUrls: ['./step1.component.scss']
+  styleUrls: ['./step1.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class Step1Component implements OnInit {
 
@@ -24,6 +25,7 @@ export class Step1Component implements OnInit {
 
 
   step1Modal!: Modal;
+  introductionModal!: Modal;
   modalLoaded: boolean = false;
 
   statements: Statement[] = [];
@@ -39,7 +41,7 @@ export class Step1Component implements OnInit {
   // When /step-1 is accessed directly by url the stepService wouldn't know that
   ngOnInit(): void {
 
-    this.stepService.setCurrentStep(1);
+    this.stepService.setCurrentStep(0);
 
     // Initialise with data 
     GlobalVars.DATA.pipe(
@@ -82,6 +84,11 @@ export class Step1Component implements OnInit {
         this.step1Modal = {
           message: conf.instructions.step1Instruction,
           okButton: conf.instructions.step1Button
+        }
+
+        this.introductionModal = {
+          message: conf.instructions.introductionInstruction,
+          okButton: conf.instructions.introductionButton
         }
 
         // Hide modal until config is loaded (otherwise modal fires next and later loaded modal is skipped)

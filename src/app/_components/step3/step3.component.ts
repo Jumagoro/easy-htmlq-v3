@@ -1,5 +1,6 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { Console } from 'console';
 import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
@@ -11,7 +12,8 @@ import { Statement } from '../statement/statement';
 @Component({
   selector: 'app-step3',
   templateUrl: './step3.component.html',
-  styleUrls: ['./step3.component.scss']
+  styleUrls: ['./step3.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class Step3Component implements OnInit {
 
@@ -107,18 +109,22 @@ export class Step3Component implements OnInit {
         0,
         0);
 
+      this.storeSwap(event.previousContainer.data, event.container.data);
+
     } // Different container
     else {
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
+      this.storeSwap(event.previousContainer.data, event.container.data);
     }
     this.storeProgress();
   }
 
 
-  storeProgress() {
+  // Saves the stage2 state into data
+  private storeProgress() {
     // Load current storage to append the changed array
     let currentStorage = this.exchangeService.get('stage2');
 
@@ -133,6 +139,41 @@ export class Step3Component implements OnInit {
 
     // Write the storage object into the storage
     this.exchangeService.set('stage2', currentStorage);
+  }
+
+
+  // Saves the indizes of the swapped elements in step3swap
+  private storeSwap(previousContainer: Statement[], newContainer: Statement[]) {
+
+    let indexPrevCon: number[] = [];
+    let indexNewCon: number[] = [];
+
+    // Get col/row index of both containers
+    for(let x = 0; x < this.cols.length; x++) {
+      for(let y = 0; y < this.cols[x].length; y++) {
+
+        // Is current container the previous one?
+        if(this.cols[x][y] == previousContainer)
+          indexPrevCon = [x, y];
+
+        // Is current container the new one?
+        else if(this.cols[x][y] == newContainer)
+          indexNewCon = [x, y];
+      }
+    }
+
+    // Load current storage to append the changed array
+    let currentStorage = this.exchangeService.get('step3swap') as number[][][];
+
+    // If nothing is in the storage, create an empty object
+    if(!currentStorage)
+      currentStorage = [];
+
+    currentStorage.push([indexPrevCon, indexNewCon]);
+
+    // Write the storage object into the storage
+    this.exchangeService.set('step3swap', currentStorage);
+
   }
 
   counter(i: number) {
@@ -159,8 +200,8 @@ export class Step3Component implements OnInit {
 
   // Reads the label / title for the table from the config
   getTableLabel() {
-    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.stage2TableName)
-      return GlobalVars.CONF.getValue().structure.stage2TableName;
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.step3TableName)
+      return GlobalVars.CONF.getValue().structure.step3TableName;
     else
       return 'Sort the cards according to your valuation'
   }

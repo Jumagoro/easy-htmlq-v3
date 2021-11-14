@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
@@ -11,7 +11,8 @@ import { Statement } from '../statement/statement';
 @Component({
   selector: 'app-step4',
   templateUrl: './step4.component.html',
-  styleUrls: ['./step4.component.scss']
+  styleUrls: ['./step4.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
 export class Step4Component implements OnInit {
 

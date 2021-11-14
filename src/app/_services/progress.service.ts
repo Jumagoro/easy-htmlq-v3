@@ -13,6 +13,7 @@ export class ProgressService {
 
   public startDecimal: number = 0;  // start of the progress bar  (0.1-1)
   public endDecimal: number = 1;  // end percent of the progressbar (0-0.9)
+  public progressBarEnabled: boolean = true;
 
   constructor(
     private exchangeService: ExchangeService
@@ -25,8 +26,13 @@ export class ProgressService {
         if((Object.keys(conf).length === 0))
           return;
            
+        if(conf.progressBar == null)
+          this.progressBarEnabled = false;
+        else {
+          this.progressBarEnabled = true;
           this.startDecimal = conf.progressBar.startDecimal;
           this.endDecimal = conf.progressBar.endDecimal;
+        }
       }
     );
 
@@ -67,5 +73,10 @@ export class ProgressService {
 
   public getTotalProgress(): number {
     return this.startDecimal + this.progress.getValue() * (this.endDecimal - this.startDecimal);
+  }
+
+
+  public get getProgressBarEnabled() {
+    return this.progressBarEnabled;
   }
 }
