@@ -33,6 +33,7 @@ Um mit dem Sosci-Wrapper zu kommunizieren werden **Javascript-Events** verwendet
 |1|ehq3_init|EHQ3|Signalisiert SoSci, dass EHQ3 bereit für die Daten-/Konfigurationsaufnahme ist|
 |2|ehq3_input_set|SoSci|Signalisiert EHQ3, dass die Daten in den Inputs liegen (siehe Abschnitt "*Aufbau*")|
 |3|ehq3_complete|EHQ3|Signalisiert SoSci, dass der Interviewer den letzten Schritt abgeschlossen hat und die Daten abgerufen werden können|
+
 Seit v0.2.0:
 - *ehq3_complete* statt *ehq3_onComplete*
 
