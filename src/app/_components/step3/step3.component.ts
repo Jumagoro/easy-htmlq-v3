@@ -91,10 +91,17 @@ export class Step3Component implements OnInit {
   drop(event: CdkDragDrop<Statement[]>) {
     if (event.previousContainer === event.container) {  // Same Container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } // Abort if there's already a statement in the cell
+    } // Swap if there is another statement in the container
     else if(event.container.data.length > 0) {
 
       let otherStatement = event.container.data[0];
+
+      this.storeSwap(
+        event.previousContainer.data[0].id,
+        otherStatement.id,
+        event.previousContainer.data,
+        event.container.data);
+
       delete event.container.data[0];
 
       // Put drag statement into new container
@@ -109,15 +116,21 @@ export class Step3Component implements OnInit {
         0,
         0);
 
-      this.storeSwap(event.previousContainer.data, event.container.data);
-
-    } // Different container
+    } // Empty, different container
     else {
+      console.log('Single')
+
+      this.storeSwap(
+        event.previousContainer.data[0].id,
+        -1,
+        event.previousContainer.data,
+        event.container.data);
+
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
                         event.currentIndex);
-      this.storeSwap(event.previousContainer.data, event.container.data);
+      
     }
     this.storeProgress();
   }
@@ -143,10 +156,11 @@ export class Step3Component implements OnInit {
 
 
   // Saves the indizes of the swapped elements in step3swap
-  private storeSwap(previousContainer: Statement[], newContainer: Statement[]) {
+  private storeSwap(idMovedStatement: number, idPassiveStatement: number,
+                    previousContainer: Statement[], newContainer: Statement[]) {
 
-    let indexPrevCon: number[] = [];
-    let indexNewCon: number[] = [];
+    let indexPrevCol: number = -1;
+    let indexNewCol: number = -1;
 
     // Get col/row index of both containers
     for(let x = 0; x < this.cols.length; x++) {
@@ -154,22 +168,26 @@ export class Step3Component implements OnInit {
 
         // Is current container the previous one?
         if(this.cols[x][y] == previousContainer)
-          indexPrevCon = [x, y];
+          indexPrevCol = x;
 
         // Is current container the new one?
         else if(this.cols[x][y] == newContainer)
-          indexNewCon = [x, y];
+          indexNewCol = x;
       }
     }
 
     // Load current storage to append the changed array
-    let currentStorage = this.exchangeService.get('step3swap') as number[][][];
+    let currentStorage = this.exchangeService.get('step3swap') as any[];
 
     // If nothing is in the storage, create an empty object
     if(!currentStorage)
       currentStorage = [];
 
-    currentStorage.push([indexPrevCon, indexNewCon]);
+    currentStorage.push({
+      s1: idMovedStatement,
+      s0: idPassiveStatement,
+      c1: indexNewCol,
+      c0: indexPrevCol });
 
     // Write the storage object into the storage
     this.exchangeService.set('step3swap', currentStorage);

@@ -186,8 +186,12 @@ Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert wer
        },
 
 	   "step3swap": [
-		   [[1,2], [4,3]],
-		   [[8,0], [8,1]],
+		   {
+			   "s1": idMovedStatement,
+			   "s0": idPassiveStatement,
+			   "c1": idNewColumnOfMoved,
+			   "c0": idOldColumnOfMoved
+		   },
 		   ...
 	   ],
        

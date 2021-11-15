@@ -174,7 +174,7 @@ export class Step2Component implements OnInit {
   drop(event: CdkDragDrop<Statement[]>) {
     if (event.previousContainer === event.container) {  // Same Container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } // Abort if there's already a statement in the cell
+    } // Swap if there is already a statement in the target container
     else if(event.container.data.length > 0) {
 
       let otherStatement = event.container.data[0];
