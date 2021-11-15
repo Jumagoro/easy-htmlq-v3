@@ -41,4 +41,20 @@ export class FooterComponent implements OnInit {
   public get getContinueEnabled() {
     return FooterComponent.continueEnabled;
   }
+
+  // Reads the label / title for the continue button from the config
+  getContinueLabel() {
+    if(GlobalVars.CONF.getValue().footer && GlobalVars.CONF.getValue().footer.continueButtonText)
+      return GlobalVars.CONF.getValue().footer.continueButtonText;
+    else
+      return 'Continue'
+  }
+
+  // Reads the label / title for the continue button from the config
+  getHelpMeLabel() {
+    if(GlobalVars.CONF.getValue().footer && GlobalVars.CONF.getValue().footer.helpMeButtonText)
+      return GlobalVars.CONF.getValue().footer.helpMeButtonText;
+    else
+      return 'Help me'
+  }
 }

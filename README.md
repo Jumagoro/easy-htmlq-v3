@@ -33,6 +33,7 @@ Um mit dem Sosci-Wrapper zu kommunizieren werden **Javascript-Events** verwendet
 |1|ehq3_init|EHQ3|Signalisiert SoSci, dass EHQ3 bereit für die Daten-/Konfigurationsaufnahme ist|
 |2|ehq3_input_set|SoSci|Signalisiert EHQ3, dass die Daten in den Inputs liegen (siehe Abschnitt "*Aufbau*")|
 |3|ehq3_complete|EHQ3|Signalisiert SoSci, dass der Interviewer den letzten Schritt abgeschlossen hat und die Daten abgerufen werden können|
+|4|ehq3_progress|EHQ3|Informiert SoSci über den Fortschritt (progress). Wert zwischen 0-1, entsprechend startDecimal und endDecimal aus Konfiguration|
 
 Seit v0.2.0:
 - *ehq3_complete* statt *ehq3_onComplete*
@@ -85,8 +86,9 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 		  			"color":"#9FDFBF",    
 		  			"amountCells":1    
 		  		},
-		  	],      
-		    "stage2TableName": "Titel über Schritt 2 / 3 Tabelle"
+		  	],
+			"step2TableName": "<b>Sort the cards according to your experience with the iPads this semester2</b>",
+            "step3TableName": "<b>Sort the cards according to your experience with the iPads this semester3</b>"
 		},
 	      
 	    "design": {
@@ -126,12 +128,21 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 	      
 	    "progressBar": {
 		    "startDecimal": 0.3,
-		    "endDecimal": 0.7
-	    } | null
+		    "endDecimal": 0.7,
+			"useEHQ3ProgressBar": false
+	    },
+
+		"footer": {
+			"helpMeButtonText": "Help me",
+			"continueButtonText": "Continue"
+		}
     }
 
 Seit v0.2.0:
 - *"progressBar": null* Deaktiviert die Progressbar
+
+Seit v0.3.0:
+- *"progressBar": {"useEHQ3ProgressBar": false}*: Ersetzt null zum deaktivieren
 
 ## Daten
 Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert werden.

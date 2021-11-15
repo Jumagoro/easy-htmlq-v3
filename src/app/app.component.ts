@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from './_config/global';
 import { ExchangeService } from './_services/exchange.service';
@@ -15,7 +16,8 @@ export class AppComponent {
 
   constructor(
     private exchangeService: ExchangeService,
-    public stepService: StepService
+    public stepService: StepService,
+    public router: Router
   ) { }
 
   ngOnInit() {

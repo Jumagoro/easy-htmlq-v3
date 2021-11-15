@@ -19,6 +19,9 @@
   </form> 
   
   <script>
+    document.getElementById('sosci-wrapper').addEventListener('ehq3_progress', function(e) {
+      alert(e.detail.progress);
+    });
     document.getElementById('sosci-wrapper').addEventListener(
       'ehq3_init', function() {
         document.getElementById('ehq3_conf').value =
@@ -117,7 +120,12 @@
           ],
           "progressBar": {
             "startDecimal": 0,
-            "endDecimal": 0.7
+            "endDecimal": 0.7,
+            "useEHQ3ProgressBar": false
+          },
+          "footer": {
+            "helpMeButtonText": "Help me",
+            "continueButtonText": "Continue"
           }
         }`;
         

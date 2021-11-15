@@ -1,4 +1,4 @@
-<div id="content-wrap" style="padding-bottom: 100px;">
+<div id="content-wrap">
     <router-outlet></router-outlet>
-    <app-footer [hidden]="stepService.getCurrentStep() == -1"></app-footer>
+    <app-footer [hidden]="router.url === '/home'" class="ehq3_footer"></app-footer>
 </div>

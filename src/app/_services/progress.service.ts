@@ -26,7 +26,7 @@ export class ProgressService {
         if((Object.keys(conf).length === 0))
           return;
            
-        if(conf.progressBar == null)
+        if(conf.progressBar && conf.progressBar.useEHQ3ProgressBar == false)
           this.progressBarEnabled = false;
         else {
           this.progressBarEnabled = true;
@@ -69,10 +69,24 @@ export class ProgressService {
 
     // Write the storage object into the storage
     this.exchangeService.set('progress', currentStorage);
+
+    this.dispatchSosciProgressEvent();
   }
 
   public getTotalProgress(): number {
     return this.startDecimal + this.progress.getValue() * (this.endDecimal - this.startDecimal);
+  }
+
+
+  // Informs sosci about new progress being made
+  public dispatchSosciProgressEvent() {
+
+    document.getElementById('sosci-wrapper')?.dispatchEvent(new CustomEvent('ehq3_progress', {
+      'detail': {
+        progress: this.startDecimal + this.progress.getValue() * (this.endDecimal - this.startDecimal),
+      }
+    }));
+    
   }
 
 

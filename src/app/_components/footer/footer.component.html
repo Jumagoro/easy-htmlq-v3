@@ -3,7 +3,7 @@
     <div class="row justify-content-around">
 
         <div class="col-4 col-md-3 px-0 text-center">
-            <button class="btn" type="button" (click)="onHelpMe()">Help me</button>
+            <button class="btn" type="button" (click)="onHelpMe()">{{ getHelpMeLabel() }}</button>
         </div>
 
         <!--<div class="col-3 text-center">
@@ -24,8 +24,8 @@
         </div>
 
         <div class="col-4 col-md-3 px-0 text-center">
-            <button *ngIf="getContinueEnabled" type="button" class="btn btn-primary rounded-pill fs-6 fw-bold" (click)="onContinue()">Continue</button>
-            <button *ngIf="!getContinueEnabled" type="button" class="btn rounded-pill fs-6 fw-bold disabled" style="background-color: #bebebe;">Continue</button>
+            <button *ngIf="getContinueEnabled" type="button" class="btn btn-primary rounded-pill fs-6 fw-bold" (click)="onContinue()">{{ getContinueLabel() }}</button>
+            <button *ngIf="!getContinueEnabled" type="button" class="btn rounded-pill fs-6 fw-bold disabled" style="background-color: #bebebe;">{{ getContinueLabel() }}</button>
         </div>
 
     </div>
