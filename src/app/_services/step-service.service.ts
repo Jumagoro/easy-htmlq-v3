@@ -18,49 +18,45 @@ export class StepService {
       4   = Step 4
       5   = Step 5
   */
-  private static currentStep: number = -1;
+  private static furthestStep: number = 0;
 
   private static stepMax: number = 5; // Last step
   
-  public getCurrentStep(): number {
-    return StepService.currentStep;
+  public getFurthestStep(): number {
+    return StepService.furthestStep;
   }
 
-  public setCurrentStep(step: number): void {
-    StepService.currentStep = Math.min(step, StepService.stepMax);
-    this.setStepInData(this.getCurrentStep());
+  public setFurthestStep(step: number): void {
+    StepService.furthestStep = Math.min(Math.max(step, StepService.furthestStep), StepService.stepMax);
+    this.setStepInData(this.getFurthestStep());
   }
 
   // Increments the step counter by one and routes to the next component
   public nextStep(): void {
 
     // Sets the current step
-    this.setCurrentStep(this.getCurrentStep() + 1);
+    this.setFurthestStep(this.getFurthestStep() + 1);
 
-    this.navigateToCurrentStep();
+    this.navigateToFurthestStep();
       
   }
 
   // Navigates based on the current step
-  public navigateToCurrentStep() {
+  public navigateToFurthestStep() {
 
-    if(this.getCurrentStep() == -1) {
+    if(this.getFurthestStep() == 0) {
       this.router.navigate(['/home']);
     }
-      
-    else if(this.getCurrentStep() == 0) {
-      this.router.navigate(['/step-1']);
-    }
     
-    else if(this.getCurrentStep() == 1) {
+    else if(this.getFurthestStep() == 1) {
       this.router.navigate(['/step-1']);
     }
       
-    else if(this.getCurrentStep() == 2) {
+    else if(this.getFurthestStep() == 2) {
       this.router.navigate(['/step-2']);
     }
 
-    else if(this.getCurrentStep() == 3) {
+    else if(this.getFurthestStep() == 3) {
       if(GlobalVars.CONF.getValue().structure.disableStep3 === true)
         this.nextStep();
       else {
@@ -68,7 +64,7 @@ export class StepService {
       }
     }
       
-    else if(this.getCurrentStep() == 4) {
+    else if(this.getFurthestStep() == 4) {
       if(GlobalVars.CONF.getValue().structure.disableStep4 === true)
         this.nextStep();
       else {
@@ -77,7 +73,7 @@ export class StepService {
         
     }
 
-    else if(this.getCurrentStep() == 5) {
+    else if(this.getFurthestStep() == 5) {
       this.exchangeService.onComplete();
     }
   }
@@ -88,7 +84,7 @@ export class StepService {
     private exchangeService: ExchangeService
   ) { }
 
-  public setStepInData(step: number) {
+  private setStepInData(step: number) {
   
     // STORE PROGRESS IN
     // Load current storage to append the changed array
@@ -98,7 +94,7 @@ export class StepService {
     if(!currentStorage)
       currentStorage = {};
 
-    currentStorage.currentStep = step;
+    currentStorage.furthestStep = step;
 
     // Write the storage object into the storage
     this.exchangeService.set('progress', currentStorage);

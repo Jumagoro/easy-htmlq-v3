@@ -41,7 +41,7 @@ export class Step1Component implements OnInit {
   // When /step-1 is accessed directly by url the stepService wouldn't know that
   ngOnInit(): void {
 
-    this.stepService.setCurrentStep(0);
+    this.stepService.setFurthestStep(0);
 
     // Initialise with data 
     GlobalVars.DATA.pipe(

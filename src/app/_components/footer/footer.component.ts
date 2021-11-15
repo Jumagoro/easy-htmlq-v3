@@ -1,5 +1,4 @@
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ModalService } from 'src/app/_services/modal-service.service';
 import { ProgressService } from 'src/app/_services/progress.service';

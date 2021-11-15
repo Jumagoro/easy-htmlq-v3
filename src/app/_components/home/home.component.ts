@@ -22,7 +22,7 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    this.stepService.setCurrentStep(-1);
+    this.stepService.setFurthestStep(0);
 
     GlobalVars.CONF.pipe(
       takeWhile( (conf:any) => ((Object.keys(conf).length === 0)), true)

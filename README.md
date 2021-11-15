@@ -151,7 +151,7 @@ Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert wer
 
     {
 	    "progress": {
-		    "currentStep": 3,
+		    "furthestStep": 3,
 	        "progress": 1
 	    },
 	    

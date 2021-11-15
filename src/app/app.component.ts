@@ -32,12 +32,12 @@ export class AppComponent {
           return;
           
         // Send user to certain step if given in the data
-        if(GlobalVars.DATA.getValue().progress && GlobalVars.DATA.getValue().progress.currentStep) {
+        if(GlobalVars.DATA.getValue().progress && GlobalVars.DATA.getValue().progress.furthestStep) {
           
-          let currentStep = GlobalVars.DATA.getValue().progress.currentStep;
+          let furthestStep = GlobalVars.DATA.getValue().progress.furthestStep;
 
-          this.stepService.setCurrentStep(currentStep);
-          this.stepService.navigateToCurrentStep();
+          this.stepService.setFurthestStep(furthestStep);
+          this.stepService.navigateToFurthestStep();
         } 
       }
     );
