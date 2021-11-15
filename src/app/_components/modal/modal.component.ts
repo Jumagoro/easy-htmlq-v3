@@ -28,7 +28,7 @@ export class ModalComponent implements OnInit {
   }
 
   ok(): void {
-    if(this.stepService.getCurrentStep() < 1) // On step == -1 or step == 0 the navigator should lead to the next page
+    if(this.stepService.getFurthestStep() < 1) // On step == -1 and 0 the navigator should lead to the next step
       this.stepService.nextStep();
 
     this.modalService.setVisible(false);

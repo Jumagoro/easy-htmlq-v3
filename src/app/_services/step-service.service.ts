@@ -18,7 +18,7 @@ export class StepService {
       4   = Step 4
       5   = Step 5
   */
-  private static furthestStep: number = 0;
+  private static furthestStep: number = -1;
 
   private static stepMax: number = 5; // Last step
   
@@ -34,6 +34,12 @@ export class StepService {
   // Increments the step counter by one and routes to the next component
   public nextStep(): void {
 
+    // Jump to current page if not in sync
+    if(!this.isStepAndURLSync()) {
+      this.navigateToFurthestStep();
+      return;
+    }
+
     // Sets the current step
     this.setFurthestStep(this.getFurthestStep() + 1);
 
@@ -44,10 +50,14 @@ export class StepService {
   // Navigates based on the current step
   public navigateToFurthestStep() {
 
-    if(this.getFurthestStep() == 0) {
+    if(this.getFurthestStep() == -1) {
       this.router.navigate(['/home']);
     }
     
+    else if(this.getFurthestStep() == 0) {
+      this.router.navigate(['/step-1']);
+    }
+
     else if(this.getFurthestStep() == 1) {
       this.router.navigate(['/step-1']);
     }
@@ -98,5 +108,21 @@ export class StepService {
 
     // Write the storage object into the storage
     this.exchangeService.set('progress', currentStorage);
+  }
+
+  // Checks if the browser path and furthestStep is in sync
+  private isStepAndURLSync(): boolean {
+
+    if( this.getFurthestStep() == -1 && this.router.url === '/home'
+        || this.getFurthestStep() == 0 && this.router.url === '/step-1'
+        || this.getFurthestStep() == 1 && this.router.url === '/step-1'
+        || this.getFurthestStep() == 2 && this.router.url === '/step-2'
+        || this.getFurthestStep() == 3 && this.router.url === '/step-3'
+        || this.getFurthestStep() == 4 && this.router.url === '/step-4'
+        || this.getFurthestStep() == 5 && this.router.url === '/step-5')
+        return true;
+
+    return false;
+
   }
 }

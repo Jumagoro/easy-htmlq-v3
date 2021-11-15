@@ -71,11 +71,12 @@ export class Step2Component implements OnInit {
         if((Object.keys(data).length === 0))
           return;
            
-        // Load remaining statements from stage1
-        this.checkStage1Storage();
-
-        // Load already sorted statements from stage2
-        this.checkStage2Storage();
+        // Load state from stage2, if no data yet, import statements from stage1
+        if(!this.checkStage2Storage()) {
+          this.checkStage1Storage();
+        }
+        
+        this.storeProgress();
       }
     );
 
@@ -145,6 +146,22 @@ export class Step2Component implements OnInit {
     // Load the storage if not empty
     if(currentStorage.cols)
       this.cols = currentStorage.cols;
+
+    // Load unsorted statements stored in stage2 agrees, neutrals, ...
+    if(currentStorage.agrees) {
+      this.agrees = [];
+      currentStorage.agrees.forEach( (val:any) => this.agrees.push(Object.assign({}, val)));
+    }
+
+    if(currentStorage.neutrals) {
+      this.neutrals = [];
+      currentStorage.neutrals.forEach( (val:any) => this.neutrals.push(Object.assign({}, val)));
+    }
+
+    if(currentStorage.disagrees) {
+      this.disagrees = [];
+      currentStorage.disagrees.forEach( (val:any) => this.disagrees.push(Object.assign({}, val)));
+    }
 
     // Check if next step should be available
     if(this.agrees.length <= 0 && this.neutrals.length <= 0 && this.disagrees.length <= 0)
