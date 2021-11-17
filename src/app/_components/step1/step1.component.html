@@ -2,7 +2,7 @@
 
 <app-modal *ngIf="modalLoaded && stepService.getFurthestStep() == 1" [modal]="step1Modal"></app-modal>
 
-<div class="container-fluid" style="max-width: 1800px;">
+<div class="container-fluid" cdkDropListGroup style="max-width: 1800px;">
 
   <!-- First row containing the statements -->
   <div class="row justify-content-center">
