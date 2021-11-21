@@ -26,7 +26,7 @@ export class ProgressService {
         if((Object.keys(conf).length === 0))
           return;
            
-        if(conf.progressBar && conf.progressBar.useEHQ3ProgressBar == false)
+        if(conf.progressBar && conf.progressBar.display == false)
           this.progressBarEnabled = false;
         else {
           this.progressBarEnabled = true;

@@ -26,110 +26,202 @@
       'ehq3_init', function() {
         document.getElementById('ehq3_conf').value =
         `{
-          "structure":{
-            "disableStep3": false,
-            "disableStep4": false,
-            "step2Columns":[
-              {
-                  "id":-4,
-                  "color":"#FFD5D5",
-                  "amountCells":1
-              },
-              {
-                  "id":-3,
-                  "color":"#FFD5D5",
-                  "amountCells":3
-              },
-              {
-                  "id":-2,
-                  "color":"#FFD5D5",
-                  "amountCells":4
-              },
-              {
-                  "id":-1,
-                  "color":"#FFD5D5",
-                  "amountCells":5
-              },
-              {
-                  "id":0,
-                  "color":"#E9E9E9",
-                  "amountCells":5
-              },
-              {
-                  "id":1,
-                  "color":"#9FDFBF",
-                  "amountCells":5
-              },
-              {
-                  "id":2,
-                  "color":"#9FDFBF",
-                  "amountCells":4
-              },
-              {
-                  "id":3,
-                  "color":"#9FDFBF",
-                  "amountCells":3
-              },
-              {
-                  "id":4,
-                  "color":"#9FDFBF",
-                  "amountCells":2
-              }
-            ],
-            "step2TableName": "<b>Sort the cards according to your experience with the iPads this semester2</b>",
-            "step3TableName": "<b>Sort the cards according to your experience with the iPads this semester3</b>"
-          },
-          "design":{
-              "labelAgree": "Ja",
-              "labelNeutral": "OKE",
-              "labelDisagree": "NO"
-          },
-          "instructions":{
-              "homeInstruction": "<b>This</b> is a demo project on iPad use in the classroom.<br><br><b>** Important Information **</b><br>For this survey you will need as much screen space as possible!<br><br>If necessary, please <b>MAXIMIZE</b> the size of your browser window, reload this web page, and click on the \\"Continue\\" button to start the survey.",
-              "homeButton": "Butt",
-
-              "introductionInstruction": "<b>Second instr</b>",
-              "introductionButton": "Batt",
-
-              "step1Instruction": "<b>Nun kommt Step 1</b>",
-              "step1Button": "Step 1 starten",
-
-              "step2Instruction": "<b>Nun kommt Step 2</b>",
-              "step2Button": "Step 2 starten",
-
-              "step3Instruction": "<b>Nun kommt Step 3</b>",
-              "step3Button": "Step 3 starten",
-
-              "step4Instruction": "<b>Nun kommt Step 4</b>",
-              "step4Button": "Step 4 starten"
-
-          },
-          "statements":[
-              {
-                "id":1,
-                "statement":"Statement 1 from config langer teeeexxxxttttt"
-              },
-              {
-                "id":2,
-                "statement":"Statement 2 from config"
-              },
-              {
-                "id":3,
-                "statement":"Statement 3 from config"
-              }
-          ],
-          "progressBar": {
-            "startDecimal": 0,
-            "endDecimal": 0.7,
-            "useEHQ3ProgressBar": false
-          },
-          "footer": {
-            "helpMeButtonText": "Help me",
-            "continueButtonText": "Continue"
-          }
-        }`;
+   "structure":{
+      "disableStep3":true,
+      "disableStep4":false,
+      "step2Columns":[
+         {
+            "id":-1,
+            "color":"f6bf76",
+            "amountCells":"2"
+         },
+         {
+            "id":0,
+            "color":"ccc9fc",
+            "amountCells":"3"
+         },
+         {
+            "id":1,
+            "color":"4ffe46",
+            "amountCells":"2"
+         }
+      ],
+      "step2TableName":"",
+      "step3TableName":""
+   },
+   "design":{
+      "labelAgree":"Stimme zu",
+      "labelNeutral":"so mittel",
+      "labelDisagree":"Lehne ab"
+   },
+   "instructions":{
+      "homeInstruction":"<p>Q-Sort-Aufgabe</p><p>Hier sehen Sie eine Aufgabe, die im folgenden genauer erkl\u00e4rt wird.</p>",
+      "homeButton":"Weiter",
+      "introductionInstruction":"<p>Wie es funktioniert?</p><p>Schieben Sie die K\u00e4rtchen auf die drei Stapel unten.</p>",
+      "introductionButton":"Weiter",
+      "step1Instruction":"<p>Schritt 1 of 4</p><p>            Read the folowing statements carefully and split them up into three piles: a pile for statements you tend to disagree with, a pile for cards you tend to agree with, and a pile for the rest.{br}{br}You can either drag the cards into one of the three piles or {b}press 1, 2, 3{/b} on your keyboard. Changes can be made later.{br}{br}If you want to read this instruction a second time, press the help-button at the bottom left corner.</p>",
+      "step1Button":"Weiter",
+      "step2Instruction":"<p>Schritt 1 of 4</p><p>            Read the folowing statements carefully and split them up into three piles: a pile for statements you tend to disagree with, a pile for cards you tend to agree with, and a pile for the rest.{br}{br}You can either drag the cards into one of the three piles or {b}press 1, 2, 3{/b} on your keyboard. Changes can be made later.{br}{br}If you want to read this instruction a second time, press the help-button at the bottom left corner.</p>",
+      "step2Button":"Weiter",
+      "step3Instruction":"<p>Schritt 1 of 4</p><p>            Read the folowing statements carefully and split them up into three piles: a pile for statements you tend to disagree with, a pile for cards you tend to agree with, and a pile for the rest.{br}{br}You can either drag the cards into one of the three piles or {b}press 1, 2, 3{/b} on your keyboard. Changes can be made later.{br}{br}If you want to read this instruction a second time, press the help-button at the bottom left corner.</p>",
+      "step3Button":"Weiter",
+      "step4Instruction":"<p>Schritt 1 of 4</p><p>            Read the folowing statements carefully and split them up into three piles: a pile for statements you tend to disagree with, a pile for cards you tend to agree with, and a pile for the rest.{br}{br}You can either drag the cards into one of the three piles or {b}press 1, 2, 3{/b} on your keyboard. Changes can be made later.{br}{br}If you want to read this instruction a second time, press the help-button at the bottom left corner.</p>",
+      "step4Button":"Weiter"
+   },
+   "statements":[
+      {
+         "id":1,
+         "statement":"Ich finde Regen toll!"
+      },
+      {
+         "id":2,
+         "statement":"Quantenphysik is etwas f\u00fcr einfache Gem\u00fcter."
+      },
+      {
+         "id":3,
+         "statement":"Kinder k\u00f6nnen ganz sch\u00f6n l\u00e4stig sein."
+      },
+      {
+         "id":4,
+         "statement":"Die Uhr ist mein st\u00e4ndiger Begleiter."
+      },
+      {
+         "id":5,
+         "statement":"Ohne Blumen gibt es keinen Fr\u00fchling."
+      },
+      {
+         "id":6,
+         "statement":"Das Lore ist des Ipsum\u2019s n\u00e4chster Verwandter."
+      },
+      {
+         "id":7,
+         "statement":"Html-Tags wie <b>bold</b> und <i>italic</i> verursachen potenziell \u00c4rger."
+      }
+   ],
+   "progressBar":{
+      "startDecimal":0,
+      "endDecimal":1,
+      "useEHQ3ProgressBar":false
+   },
+   "footer":{
+      "helpMeButtonText":"empty to disable",
+      "continueButtonText":"Continue"
+   }
+}`;
         
-        document.getElementById('ehq3_data').value = '{}';
+        document.getElementById('ehq3_data').value = `
+   "progress":{
+      "furthestStep":3,
+      "progress":0.6666666666666666
+   },
+   "stage1":{
+      "statements":[
+         
+      ],
+      "agrees":[
+         {
+            "id":4,
+            "statement":"Die Uhr ist mein ständiger Begleiter.",
+            "type":1
+         },
+         {
+            "id":3,
+            "statement":"Kinder können ganz schön lästig sein.",
+            "type":1
+         },
+         {
+            "id":2,
+            "statement":"Quantenphysik is etwas für einfache Gemüter.",
+            "type":1
+         }
+      ],
+      "neutrals":[
+         {
+            "id":6,
+            "statement":"Das Lore ist des Ipsum\'s nächster Verwandter.",
+            "type":2
+         },
+         {
+            "id":5,
+            "statement":"Ohne Blumen gibt es keinen Frühling.",
+            "type":2
+         },
+         {
+            "id":1,
+            "statement":"Ich finde Regen toll!",
+            "type":2
+         }
+      ],
+      "disagrees":[
+         {
+            "id":7,
+            "statement":"Html-Tags wie <b>bold</b> und <i>italic</i> verursachen potenziell Ärger.",
+            "type":3
+         }
+      ],
+      "timestamp":"2021-11-21T06:28:10.994Z"
+   },
+   "stage2":{
+      "cols":[
+         [
+            [
+               {
+                  "id":7,
+                  "statement":"Html-Tags wie <b>bold</b> und <i>italic</i> verursachen potenziell Ärger.",
+                  "type":3
+               }
+            ],
+            [
+               {
+                  "id":6,
+                  "statement":"Das Lore ist des Ipsum\'s nächster Verwandter.",
+                  "type":2
+               }
+            ]
+         ],
+         [
+            [
+               {
+                  "id":1,
+                  "statement":"Ich finde Regen toll!",
+                  "type":2
+               }
+            ],
+            [
+               {
+                  "id":5,
+                  "statement":"Ohne Blumen gibt es keinen Frühling.",
+                  "type":2
+               }
+            ],
+            [
+               {
+                  "id":2,
+                  "statement":"Quantenphysik is etwas für einfache Gemüter.",
+                  "type":1
+               }
+            ]
+         ],
+         [
+            [
+               {
+                  "id":4,
+                  "statement":"Die Uhr ist mein ständiger Begleiter.",
+                  "type":1
+               }
+            ],
+            [
+               {
+                  "id":3,
+                  "statement":"Kinder können ganz schön lästig sein.",
+                  "type":1
+               }
+            ]
+         ]
+      ],
+      "timestamp":"2021-11-21T06:34:26.913Z"
+   }
+}`;
         document.getElementById('sosci-wrapper').dispatchEvent(new Event("ehq3_input_set"));
       //}, 5000);
       }

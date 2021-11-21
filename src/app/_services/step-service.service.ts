@@ -34,8 +34,11 @@ export class StepService {
   // Increments the step counter by one and routes to the next component
   public nextStep(): void {
 
-    // Jump to current page if not in sync
-    if(!this.isStepAndURLSync()) {
+    // Jump to current page if not in sync and furthest step not disabled
+    if(!this.isStepAndURLSync() && 
+       !(this.getFurthestStep() == 3 && GlobalVars.CONF.getValue().structure.disableStep3) && // Don't jump if target jump is disabled
+       !(this.getFurthestStep() == 4 && GlobalVars.CONF.getValue().structure.disableStep4)    // Otherwise infinite recursion
+    ) {
       this.navigateToFurthestStep();
       return;
     }

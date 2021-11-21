@@ -56,4 +56,12 @@ export class FooterComponent implements OnInit {
     else
       return 'Help me'
   }
+
+  // Disable helpMeButton if given text is empty
+  isHelpMeEnabled() {
+    if(GlobalVars.CONF.getValue().footer && GlobalVars.CONF.getValue().footer.helpMeButtonText === '')
+      return false;
+    else
+      return true;
+  }
 }

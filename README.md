@@ -129,7 +129,7 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 	    "progressBar": {
 		    "startDecimal": 0.3,
 		    "endDecimal": 0.7,
-			"useEHQ3ProgressBar": false
+			"display": true
 	    },
 
 		"footer": {
