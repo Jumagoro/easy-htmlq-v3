@@ -1,6 +1,6 @@
 export interface Statement {
     id: number,
-    statement: string;
+    //statement: string,
     //color?: string;
     type?: Type,
 

@@ -1,4 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { ExchangeService } from 'src/app/_services/exchange.service';
 import { ModalService } from 'src/app/_services/modal-service.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { Modal } from './modal';
@@ -15,7 +16,8 @@ export class ModalComponent implements OnInit {
 
   constructor(
     private stepService: StepService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private exchangeService: ExchangeService
   ) { }
 
   ngOnInit(): void {
@@ -28,10 +30,17 @@ export class ModalComponent implements OnInit {
   }
 
   ok(): void {
-    if(this.stepService.getFurthestStep() < 1) // On step == -1 and 0 the navigator should lead to the next step
-      this.stepService.nextStep();
 
-    this.modalService.setVisible(false);
+    if(this.stepService.getFurthestStep() < 1) { // On step == -1 and 0 the navigator should lead to the next step
+      this.stepService.nextStep();
+      this.exchangeService.dispatchSosciPresent(this.stepService.getCurrentStep, "instruction");
+    }
+    
+    else {
+      this.exchangeService.dispatchSosciPresent(this.stepService.getCurrentStep, "start");
+      this.modalService.setVisible(false);
+    }
+    
   }
 
   isVisible() {

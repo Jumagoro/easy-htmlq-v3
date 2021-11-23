@@ -22,6 +22,9 @@
     document.getElementById('sosci-wrapper').addEventListener('ehq3_progress', function(e) {
       //alert(e.detail.progress);
     });
+    document.getElementById('sosci-wrapper').addEventListener('ehq3_present', function(e) {
+      //alert(e.detail.step + " " + e.detail.phase);
+    });
     document.getElementById('sosci-wrapper').addEventListener(
       'ehq3_init', function() {
         document.getElementById('ehq3_conf').value =

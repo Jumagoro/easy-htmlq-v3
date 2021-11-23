@@ -128,11 +128,10 @@ export class Step1Component implements OnInit {
   private initStatements() {
     //let mapJSON = JSON.parse(xmlConverter.xml2json(xml, {compact: true, spaces: 4}));
 
-    // Store all xml statements into the statements array
+    // Store all statements into the statements array
     for(let statement of GlobalVars.CONF.getValue().statements) {
       this.statements.push({
-        id: statement.id,
-        statement: statement.statement
+        id: statement.id
       });
     }
 

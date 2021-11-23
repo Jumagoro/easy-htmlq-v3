@@ -11,7 +11,7 @@ export class StepService {
 
   /*  Indicates the current step in the survey
       -1  = Home / No progress
-      0   = Introduction screen
+      0   = Step 1 Introduction screen
       1   = Step 1
       2   = Step 2
       3   = Step 3
@@ -113,19 +113,41 @@ export class StepService {
     this.exchangeService.set('progress', currentStorage);
   }
 
-  // Checks if the browser path and furthestStep is in sync
+  // Checks if the browser path and furthestStep are in sync
   private isStepAndURLSync(): boolean {
 
-    if( this.getFurthestStep() == -1 && this.router.url === '/home'
-        || this.getFurthestStep() == 0 && this.router.url === '/step-1'
-        || this.getFurthestStep() == 1 && this.router.url === '/step-1'
-        || this.getFurthestStep() == 2 && this.router.url === '/step-2'
-        || this.getFurthestStep() == 3 && this.router.url === '/step-3'
-        || this.getFurthestStep() == 4 && this.router.url === '/step-4'
-        || this.getFurthestStep() == 5 && this.router.url === '/step-5')
+    if(this.getCurrentStep == this.getFurthestStep())
         return true;
 
     return false;
 
+  }
+
+
+  /**
+   * Gets the current step based on the route
+   */
+  public get getCurrentStep(): number {
+
+    if(this.router.url === '/home')
+      return -1;
+
+    else if(this.router.url === '/step-1' && this.getFurthestStep() <= 0)
+      return 0;
+
+    else if(this.router.url === '/step-1' && this.getFurthestStep() > 0)
+      return 1;
+
+    else  if(this.router.url === '/step-2')
+      return 2;
+
+    else  if(this.router.url === '/step-3')
+      return 3;
+
+    else  if(this.router.url === '/step-4')
+      return 4;
+
+    return -2;
+    
   }
 }

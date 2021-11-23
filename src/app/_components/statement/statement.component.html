@@ -2,5 +2,5 @@
     [class.bg-agree]="statement?.type === Type.AGREE"
     [class.bg-neutral]="statement?.type === Type.NEUTRAL"
     [class.bg-disagree]="statement?.type === Type.DISAGREE">
-    {{ statement.statement }}
+    {{ getStatementText() }}
 </div>

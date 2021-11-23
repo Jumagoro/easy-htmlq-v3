@@ -43,11 +43,11 @@ export class Step4Component implements OnInit {
         if((Object.keys(data).length === 0))
           return;
            
-        // Load stage3-Storage and quit when successfull
-        if(this.checkStage3Storage())
+        // Load stage4-Storage and quit when successfull
+        if(this.checkStage4Storage())
           return;
 
-        // Load stage2-storage if no stage3-storage is found
+        // Load stage2-storage if no stage4-storage is found
         this.checkStage2Storage();
       }
     );
@@ -74,9 +74,9 @@ export class Step4Component implements OnInit {
   }
 
 
-  checkStage3Storage(): boolean {
+  checkStage4Storage(): boolean {
     // Check if something is stored in the storage from step3
-    let currentStorage = this.exchangeService.get('stage3');
+    let currentStorage = this.exchangeService.get('stage4');
 
     if(!currentStorage)
       return false;
@@ -85,10 +85,10 @@ export class Step4Component implements OnInit {
     let stage2Storage = this.exchangeService.get('stage2');
     if(stage2Storage && stage2Storage.timestamp && currentStorage.timestamp) {
       let stage2Update = new Date(stage2Storage.timestamp);
-      let stage3Update = new Date(currentStorage.timestamp);
+      let stage4Update = new Date(currentStorage.timestamp);
 
       // Stage 2 is newer than stage 3 -> Abort and load stage 2
-      if(stage2Update > stage3Update)
+      if(stage2Update > stage4Update)
         return false;
     }
 
@@ -153,7 +153,7 @@ export class Step4Component implements OnInit {
 
   storeProgress() {
     // Load current storage to append the changed array
-    let currentStorage = this.exchangeService.get('stage3');
+    let currentStorage = this.exchangeService.get('stage4');
 
     // If nothing is in the storage, create an empty object
     if(!currentStorage)
@@ -166,7 +166,7 @@ export class Step4Component implements OnInit {
     currentStorage.timestamp = new Date().toISOString();
 
     // Write the storage object into the storage
-    this.exchangeService.set('stage3', currentStorage);
+    this.exchangeService.set('stage4', currentStorage);
   }
 
   private calculateProgress() {

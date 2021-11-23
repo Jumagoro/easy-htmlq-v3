@@ -97,4 +97,39 @@ export class ExchangeService {
     }
     return false;
   }
+
+
+  /**
+   * Notifies sosci, that the user has interacted with an instruction (help button, okay, etc.)
+   * @param step The current step the user is in
+   * @param phase The exact event that happened (help, instruction, start)
+   */
+  dispatchSosciPresent(step: number, phase: string) {
+
+    document.getElementById('sosci-wrapper')?.dispatchEvent(new CustomEvent('ehq3_present', {
+      'detail': {
+        step: step,
+        phase: phase
+      }
+    }));
+
+  }
+
+
+  /**
+   * Loads the statement's content with the given id from the config
+   * @param id  ID of the statement to get the content from
+   * @returns The content of the statement with the given id
+   */
+  public getStatementByID(id: number): string {
+    if(!GlobalVars.CONF || !GlobalVars.CONF.getValue())
+      return "";
+
+    for(let statement of GlobalVars.CONF.getValue().statements) {
+      if(statement.id == id)
+        return statement.statement;
+    }
+
+    return "";
+  }
 }

@@ -1,6 +1,6 @@
 # Easy HTMLQ V3
 ## Download
-[First Release](https://github.com/Jumagoro/easy-htmlq-v3/releases/tag/v0.1.0)
+[Releases](https://github.com/Jumagoro/easy-htmlq-v3/releases)
 
 ## Ablauf
 Interviewer erhalten eine Liste von Statements (Kombination aus einer ID und einem Text), z.B.:
@@ -23,7 +23,7 @@ Der dritte Schritt ähnelt dem zweiten und legt den Fokus lediglich auf möglich
 Dieser Schritt ist optional und kann über die Konfiguration (siehe Abschnitt "*Daten / Konfiguration*") übersprungen werden.
 
 ## Schritt 4 ("/step-4"):
-Dieser letzte Schritt nimmt alle Statements aus den Extrema des vorherigen Schrittes (Schritt 2 / Schritt 3), also den Spalten "absolute Ablehnung" (-4) und "absolute Zustimmung" (+4) und gibt nun die Möglichkeit, einen Kommentar zu den jeweiligen Statements zu fassen. Schritt 4 verwendet im Speicher (Javascript **DATA** bzw. HTML Input **ehq3_data**) den Bereich **stage3** (genaueres siehe Abschnitt "*Daten / Konfiguration*").
+Dieser letzte Schritt nimmt alle Statements aus den Extrema des vorherigen Schrittes (Schritt 2 / Schritt 3), also den Spalten "absolute Ablehnung" (-4) und "absolute Zustimmung" (+4) und gibt nun die Möglichkeit, einen Kommentar zu den jeweiligen Statements zu fassen. Schritt 4 verwendet im Speicher (Javascript **DATA** bzw. HTML Input **ehq3_data**) den Bereich **stage4** (genaueres siehe Abschnitt "*Daten / Konfiguration*").
 Die Kommentarfelder können dabei jedoch auch leer bleiben, der Weiter / "Continue" Button ist stets vorhanden und beendet zugleich auf die Umfrage (siehe Abschnitt "*Events*").
 
 ## Events
@@ -33,7 +33,11 @@ Um mit dem Sosci-Wrapper zu kommunizieren werden **Javascript-Events** verwendet
 |1|ehq3_init|EHQ3|Signalisiert SoSci, dass EHQ3 bereit für die Daten-/Konfigurationsaufnahme ist|
 |2|ehq3_input_set|SoSci|Signalisiert EHQ3, dass die Daten in den Inputs liegen (siehe Abschnitt "*Aufbau*")|
 |3|ehq3_complete|EHQ3|Signalisiert SoSci, dass der Interviewer den letzten Schritt abgeschlossen hat und die Daten abgerufen werden können|
-|4|ehq3_progress|EHQ3|Informiert SoSci über den Fortschritt (progress). Wert zwischen 0-1, entsprechend startDecimal und endDecimal aus Konfiguration|
+|-|ehq3_progress|EHQ3|Informiert SoSci über den Fortschritt (progress). Wert zwischen 0-1, entsprechend startDecimal und endDecimal aus Konfiguration|
+|-|ehq3_present|EHQ3|Informiert SoSci über das Interagieren mit Hilfe-Button, oder das weiterklicken von Instructions|
+
+Seit v0.4.0:
+- *ehq3_present* wurde hinzugefügt
 
 Seit v0.2.0:
 - *ehq3_complete* statt *ehq3_onComplete*
@@ -138,11 +142,11 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 		}
     }
 
-Seit v0.2.0:
-- *"progressBar": null* Deaktiviert die Progressbar
-
 Seit v0.3.0:
 - *"progressBar": {"useEHQ3ProgressBar": false}*: Ersetzt null zum deaktivieren
+
+Seit v0.2.0:
+- *"progressBar": null* Deaktiviert die Progressbar
 
 ## Daten
 Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert werden.
@@ -185,7 +189,7 @@ Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert wer
           "timestamp":"2021-10-29T11:58:59.207Z"
        },
 
-	   "step3swap": [
+	   	"step3swap": [
 		   {
 			   "s1": idMovedStatement,
 			   "s0": idPassiveStatement,
@@ -193,17 +197,20 @@ Im folgenden befinden sich eine Übersicht, wie Eingaben / Daten gespeichert wer
 			   "c0": idOldColumnOfMoved
 		   },
 		   ...
-	   ],
+	   	],
        
-       "stage3":{
+       	"stage4":{
           "agree":[ [{}, "Kommentar zu statement"], ... ],
           "disagree":[ [{}, ""], ... ],
           "timestamp":"2021-10-29T11:59:10.835Z"
-       }
+       	},
     }
     
  Dabei steht `{}` jeweils für ein (mögliches) Statement-Objekt, `{}, ...` für ein (mögliches) Statement-Objekt oder auch mehrere.
 Unter *stage2* -> *cols*: Jedes äußere Array (in dem ersten Array), steht jeweils für eine Spalte, mit der jeweiligen Anzahl an Zellen (z.B. 5). Diese Zellen jedoch sind auch wiederum ein Array, was jedoch i. d. R. nur ein Objekt enthalten soll. Jede Zelle ist hier jedoch ein Array, da aus technischer Sicht jeder Ablagestapel (was eine Zelle hier ist) als ein Array realisiert werden muss. Daher das drei dimensionale Array (obwohl eigentlich nur zwei dimensional benötigt).
+
+Seit v0.4.0:
+- Daten enhalten nicht mehr Text von Statements (nur noch id und type)
 
 Seit v0.2.0:
 - *step3swap* enthält die Indizes der in Schritt 3 getauschten Statements
