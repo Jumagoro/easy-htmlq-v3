@@ -113,6 +113,7 @@ export class StepService {
     this.exchangeService.set('progress', currentStorage);
   }
 
+  
   // Checks if the browser path and furthestStep are in sync
   private isStepAndURLSync(): boolean {
 

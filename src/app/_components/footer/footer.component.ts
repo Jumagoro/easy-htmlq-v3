@@ -30,6 +30,7 @@ export class FooterComponent implements OnInit {
     
     if(this.modalService.getVisible() == false) {
       this.exchangeService.dispatchSosciPresent(this.stepService.getCurrentStep, "help");
+      this.modalService.setIsHelp(true);
       this.modalService.setVisible(true);
     }
     

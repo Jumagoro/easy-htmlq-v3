@@ -33,7 +33,6 @@ export class ModalComponent implements OnInit {
 
     if(this.stepService.getFurthestStep() < 1) { // On step == -1 and 0 the navigator should lead to the next step
       this.stepService.nextStep();
-      this.exchangeService.dispatchSosciPresent(this.stepService.getCurrentStep, "instruction");
     }
     
     else {
