@@ -35,6 +35,23 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     background-color: #ffd5d5;
 }
 
+
+.btn-main {
+    color: white;
+    background-color: #0d6efd;
+}
+.btn-main:hover {
+    color: gainsboro;
+}
+
+.btn-help {
+    color: black;
+    background-color: #bebebe;
+}
+.btn-help:hover {
+    
+}
+
 @include media-breakpoint-down(md) {
     .bottom-statements-row {
         overflow-y: scroll;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { FooterComponent } from '../_components/footer/footer.component';
 import { GlobalVars } from '../_config/global';
 import { ExchangeService } from './exchange.service';
 import { StorageService } from './storage.service';
@@ -36,6 +37,7 @@ export class StepService {
 
     // Jump to current page if not in sync and furthest step not disabled
     if(!this.isStepAndURLSync() && 
+      //!( (this.getFurthestStep() == 0 || this.getFurthestStep() == 1) && GlobalVars.CONF.getValue().structure.disableStep1) &&
        !(this.getFurthestStep() == 3 && GlobalVars.CONF.getValue().structure.disableStep3) && // Don't jump if target jump is disabled
        !(this.getFurthestStep() == 4 && GlobalVars.CONF.getValue().structure.disableStep4)    // Otherwise infinite recursion
     ) {
@@ -58,11 +60,19 @@ export class StepService {
     }
     
     else if(this.getFurthestStep() == 0) {
-      this.router.navigate(['/step-1']);
+      //if(GlobalVars.CONF.getValue().structure.disableStep1 === true)
+        //this.nextStep();
+      //else {
+        this.router.navigate(['/step-1']);
+      //}
     }
 
     else if(this.getFurthestStep() == 1) {
-      this.router.navigate(['/step-1']);
+      //if(GlobalVars.CONF.getValue().structure.disableStep1 === true)
+        //this.nextStep();
+      //else {
+        this.router.navigate(['/step-1']);
+      //}
     }
       
     else if(this.getFurthestStep() == 2) {
@@ -87,7 +97,14 @@ export class StepService {
     }
 
     else if(this.getFurthestStep() == 5) {
-      this.exchangeService.onComplete();
+      if(this.getStep4Forced() && this.exchangeService.getStep4Complete())
+        this.exchangeService.onComplete();
+
+      else {
+        alert(this.getContinue4DisabledAlert());
+        this.setFurthestStep(4);
+        FooterComponent.setContinueEnabled(true);
+      }
     }
   }
 
@@ -150,5 +167,20 @@ export class StepService {
 
     return -2;
     
+  }
+
+
+  getStep4Forced() {
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.forceStep4)
+      return GlobalVars.CONF.getValue().structure.forceStep4;
+
+    return false;
+  }
+
+  getContinue4DisabledAlert() {
+    if(GlobalVars.CONF.getValue().instructions && GlobalVars.CONF.getValue().instructions.step4UnfinishedText)
+      return GlobalVars.CONF.getValue().instructions.step4UnfinishedText;
+    else
+      return 'Please fill all fields.'
   }
 }

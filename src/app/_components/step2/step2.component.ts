@@ -7,7 +7,7 @@ import { ProgressService } from 'src/app/_services/progress.service';
 import { StepService } from 'src/app/_services/step-service.service';
 import { FooterComponent } from '../footer/footer.component';
 import { Modal } from '../modal/modal';
-import { Statement } from '../statement/statement';
+import { Statement, Type } from '../statement/statement';
 
 @Component({
   selector: 'app-step2',
@@ -178,17 +178,31 @@ export class Step2Component implements OnInit {
     else if(event.container.data.length > 0) {
 
       let otherStatement = event.container.data[0];
+      let previousContainer = event.previousContainer.data;
       delete event.container.data[0];
 
       // Put drag statement into new container
-      transferArrayItem(event.previousContainer.data,
+      transferArrayItem(previousContainer,
         event.container.data,
         event.previousIndex,
         0);
 
+      // If previous container is from step 1, find the correct container for the other statement
+      if( previousContainer == this.agrees ||
+          previousContainer == this.neutrals ||
+          previousContainer == this.disagrees)
+      {
+        if(otherStatement.type == Type.AGREE)
+          previousContainer = this.agrees;
+        else if(otherStatement.type == Type.NEUTRAL)
+          previousContainer = this.neutrals;
+        else if(otherStatement.type == Type.DISAGREE)
+          previousContainer = this.disagrees;
+        
+      }
       // Transfer other statement into previous container
       transferArrayItem([otherStatement],
-        event.previousContainer.data,
+        previousContainer,
         0,
         0);
 
@@ -281,4 +295,18 @@ export class Step2Component implements OnInit {
 
     return "Disagree";
   }
+
+  getVerticalAlignmentEnabled() {
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.stage2VerticalAlignment)
+      return GlobalVars.CONF.getValue().structure.stage2VerticalAlignment;
+
+    return false;
+  }
+
+  /*step1Disabled() {
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.disableStep1)
+      return GlobalVars.CONF.getValue().structure.disableStep1;
+
+    return false;
+  }*/
 }

@@ -3,11 +3,11 @@
 <div class="container-fluid" cdkDropListGroup>
   <!-- First row containing disagree, heading and agree -->
   <div class="row justify-content-between">
+    <div class="col-12 text-center">
+      <span [innerHTML]="getTableLabel()"></span>
+    </div>
     <div class="col-auto text-start">
         <span>{{ getLabelDisagree() }}</span>
-    </div>
-    <div class="col-auto text-center">
-        <span [innerHTML]="getTableLabel()"></span>
     </div>
     <div class="col-auto text-end">
         <span>{{ getLabelAgree() }}</span>
@@ -26,8 +26,8 @@
             <tbody>
               <!-- Columns holding the cardholders -->
               <tr>
-                <td class="p-0 column" *ngFor="let col of cols; let c = index" [style.width]="(100 / cols.length) + '%'"> <!-- Create all cols -->
-                    <div class="cell text-center" *ngFor="let cell of cols[c]; let i = index"
+                <td class="p-0 column" *ngFor="let col of cols; let c = index" [style.width]="(100 / cols.length) + '%'" [class.align-middle]="getVerticalAlignmentEnabled()"> <!-- Create all cols -->
+                    <div class="cell text-center m-1" *ngFor="let cell of cols[c]; let i = index"
                         cdkDropList [cdkDropListData]="cols[c][i]" (cdkDropListDropped)="drop($event)"> <!-- Create all cells in a col -->
                         <!-- Statement in a cell (if exists) -->
                         <app-statement *ngIf="cols[c][i][0]" [statement]="cols[c][i][0]" cdkDrag></app-statement>
@@ -39,9 +39,10 @@
     </div>
   </div>
 
+  <!--  && !step1Disabled()-->
   <!-- Second row containing the pre sorted statements -->
   <div *ngIf="!nextStepAvailable" class="row justify-content-center mt-5">
-    <div class="col p-0">
+    <div class="col-12 col-sm order-lg-1 p-0 mb-3">
         <p class="text-center">{{ getLabelDisagree() }}</p>
         <div
             cdkDropList
@@ -51,17 +52,17 @@
         </div>
     </div>
 
-    <div class="col p-0">
+    <div class="col-12 col-sm-12 col-lg order-sm-last order-lg-2 p-0 mb-3">
         <p class="text-center">{{ getLabelNeutral() }}</p>
         <div
             cdkDropList
             [cdkDropListData]="neutrals"
-            class="statement-container mx-auto">
+            class="statement-container mx-auto mb-3">
             <app-statement *ngFor="let neutral of neutrals" [statement]="neutral" cdkDrag></app-statement>
         </div>
     </div>
 
-    <div class="col p-0">
+    <div class="col-12 col-sm order-lg-3 p-0">
         <p class="text-center">{{ getLabelAgree() }}</p>
         <div
             cdkDropList
@@ -71,4 +72,22 @@
         </div>
     </div>
   </div>
+
+  <!-- && step1Disabled()-->
+  <!--
+  <div *ngIf="!nextStepAvailable" class="row justify-content-center mt-5">
+    <div class="row justify-content-center">
+      <div id="statements" class="col-12 col-md-8 p-0">
+          <div
+              cdkDropList
+              [cdkDropListData]="statements"
+              class="statement-container mx-auto h-100"
+              [cdkDropListEnterPredicate]="noReturnPredicate"
+              >
+              <app-statement *ngFor="let statement of statements" [statement]="statement" cdkDrag></app-statement>
+          </div>
+      </div>
+    </div>
+  </div>-->
+
 </div>

@@ -30,27 +30,30 @@
         document.getElementById('ehq3_conf').value =
         `{
    "structure":{
-      "disableStep3":true,
+      "disableStep1":true,
+      "disableStep3":false,
       "disableStep4":false,
+      "forceStep4": true,
       "step2Columns":[
          {
             "id":-1,
-            "color":"f6bf76",
+            "color":"#f6bf76",
             "amountCells":"2"
          },
          {
             "id":0,
-            "color":"ccc9fc",
+            "color":"#ccc9fc",
             "amountCells":"3"
          },
          {
             "id":1,
-            "color":"4ffe46",
+            "color":"#4ffe46",
             "amountCells":"2"
          }
       ],
       "step2TableName":"",
-      "step3TableName":""
+      "step3TableName":"",
+      "stage2VerticalAlignment": true
    },
    "design":{
       "labelAgree":"Stimme zu",
@@ -69,7 +72,10 @@
       "step3Instruction":"<p>Schritt 1 of 4</p><p>            Read the folowing statements carefully and split them up into three piles: a pile for statements you tend to disagree with, a pile for cards you tend to agree with, and a pile for the rest.{br}{br}You can either drag the cards into one of the three piles or {b}press 1, 2, 3{/b} on your keyboard. Changes can be made later.{br}{br}If you want to read this instruction a second time, press the help-button at the bottom left corner.</p>",
       "step3Button":"Weiter",
       "step4Instruction":"<p>Schritt 1 of 4</p><p>            Read the folowing statements carefully and split them up into three piles: a pile for statements you tend to disagree with, a pile for cards you tend to agree with, and a pile for the rest.{br}{br}You can either drag the cards into one of the three piles or {b}press 1, 2, 3{/b} on your keyboard. Changes can be made later.{br}{br}If you want to read this instruction a second time, press the help-button at the bottom left corner.</p>",
-      "step4Button":"Weiter"
+      "step4Button":"Weiter",
+
+      "step4UnfinishedText": "4 beenden!",
+      "unfinishedText": "rest beenden!"
    },
    "statements":[
       {
@@ -107,7 +113,7 @@
       "useEHQ3ProgressBar":false
    },
    "footer":{
-      "helpMeButtonText":"empty to disable",
+      "helpMeButtonText":"Help me",
       "continueButtonText":"Continue"
    }
 }`;

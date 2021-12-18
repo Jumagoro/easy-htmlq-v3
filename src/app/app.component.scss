@@ -1,5 +1,11 @@
+//@import "../../node_modules/bootstrap/scss/_functions.scss";
+//@import "../../node_modules/bootstrap/scss/_variables.scss";
+//@import "../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
+
+
 #content-wrap {
     position: relative;
+    //border: 1px solid red;
 }
 
 .ehq3_footer {
@@ -11,3 +17,21 @@
     margin-top: 40px;
     display: block;
 }
+
+/*@include media-breakpoint-up(sm) {
+    #content-wrap {
+        border: 1px solid blue;
+    }
+ }
+
+ @include media-breakpoint-up(md) {
+    #content-wrap {
+        border: 1px solid purple;
+    }
+ }
+
+ @include media-breakpoint-up(lg) {
+    #content-wrap {
+        border: 1px solid green;
+    }
+ }*/

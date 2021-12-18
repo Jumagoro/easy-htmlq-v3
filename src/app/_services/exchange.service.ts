@@ -6,6 +6,8 @@ import { GlobalVars } from '../_config/global';
 })
 export class ExchangeService {
 
+  private step4Complete: boolean = false;
+
   constructor(  ) { }
 
   // Gets the data / conf from the input
@@ -131,5 +133,13 @@ export class ExchangeService {
     }
 
     return "";
+  }
+
+  public setStep4Complete(complete: boolean) {
+    this.step4Complete = complete;
+  }
+
+  public getStep4Complete():boolean {
+    return this.step4Complete;
   }
 }

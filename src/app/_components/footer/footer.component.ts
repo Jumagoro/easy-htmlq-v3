@@ -45,8 +45,16 @@ export class FooterComponent implements OnInit {
     this.stepService.nextStep()
   }
 
+  onContinueDisabled() {
+    alert(this.getContinueDisabledAlert());
+  }
+
   public get getContinueEnabled() {
     return FooterComponent.continueEnabled;
+  }
+
+  public static setContinueEnabled(enabled: boolean) {
+    FooterComponent.continueEnabled = enabled;
   }
 
   // Reads the label / title for the continue button from the config
@@ -71,5 +79,13 @@ export class FooterComponent implements OnInit {
       return false;
     else
       return true;
+  }
+
+
+  getContinueDisabledAlert() {
+    if(GlobalVars.CONF.getValue().instructions && GlobalVars.CONF.getValue().instructions.unfinishedText)
+      return GlobalVars.CONF.getValue().instructions.unfinishedText;
+    else
+      return 'Please fill all expected fields.'
   }
 }

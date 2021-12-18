@@ -70,6 +70,7 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 
     {
 	    "structure": {
+			"disableStep1": true,
 	     	"disableStep3": false,
 	     	"disableStep4": false,
 	     	"step2Columns": [
@@ -92,7 +93,8 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 		  		},
 		  	],
 			"step2TableName": "<b>Sort the cards according to your experience with the iPads this semester2</b>",
-            "step3TableName": "<b>Sort the cards according to your experience with the iPads this semester3</b>"
+            "step3TableName": "<b>Sort the cards according to your experience with the iPads this semester3</b>",
+			"stage2VerticalAlignment": true
 		},
 	      
 	    "design": {
@@ -119,7 +121,10 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 		    "step3Button": "Instruction button",
 	      
 		    "step4Instruction": "<b>Step 4 Instruction</b><br>Try Html here",
-		    "step4Button": "Instruction button"
+		    "step4Button": "Instruction button",
+			
+			"step4UnfinishedText": "4 beenden!",
+			"unfinishedText": "rest beenden!"
 	    },
 	      
 	    "statements": [

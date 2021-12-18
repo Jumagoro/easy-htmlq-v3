@@ -137,12 +137,6 @@ export class Step4Component implements OnInit {
     return true;
   }
 
-  onContinue() {
-    this.storeProgress();
-
-    this.stepService.nextStep();
-  }
-
 
   // Fired when something is typed into a comment
   commentChange(event: any) {
@@ -169,7 +163,20 @@ export class Step4Component implements OnInit {
     this.exchangeService.set('stage4', currentStorage);
   }
 
+
   private calculateProgress() {
+
+    let commentsFilled = this.getAmountCommented();
+
+    this.exchangeService.setStep4Complete(commentsFilled >= this.totalComments);
+    this.progressService.setProgress( (2/3) + (commentsFilled / this.totalComments) * (1/3) );
+
+  }
+
+  /**
+   * Checks how many comments have been given
+   */
+  private getAmountCommented(): number {
     let commentsFilled = 0;
     for(let comment of this.commentsAgree) {
       if(comment[1] && comment[1] !== '')
@@ -181,8 +188,7 @@ export class Step4Component implements OnInit {
         commentsFilled++;
     }
 
-    this.progressService.setProgress( (2/3) + (commentsFilled / this.totalComments) * (1/3) );
-
+    return commentsFilled;
   }
 
   getLabelAgree() {
@@ -197,5 +203,23 @@ export class Step4Component implements OnInit {
       return GlobalVars.CONF.getValue().design.labelDisagree;
 
     return "Disagree";
+  }
+
+  getIDMostAgree() {
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.step2Columns) {
+      let step2Columns = GlobalVars.CONF.getValue().structure.step2Columns;
+      return step2Columns[0].id;
+    }
+
+    return -1;    
+  }
+
+  getIDMostDisagree() {
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.step2Columns) {
+      let step2Columns = GlobalVars.CONF.getValue().structure.step2Columns;
+      return step2Columns[step2Columns.length-1].id;
+    }
+
+    return -1;
   }
 }

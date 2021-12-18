@@ -244,4 +244,11 @@ export class Step3Component implements OnInit {
 
     return "Disagree";
   }
+
+  getVerticalAlignmentEnabled() {
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.stage2VerticalAlignment)
+      return GlobalVars.CONF.getValue().structure.stage2VerticalAlignment;
+
+    return false;
+  }
 }
