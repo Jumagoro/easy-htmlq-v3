@@ -94,7 +94,7 @@ export class Step2Component implements OnInit {
     this.cols = [];
     this.colColors = [];
 
-    GlobalVars.CONF.getValue().structure.step2Columns.forEach((value:any, index:any) => {
+    GlobalVars.CONF.getValue().structure.gridColumns.forEach((value:any, index:any) => {
 
       this.cols[index] = [];
       this.colColors[index] = value.color;
@@ -296,12 +296,6 @@ export class Step2Component implements OnInit {
     return "Disagree";
   }
 
-  getVerticalAlignmentEnabled() {
-    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.stage2VerticalAlignment)
-      return GlobalVars.CONF.getValue().structure.stage2VerticalAlignment;
-
-    return false;
-  }
 
   /*step1Disabled() {
     if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.disableStep1)

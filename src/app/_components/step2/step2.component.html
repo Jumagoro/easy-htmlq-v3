@@ -26,7 +26,7 @@
             <tbody>
               <!-- Columns holding the cardholders -->
               <tr>
-                <td class="p-0 column" *ngFor="let col of cols; let c = index" [style.width]="(100 / cols.length) + '%'" [class.align-middle]="getVerticalAlignmentEnabled()"> <!-- Create all cols -->
+                <td class="p-0 column gridVerticalAlignment" *ngFor="let col of cols; let c = index" [style.width]="(100 / cols.length) + '%'"> <!-- Create all cols -->
                     <div class="cell text-center m-1" *ngFor="let cell of cols[c]; let i = index"
                         cdkDropList [cdkDropListData]="cols[c][i]" (cdkDropListDropped)="drop($event)"> <!-- Create all cells in a col -->
                         <!-- Statement in a cell (if exists) -->

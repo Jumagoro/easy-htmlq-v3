@@ -206,18 +206,18 @@ export class Step4Component implements OnInit {
   }
 
   getIDMostAgree() {
-    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.step2Columns) {
-      let step2Columns = GlobalVars.CONF.getValue().structure.step2Columns;
-      return step2Columns[0].id;
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.gridColumns) {
+      let gridColumns = GlobalVars.CONF.getValue().structure.gridColumns;
+      return gridColumns[0].id;
     }
 
     return -1;    
   }
 
   getIDMostDisagree() {
-    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.step2Columns) {
-      let step2Columns = GlobalVars.CONF.getValue().structure.step2Columns;
-      return step2Columns[step2Columns.length-1].id;
+    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.gridColumns) {
+      let gridColumns = GlobalVars.CONF.getValue().structure.gridColumns;
+      return gridColumns[gridColumns.length-1].id;
     }
 
     return -1;

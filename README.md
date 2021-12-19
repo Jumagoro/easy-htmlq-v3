@@ -73,7 +73,7 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 			"disableStep1": true,
 	     	"disableStep3": false,
 	     	"disableStep4": false,
-	     	"step2Columns": [
+	     	"gridColumns": [
 			  	{
 		  		   	"id": -4,    
 		  			"color": "#FFD5D5",    
@@ -93,8 +93,7 @@ Im folgenden befinden sich alle möglichen Felder, die über die Konfiguration g
 		  		},
 		  	],
 			"step2TableName": "<b>Sort the cards according to your experience with the iPads this semester2</b>",
-            "step3TableName": "<b>Sort the cards according to your experience with the iPads this semester3</b>",
-			"stage2VerticalAlignment": true
+            "step3TableName": "<b>Sort the cards according to your experience with the iPads this semester3</b>"
 		},
 	      
 	    "design": {
@@ -222,6 +221,8 @@ Seit v0.2.0:
 - *stage2* enthält nun eine Kopie der in stage1 sortierten Statements, sodass stage1 bis zum Ende erhalten bleibt (Kopien werden gelöscht, wenn leer)
 
 ## Farben / Styles / CSS:
+
+### Kartenfarben
 Die Farbe von "Agree", "Neutral" und "Disagree" wird unterschiedlich festgelegt.
 Die Farbe der Spaltenbeschriftung aus **Stage2** wird beispielsweise direkt über die Konfiguration erledigt.
 Die Farben der Statement Karten an sich wird jedoch über folgende CSS-Klassen geregelt:
@@ -232,6 +233,16 @@ Die Farben der Statement Karten an sich wird jedoch über folgende CSS-Klassen g
 
 Diese Standardwerte sollten jedoch über ein eigenes CSS (eventuell `!important`benötigt) überschreibbar sein.
 Ein Statement erhält diese Klassen abhängig von seinem Typ (1=Agree, 2=Neutral, 3=Disagree).
+
+### Anpassen des vertikalen Grid-Layouts
+CSS Klasse *.gridVerticalAlignment* -> *vertical-align: top* Wert ändern
+
+### Anpassen des Weiter / Hilfe Knopf
+- .btn-main {}
+- .btn-main:hover {}
+
+- .btn-help {}
+- .btn-help:hover {}
 
 ## Dateien
 Die Anwendung besteht aus folgenden Dateien (nach dem Kompilieren):

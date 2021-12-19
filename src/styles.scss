@@ -52,6 +52,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
     
 }
 
+.gridVerticalAlignment {
+    vertical-align: top;
+}
+
 @include media-breakpoint-down(md) {
     .bottom-statements-row {
         overflow-y: scroll;

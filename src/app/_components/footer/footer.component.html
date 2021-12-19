@@ -24,8 +24,8 @@
         </div>
 
         <div class="col-4 col-md-3 px-0 text-center">
-            <button *ngIf="getContinueEnabled" type="button" class="btn btn-main rounded-pill fs-6 fw-bold" (click)="onContinue()">{{ getContinueLabel() }}</button>
-            <button *ngIf="!getContinueEnabled" type="button" class="btn rounded-pill fs-6 fw-bold" (click)="onContinueDisabled()" style="background-color: #bebebe;">{{ getContinueLabel() }}</button>
+            <button *ngIf="getContinueEnabled" type="button" class="btn btn-main fs-6 fw-bold" (click)="onContinue()">{{ getContinueLabel() }}</button>
+            <button *ngIf="!getContinueEnabled" type="button" class="btn fs-6 fw-bold" (click)="onContinueDisabled()" style="background-color: #bebebe;">{{ getContinueLabel() }}</button>
         </div>
 
     </div>
