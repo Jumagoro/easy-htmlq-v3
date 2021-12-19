@@ -15,6 +15,7 @@ import { FooterComponent } from './_components/footer/footer.component';
 import { StatementComponent } from './_components/statement/statement.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { APP_BASE_HREF } from '@angular/common';
+import { ngResizeObserverProviders } from 'ng-resize-observer';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,7 @@ import { APP_BASE_HREF } from '@angular/common';
     ModalComponent,
     HomeComponent,
     FooterComponent,
-    StatementComponent,
+    StatementComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +38,8 @@ import { APP_BASE_HREF } from '@angular/common';
     ReactiveFormsModule
   ],
   providers: [
-    { provide: APP_BASE_HREF, useValue : '/' }
+    { provide: APP_BASE_HREF, useValue : '/' },
+    ngResizeObserverProviders
   ],
   bootstrap: [AppComponent]
 })

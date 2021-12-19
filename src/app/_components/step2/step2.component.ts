@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
@@ -20,7 +20,8 @@ export class Step2Component implements OnInit {
   constructor(
     public stepService: StepService,
     private exchangeService: ExchangeService,
-    private progressService: ProgressService
+    private progressService: ProgressService,
+    private zone: NgZone
   ) {}
 
   step2Modal!: Modal;
@@ -38,7 +39,28 @@ export class Step2Component implements OnInit {
 
   totalCols: number = 0;
 
+  oneLine: boolean = false;
+  twoLine: boolean = false;
+
+  observer!: ResizeObserver;
+  presortRow!: HTMLElement | null;
+
   ngOnInit(): void {
+
+    this.presortRow = document.querySelector(".ehq3_presort-row");
+
+    // React to width changes -> single line or multi line layout
+    /*this.observer = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        this.zone.run(() => {
+          this.onResize(entry.contentRect.width);
+        });
+      });
+    });
+
+    if(this.presortRow !== null)
+      this.observer.observe(this.presortRow);
+     */
 
     // When /step-2 is accessed directly by url the stepService wouldn't know that
     this.stepService.setFurthestStep(2);
@@ -86,6 +108,13 @@ export class Step2Component implements OnInit {
     if(unsortedStatementsLeft <= 0)
       FooterComponent.continueEnabled = true;
 
+  }
+
+  ngOnDestroy() {
+    if(this.presortRow !== null) {
+      //this.observer.unobserve(this.presortRow);
+    }
+      
   }
 
 
@@ -296,6 +325,25 @@ export class Step2Component implements OnInit {
     return "Disagree";
   }
 
+  private onResize(width: number) {
+
+    if(width > 1200) {
+      this.twoLine = false;
+      this.oneLine = true;
+    }
+    else if(width > 800) {
+      this.oneLine = false;
+      this.twoLine = true;
+    } else {
+      this.oneLine = false;
+      this.twoLine = false;
+    }
+
+  }
+
+  public isMobile(): boolean {
+    return !this.oneLine && !this.twoLine;
+  }
 
   /*step1Disabled() {
     if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.disableStep1)

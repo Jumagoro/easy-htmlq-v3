@@ -1,6 +1,6 @@
-//@import "../../node_modules/bootstrap/scss/_functions.scss";
-//@import "../../node_modules/bootstrap/scss/_variables.scss";
-//@import "../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
+@import "../../node_modules/bootstrap/scss/_functions.scss";
+@import "../../node_modules/bootstrap/scss/_variables.scss";
+@import "../../node_modules/bootstrap/scss/mixins/_breakpoints.scss";
 
 
 #content-wrap {
@@ -18,7 +18,7 @@
     display: block;
 }
 
-/*@include media-breakpoint-up(sm) {
+@include media-breakpoint-up(sm) {
     #content-wrap {
         border: 1px solid blue;
     }
@@ -34,4 +34,10 @@
     #content-wrap {
         border: 1px solid green;
     }
- }*/
+ }
+
+ @include media-breakpoint-up(xl) {
+    #content-wrap {
+        border: 1px solid yellow;
+    }
+ }

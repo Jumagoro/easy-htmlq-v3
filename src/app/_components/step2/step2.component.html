@@ -41,35 +41,37 @@
 
   <!--  && !step1Disabled()-->
   <!-- Second row containing the pre sorted statements -->
-  <div *ngIf="!nextStepAvailable" class="row justify-content-center mt-5">
-    <div class="col-12 col-sm order-lg-1 p-0 mb-3">
-        <p class="text-center">{{ getLabelDisagree() }}</p>
-        <div
-            cdkDropList
-            [cdkDropListData]="disagrees"
-            class="statement-container mx-auto">
-            <app-statement *ngFor="let disagree of disagrees" [statement]="disagree" cdkDrag></app-statement>
-        </div>
+  <div class="row justify-content-center mt-4 ehq3_presort-row"
+      [ngClass]="{'presort-three-line': isMobile(), 'presort-two-line': twoLine, 'presort-one-line' : oneLine }">
+    <div *ngIf="!nextStepAvailable" class="p-0 mb-3 presort-disagree-container">
+      <p class="text-center mb-1">{{ getLabelDisagree() }}</p>
+      <div
+          cdkDropList
+          [cdkDropListData]="disagrees"
+          class="statement-container mx-auto"
+          (cdkDropListDropped)="drop($event)">
+          <app-statement *ngFor="let disagree of disagrees" [statement]="disagree" cdkDrag></app-statement>
+      </div>
     </div>
-
-    <div class="col-12 col-sm-12 col-lg order-sm-last order-lg-2 p-0 mb-3">
-        <p class="text-center">{{ getLabelNeutral() }}</p>
-        <div
-            cdkDropList
-            [cdkDropListData]="neutrals"
-            class="statement-container mx-auto mb-3">
-            <app-statement *ngFor="let neutral of neutrals" [statement]="neutral" cdkDrag></app-statement>
-        </div>
+    <div *ngIf="!nextStepAvailable" class="p-0 mb-3 presort-neutral-container">
+      <p class="text-center mb-1">{{ getLabelNeutral() }}</p>
+      <div
+          cdkDropList
+          [cdkDropListData]="neutrals"
+          class="statement-container mx-auto"
+          (cdkDropListDropped)="drop($event)">
+          <app-statement *ngFor="let neutral of neutrals" [statement]="neutral" cdkDrag></app-statement>
+      </div>
     </div>
-
-    <div class="col-12 col-sm order-lg-3 p-0">
-        <p class="text-center">{{ getLabelAgree() }}</p>
-        <div
-            cdkDropList
-            [cdkDropListData]="agrees"
-            class="statement-container mx-auto">
-            <app-statement *ngFor="let agree of agrees" [statement]="agree" cdkDrag></app-statement>
-        </div>
+    <div *ngIf="!nextStepAvailable" class="p-0 mb-3 presort-agree-container">
+      <p class="text-center mb-1">{{ getLabelAgree() }}</p>
+      <div
+          cdkDropList
+          [cdkDropListData]="agrees"
+          class="statement-container mx-auto"
+          (cdkDropListDropped)="drop($event)">
+          <app-statement *ngFor="let agree of agrees" [statement]="agree" cdkDrag></app-statement>
+      </div>
     </div>
   </div>
 

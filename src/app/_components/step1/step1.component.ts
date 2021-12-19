@@ -1,13 +1,19 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import { ChangeDetectorRef, Component, HostListener, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import { StepService } from 'src/app/_services/step-service.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Statement, Type } from '../statement/statement';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
-import { takeWhile } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
 import { ProgressService } from 'src/app/_services/progress.service';
 import { Modal } from '../modal/modal';
 import { FooterComponent } from '../footer/footer.component';
+import { BehaviorSubject, fromEvent } from 'rxjs';
+
+import {
+  NgResizeObserver,
+  ngResizeObserverProviders
+} from "ng-resize-observer";
 
 @Component({
   selector: 'app-step1',
@@ -20,7 +26,9 @@ export class Step1Component implements OnInit {
   constructor(
     public stepService: StepService,
     private exchangeService: ExchangeService,
-    private progressService: ProgressService
+    private progressService: ProgressService,
+    private zone: NgZone,
+    private resize: NgResizeObserver
   ) {}
 
 
@@ -38,8 +46,34 @@ export class Step1Component implements OnInit {
 
   dataLoaded: boolean = false;
 
+  oneLine: boolean = false;
+  twoLine: boolean = false;
+
+  observer!: ResizeObserver;
+  presortRow!: HTMLElement | null;
+
   // When /step-1 is accessed directly by url the stepService wouldn't know that
   ngOnInit(): void {
+
+
+
+    let width = this.resize.pipe(map((entry) => entry.contentRect.width));
+    console.log(width);
+
+    /*this.presortRow = document.querySelector(".ehq3_presort-row");
+
+    // React to width changes -> single line or multi line layout
+    this.observer = new ResizeObserver(entries => {
+      entries.forEach(entry => {
+        this.zone.run(() => {
+          this.onResize(entry.contentRect.width);
+        });
+      });
+    });
+
+    if(this.presortRow !== null)
+      this.observer.observe(this.presortRow);*/
+      
 
     this.stepService.setFurthestStep(0);
 
@@ -100,6 +134,13 @@ export class Step1Component implements OnInit {
     if(this.statements.length <= 0)
       FooterComponent.continueEnabled = true;
     
+  }
+
+  ngOnDestroy() {
+    if(this.presortRow !== null) {
+      this.observer.unobserve(this.presortRow);
+    }
+      
   }
 
   drop(event: CdkDragDrop<Statement[]>) {
@@ -231,4 +272,25 @@ export class Step1Component implements OnInit {
 
     return "Disagree";
   }
+
+  private onResize(width: number) {
+
+    if(width > 1200) {
+      this.twoLine = false;
+      this.oneLine = true;
+    }
+    else if(width > 800) {
+      this.oneLine = false;
+      this.twoLine = true;
+    } else {
+      this.oneLine = false;
+      this.twoLine = false;
+    }
+
+  }
+
+  public isMobile(): boolean {
+    return !this.oneLine && !this.twoLine;
+  }
+
 }
