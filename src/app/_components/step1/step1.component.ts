@@ -10,11 +10,6 @@ import { Modal } from '../modal/modal';
 import { FooterComponent } from '../footer/footer.component';
 import { BehaviorSubject, fromEvent } from 'rxjs';
 
-import {
-  NgResizeObserver,
-  ngResizeObserverProviders
-} from "ng-resize-observer";
-
 @Component({
   selector: 'app-step1',
   templateUrl: './step1.component.html',
@@ -27,8 +22,7 @@ export class Step1Component implements OnInit {
     public stepService: StepService,
     private exchangeService: ExchangeService,
     private progressService: ProgressService,
-    private zone: NgZone,
-    private resize: NgResizeObserver
+    private zone: NgZone
   ) {}
 
 
@@ -48,32 +42,16 @@ export class Step1Component implements OnInit {
 
   oneLine: boolean = false;
   twoLine: boolean = false;
-
-  observer!: ResizeObserver;
-  presortRow!: HTMLElement | null;
-
+  
   // When /step-1 is accessed directly by url the stepService wouldn't know that
   ngOnInit(): void {
 
-
-
-    let width = this.resize.pipe(map((entry) => entry.contentRect.width));
-    console.log(width);
-
-    /*this.presortRow = document.querySelector(".ehq3_presort-row");
-
-    // React to width changes -> single line or multi line layout
-    this.observer = new ResizeObserver(entries => {
-      entries.forEach(entry => {
-        this.zone.run(() => {
-          this.onResize(entry.contentRect.width);
-        });
-      });
+    let localSelf = this;
+    window.addEventListener("resize", function() {
+      localSelf.onResizeRow();
     });
+    this.onResizeRow();
 
-    if(this.presortRow !== null)
-      this.observer.observe(this.presortRow);*/
-      
 
     this.stepService.setFurthestStep(0);
 
@@ -136,12 +114,6 @@ export class Step1Component implements OnInit {
     
   }
 
-  ngOnDestroy() {
-    if(this.presortRow !== null) {
-      this.observer.unobserve(this.presortRow);
-    }
-      
-  }
 
   drop(event: CdkDragDrop<Statement[]>) {
     if (event.previousContainer === event.container) {  // Same Container
@@ -273,13 +245,21 @@ export class Step1Component implements OnInit {
     return "Disagree";
   }
 
+  private onResizeRow() {
+      let singlePresort: HTMLElement | null  = document.querySelector(".ehq3_presort-row");
+      if (!(singlePresort instanceof HTMLElement)) {
+        return;
+      }
+      this.onResize(singlePresort!.offsetWidth);
+  }
+
   private onResize(width: number) {
 
-    if(width > 1200) {
+    if(width > 950) {
       this.twoLine = false;
       this.oneLine = true;
     }
-    else if(width > 800) {
+    else if(width > 650) {
       this.oneLine = false;
       this.twoLine = true;
     } else {

@@ -50,7 +50,7 @@ export class Step2Component implements OnInit {
     this.presortRow = document.querySelector(".ehq3_presort-row");
 
     // React to width changes -> single line or multi line layout
-    /*this.observer = new ResizeObserver(entries => {
+    this.observer = new ResizeObserver(entries => {
       entries.forEach(entry => {
         this.zone.run(() => {
           this.onResize(entry.contentRect.width);
@@ -60,7 +60,7 @@ export class Step2Component implements OnInit {
 
     if(this.presortRow !== null)
       this.observer.observe(this.presortRow);
-     */
+     
 
     // When /step-2 is accessed directly by url the stepService wouldn't know that
     this.stepService.setFurthestStep(2);
@@ -112,7 +112,7 @@ export class Step2Component implements OnInit {
 
   ngOnDestroy() {
     if(this.presortRow !== null) {
-      //this.observer.unobserve(this.presortRow);
+      this.observer.unobserve(this.presortRow);
     }
       
   }
@@ -325,6 +325,7 @@ export class Step2Component implements OnInit {
     return "Disagree";
   }
 
+  
   private onResize(width: number) {
 
     if(width > 1200) {
