@@ -12,7 +12,6 @@ import { StepService } from './_services/step-service.service';
 })
 export class AppComponent {
 
-  title = 'easy-htmlq-v3';
 
   constructor(
     private exchangeService: ExchangeService,
@@ -20,6 +19,14 @@ export class AppComponent {
     public router: Router
   ) { }
 
+  
+  // Application title
+  title = 'easy-htmlq-v3';
+
+
+  /**
+   * Retrieve information (config & data) used in this module
+   */
   ngOnInit() {
     
     // Initialise with data 

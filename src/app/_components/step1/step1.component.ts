@@ -1,14 +1,13 @@
-import { ChangeDetectorRef, Component, HostListener, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import { StepService } from 'src/app/_services/step-service.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Statement, Type } from '../statement/statement';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
-import { map, takeWhile } from 'rxjs/operators';
+import { takeWhile } from 'rxjs/operators';
 import { ProgressService } from 'src/app/_services/progress.service';
 import { Modal } from '../modal/modal';
 import { FooterComponent } from '../footer/footer.component';
-import { BehaviorSubject, fromEvent } from 'rxjs';
 
 @Component({
   selector: 'app-step1',
