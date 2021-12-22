@@ -37,14 +37,16 @@ export class ExchangeService {
       let data = dataInput.getAttribute("value");
 
       if(data) {
+        
         try { // Set data if input is valid json
           GlobalVars.DATA.next(JSON.parse(data));
         } catch (e) { // Set empty if not in json format
-          GlobalVars.DATA.next({});
+          console.log('Invalid data input!\n' + e);
+          GlobalVars.DATA.next({} as any);
         }
       }   
       else  // Set empty if no data is given
-        GlobalVars.DATA.next({}); 
+        GlobalVars.DATA.next({} as any); 
     }
   }
 

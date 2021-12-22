@@ -1,6 +1,6 @@
-<app-modal *ngIf="modalLoaded && stepService.getFurthestStep() == 0" [modal]="introductionModal"></app-modal>
+<app-modal *ngIf="modalLoaded && stepService.getFurthestStep == 0" [modal]="introductionModal"></app-modal>
 
-<app-modal *ngIf="modalLoaded && stepService.getFurthestStep() == 1" [modal]="step1Modal"></app-modal>
+<app-modal *ngIf="modalLoaded && stepService.getFurthestStep == 1" [modal]="step1Modal"></app-modal>
 
 <div class="container-fluid" cdkDropListGroup style="max-width: 1800px;">
 
@@ -19,8 +19,9 @@
   </div>
 
   <!-- Second row containing disagree, neutral, agree-->
-  <div class="row justify-content-center mt-4 bottom-statements-row" >
-    <div class="col p-0">
+  <div  class="row justify-content-center mt-4 ehq3_presort-row"
+        [ngClass]="{'presort-three-line': isMobile(), 'presort-two-line': twoLine, 'presort-one-line' : oneLine }">
+    <div class="p-0 mb-3 presort-disagree-container">
         <p class="text-center mb-1">{{ getLabelDisagree() }}</p>
         <div
             cdkDropList
@@ -30,7 +31,7 @@
             <app-statement *ngFor="let disagree of disagrees" [statement]="disagree" cdkDrag></app-statement>
         </div>
     </div>
-    <div class="col p-0">
+    <div class="p-0 mb-3 presort-neutral-container">
         <p class="text-center mb-1">{{ getLabelNeutral() }}</p>
         <div
             cdkDropList
@@ -40,7 +41,7 @@
             <app-statement *ngFor="let neutral of neutrals" [statement]="neutral" cdkDrag></app-statement>
         </div>
     </div>
-    <div class="col p-0">
+    <div class="p-0 mb-3 presort-agree-container">
         <p class="text-center mb-1">{{ getLabelAgree() }}</p>
         <div
             cdkDropList
@@ -51,5 +52,4 @@
         </div>
     </div>
   </div>
-
 </div>

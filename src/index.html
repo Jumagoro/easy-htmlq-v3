@@ -52,8 +52,7 @@
          }
       ],
       "step2TableName":"",
-      "step3TableName":"",
-      "stage2VerticalAlignment": true
+      "step3TableName":""
    },
    "design":{
       "labelAgree":"Stimme zu",
@@ -118,119 +117,7 @@
    }
 }`;
         
-        document.getElementById('ehq3_data').value = `
-   "progress":{
-      "furthestStep":3,
-      "progress":0.6666666666666666
-   },
-   "stage1":{
-      "statements":[
-         
-      ],
-      "agrees":[
-         {
-            "id":4,
-            "statement":"Die Uhr ist mein ständiger Begleiter.",
-            "type":1
-         },
-         {
-            "id":3,
-            "statement":"Kinder können ganz schön lästig sein.",
-            "type":1
-         },
-         {
-            "id":2,
-            "statement":"Quantenphysik is etwas für einfache Gemüter.",
-            "type":1
-         }
-      ],
-      "neutrals":[
-         {
-            "id":6,
-            "statement":"Das Lore ist des Ipsum\'s nächster Verwandter.",
-            "type":2
-         },
-         {
-            "id":5,
-            "statement":"Ohne Blumen gibt es keinen Frühling.",
-            "type":2
-         },
-         {
-            "id":1,
-            "statement":"Ich finde Regen toll!",
-            "type":2
-         }
-      ],
-      "disagrees":[
-         {
-            "id":7,
-            "statement":"Html-Tags wie <b>bold</b> und <i>italic</i> verursachen potenziell Ärger.",
-            "type":3
-         }
-      ],
-      "timestamp":"2021-11-21T06:28:10.994Z"
-   },
-   "stage2":{
-      "cols":[
-         [
-            [
-               {
-                  "id":7,
-                  "statement":"Html-Tags wie <b>bold</b> und <i>italic</i> verursachen potenziell Ärger.",
-                  "type":3
-               }
-            ],
-            [
-               {
-                  "id":6,
-                  "statement":"Das Lore ist des Ipsum\'s nächster Verwandter.",
-                  "type":2
-               }
-            ]
-         ],
-         [
-            [
-               {
-                  "id":1,
-                  "statement":"Ich finde Regen toll!",
-                  "type":2
-               }
-            ],
-            [
-               {
-                  "id":5,
-                  "statement":"Ohne Blumen gibt es keinen Frühling.",
-                  "type":2
-               }
-            ],
-            [
-               {
-                  "id":2,
-                  "statement":"Quantenphysik is etwas für einfache Gemüter.",
-                  "type":1
-               }
-            ]
-         ],
-         [
-            [
-               {
-                  "id":4,
-                  "statement":"Die Uhr ist mein ständiger Begleiter.",
-                  "type":1
-               }
-            ],
-            [
-               {
-                  "id":3,
-                  "statement":"Kinder können ganz schön lästig sein.",
-                  "type":1
-               }
-            ]
-         ]
-      ],
-      "timestamp":"2021-11-21T06:34:26.913Z"
-   }
-}`;
+        document.getElementById('ehq3_data').value = ``;
         document.getElementById('sosci-wrapper').dispatchEvent(new Event("ehq3_input_set"));
       //}, 5000);
       }

@@ -1,6 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, OnInit, ViewEncapsulation } from '@angular/core';
-import { Console } from 'console';
 import { takeWhile } from 'rxjs/operators';
 import { GlobalVars } from 'src/app/_config/global';
 import { ExchangeService } from 'src/app/_services/exchange.service';
@@ -17,19 +16,27 @@ import { Statement } from '../statement/statement';
 })
 export class Step3Component implements OnInit {
 
+
   constructor(
     public stepService: StepService,
     private exchangeService: ExchangeService
   ) {}
 
+  /* Modal utility */
   step3Modal!: Modal;
   modalLoaded: boolean = false;
 
-  cols: Statement[][][] = [[[]]];  // Array with the cells holding the statements
-  colColors: string[] = []; // Array with the color for each column
-  colHeadings: string[] = [];   // Array with the cols headlines
+  // Array with the cells holding the statements
+  // Array with the color for each column
+  // Array with the cols headlines
+  cols: Statement[][][] = [[[]]];
+  colColors: string[] = [];
+  colHeadings: string[] = [];
 
 
+  /**
+   * Retrieve information (config & data) used in this module
+   */
   ngOnInit(): void {
 
     // When /step-3 is accessed directly by url the stepService wouldn't know that
@@ -43,6 +50,7 @@ export class Step3Component implements OnInit {
         if((Object.keys(conf).length === 0))
           return;
            
+        // Create grid structure
         this.initCols();
 
         this.step3Modal = {
@@ -68,11 +76,14 @@ export class Step3Component implements OnInit {
       }
     );
     
-    
     FooterComponent.continueEnabled = true;
   }
 
 
+  /**
+   * Check if stage2 has already been worked on and load data if true
+   * @returns Returns true, if data from stage2 is found
+   */
   checkStage2Storage(): boolean {
     // Check if something is stored in the storage from stage2
     let currentStorage = this.exchangeService.get('stage2');
@@ -87,22 +98,27 @@ export class Step3Component implements OnInit {
     return true;
   }
 
-  
+
+  /**
+   * Performs a statement switch after drop between two containers
+   * @param event Event containing data about the source, target, etc.
+   */
   drop(event: CdkDragDrop<Statement[]>) {
     if (event.previousContainer === event.container) {  // Same Container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
     } // Swap if there is another statement in the container
     else if(event.container.data.length > 0) {
 
+      // Temp storage of other statement
       let otherStatement = event.container.data[0];
+      delete event.container.data[0];
 
+      // Save information about swaps (only in this module)
       this.storeSwap(
         event.previousContainer.data[0].id,
         otherStatement.id,
         event.previousContainer.data,
-        event.container.data);
-
-      delete event.container.data[0];
+        event.container.data);      
 
       // Put drag statement into new container
       transferArrayItem(event.previousContainer.data,
@@ -118,7 +134,6 @@ export class Step3Component implements OnInit {
 
     } // Empty, different container
     else {
-      console.log('Single')
 
       this.storeSwap(
         event.previousContainer.data[0].id,
@@ -136,7 +151,9 @@ export class Step3Component implements OnInit {
   }
 
 
-  // Saves the stage2 state into data
+  /**
+   * Stores the current progress into the data
+   */
   private storeProgress() {
     // Load current storage to append the changed array
     let currentStorage = this.exchangeService.get('stage2');
@@ -194,10 +211,13 @@ export class Step3Component implements OnInit {
 
   }
 
-  counter(i: number) {
-    return new Array(i);
-  }
-
+  
+  /**
+   * Initializes the grid
+   * - Create array for each cell
+   * - Fill headings with value
+   * - Fill colors with value
+   */
   private initCols() {
 
     this.cols = [];
@@ -215,6 +235,9 @@ export class Step3Component implements OnInit {
 
     });
   }
+
+
+  // Getter / Setter
 
   // Reads the label / title for the table from the config
   getTableLabel() {
@@ -243,5 +266,11 @@ export class Step3Component implements OnInit {
       return GlobalVars.CONF.getValue().design.labelDisagree;
 
     return "Disagree";
+  }
+
+
+  // Utility for gui
+  counter(i: number) {
+    return new Array(i);
   }
 }

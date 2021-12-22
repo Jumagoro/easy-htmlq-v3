@@ -26,7 +26,7 @@ import { APP_BASE_HREF } from '@angular/common';
     ModalComponent,
     HomeComponent,
     FooterComponent,
-    StatementComponent,
+    StatementComponent
   ],
   imports: [
     BrowserModule,

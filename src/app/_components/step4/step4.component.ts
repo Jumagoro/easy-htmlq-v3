@@ -16,20 +16,29 @@ import { Statement } from '../statement/statement';
 })
 export class Step4Component implements OnInit {
 
+
   constructor(
     private stepService: StepService,
     private exchangeService: ExchangeService,
     private progressService: ProgressService
   ) {}
 
+  
+  /* Modal utility */
   step4Modal!: Modal;
   modalLoaded: boolean = false;
 
+  // Arrays combining a statement with a comment
   commentsAgree: [Statement, string][] = [];
   commentsDisagree: [Statement, string][] = [];
 
+  // Used to calculate the progress
   totalComments = 0;
   
+
+  /**
+   * Retrieve information (config & data) used in this module
+   */
   ngOnInit(): void {
 
     // When /step-4 is accessed directly by url the stepService wouldn't know that
@@ -74,6 +83,10 @@ export class Step4Component implements OnInit {
   }
 
 
+  /**
+   * Check if stage4 has already been worked on and load data if true
+   * @returns Returns true, if data from stage2 is found
+   */
   checkStage4Storage(): boolean {
     // Check if something is stored in the storage from step3
     let currentStorage = this.exchangeService.get('stage4');
@@ -81,7 +94,7 @@ export class Step4Component implements OnInit {
     if(!currentStorage)
       return false;
 
-    // Check if stage 3 storage is newer that stage 2 (load stage 2 if stage 2 is newer)
+    // Check if stage 2 storage is newer that stage 4 (load stage 2 if stage 2 is newer)
     let stage2Storage = this.exchangeService.get('stage2');
     if(stage2Storage && stage2Storage.timestamp && currentStorage.timestamp) {
       let stage2Update = new Date(stage2Storage.timestamp);
@@ -102,6 +115,10 @@ export class Step4Component implements OnInit {
   }
 
 
+  /**
+   * Check stage2 if no stage4 data is found and load data if true
+   * @returns Returns true, if data from stage2 is found
+   */
   checkStage2Storage(): boolean {
     // Check if something is stored in the storage from stage2
     let currentStorage = this.exchangeService.get('stage2');
@@ -138,13 +155,18 @@ export class Step4Component implements OnInit {
   }
 
 
-  // Fired when something is typed into a comment
+  /**
+   * Fired when something is typed into a comment
+   */
   commentChange(event: any) {
     this.storeProgress();
-
     this.calculateProgress();
   }
 
+
+  /**
+   * Stores the current progress into the data
+   */
   storeProgress() {
     // Load current storage to append the changed array
     let currentStorage = this.exchangeService.get('stage4');
@@ -164,6 +186,9 @@ export class Step4Component implements OnInit {
   }
 
 
+  /**
+   * Calculates the current progress by checking filled comments
+   */
   private calculateProgress() {
 
     let commentsFilled = this.getAmountCommented();
@@ -172,6 +197,7 @@ export class Step4Component implements OnInit {
     this.progressService.setProgress( (2/3) + (commentsFilled / this.totalComments) * (1/3) );
 
   }
+
 
   /**
    * Checks how many comments have been given
@@ -190,6 +216,9 @@ export class Step4Component implements OnInit {
 
     return commentsFilled;
   }
+
+
+  // Getter / Setter
 
   getLabelAgree() {
     if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelAgree)

@@ -9,19 +9,19 @@ import { Statement, Type } from './statement';
 })
 export class StatementComponent implements OnInit {
 
+
   constructor(
     private exchangeService: ExchangeService
-  ) {
-
-  }
+  ) { }
 
   // Reference to statement.ts Type enum for template
   Type = Type;
-  
+
+  // Data of the statement
   @Input() statement!: Statement;
 
-  ngOnInit(): void {
 
+  ngOnInit(): void {
     // Card default color is grey
     if(this.statement && !this.statement.type)
       this.statement.type = Type.NEUTRAL;

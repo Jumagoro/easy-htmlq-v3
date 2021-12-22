@@ -42,6 +42,16 @@
 }
 
 
+// Stack statements in the "raw statements"-container (list in other containers)
+#statements > .statement-container > app-statement {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+
+
 // Item that is beeing dragged
 .cdk-drag-preview {
     box-sizing: border-box;

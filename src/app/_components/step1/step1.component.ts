@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit, ViewEncapsulation } from '@angular/core';
+import { Component, HostListener, NgZone, OnInit, ViewEncapsulation } from '@angular/core';
 import { StepService } from 'src/app/_services/step-service.service';
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Statement, Type } from '../statement/statement';
@@ -17,10 +17,12 @@ import { FooterComponent } from '../footer/footer.component';
 })
 export class Step1Component implements OnInit {
 
+
   constructor(
     public stepService: StepService,
     private exchangeService: ExchangeService,
-    private progressService: ProgressService
+    private progressService: ProgressService,
+    private zone: NgZone
   ) {}
 
 
@@ -38,8 +40,21 @@ export class Step1Component implements OnInit {
 
   dataLoaded: boolean = false;
 
-  // When /step-1 is accessed directly by url the stepService wouldn't know that
+  oneLine: boolean = false;
+  twoLine: boolean = false;
+  
+
+  /**
+   * Retrieve information (config & data) used in this module
+   */
   ngOnInit(): void {
+
+    // Fix breakpoint for presort-row
+    let localSelf = this;
+    window.addEventListener("resize", function() {
+      localSelf.onResizeRow();
+    });
+    this.onResizeRow();
 
     this.stepService.setFurthestStep(0);
 
@@ -99,9 +114,13 @@ export class Step1Component implements OnInit {
     // Check if already finished
     if(this.statements.length <= 0)
       FooterComponent.continueEnabled = true;
-    
   }
 
+
+  /**
+   * Performs a statement switch after drop between two containers
+   * @param event Event containing data about the source, target, etc.
+   */
   drop(event: CdkDragDrop<Statement[]>) {
     if (event.previousContainer === event.container) {  // Same Container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
@@ -124,9 +143,10 @@ export class Step1Component implements OnInit {
   }
 
 
-  /** Loads the statements from the xml config */
+  /**
+   * Loads all statements from the config to the raw statements array
+   */
   private initStatements() {
-    //let mapJSON = JSON.parse(xmlConverter.xml2json(xml, {compact: true, spaces: 4}));
 
     // Store all statements into the statements array
     for(let statement of GlobalVars.CONF.getValue().statements) {
@@ -171,13 +191,17 @@ export class Step1Component implements OnInit {
       FooterComponent.continueEnabled = true;
   }
 
-  /** Predicate function that doesn't allow items to be dropped into a list. */
+  /**
+   * Predicate function that doesn't allow items to be dropped into a list.
+   */
   noReturnPredicate() {
     return false;
   }
 
   
-  /** Keylistener */
+  /**
+   * Keylistener
+   */
   @HostListener('document:keypress', ['$event'])
   handleKeyboardEvent(event: KeyboardEvent) { 
 
@@ -211,6 +235,60 @@ export class Step1Component implements OnInit {
     this.storeProgress();
   }
 
+  
+  /**
+   * Called when the window is resized -> Update presort layout
+   */
+  private onResizeRow() {
+
+    // Row (div) containing the presorted statement containers
+    let singlePresort: HTMLElement | null  = document.querySelector(".ehq3_presort-row");
+    if (!(singlePresort instanceof HTMLElement)) {
+      return;
+    }
+
+    // Set layout depending on the row's (div's) width
+    this.onResize(singlePresort!.offsetWidth);
+  }
+
+
+  /**
+   * Sets the presort layout depending on the given width
+   * @param width  Width of the row / div of the presorted statement containers
+   */
+  private onResize(width: number) {
+
+    // All container in one line
+    if(width > 950) {
+      this.twoLine = false;
+      this.oneLine = true;
+    }
+
+    // Neutral container below agree & disagree
+    else if(width > 650) {
+      this.oneLine = false;
+      this.twoLine = true;
+    } 
+    
+    // All container below each other
+    else {
+      this.oneLine = false;
+      this.twoLine = false;
+    }
+  }
+
+
+
+  // Getter / Setter
+
+  /**
+   * Checks if the layout is for mobile devices
+   * @returns True, if the layout is for mobile (all containers below each other)
+   */
+  public isMobile(): boolean {
+    return !this.oneLine && !this.twoLine;
+  }
+
   getLabelNeutral() {
     if(GlobalVars.CONF.getValue().design && GlobalVars.CONF.getValue().design.labelNeutral)
       return GlobalVars.CONF.getValue().design.labelNeutral;
@@ -231,4 +309,5 @@ export class Step1Component implements OnInit {
 
     return "Disagree";
   }
+
 }

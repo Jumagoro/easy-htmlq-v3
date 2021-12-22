@@ -46,15 +46,38 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .btn-help {
     color: black;
-    background-color: #bebebe;
 }
 .btn-help:hover {
     
 }
 
-.gridVerticalAlignment {
-    vertical-align: top;
+/*
+    Presort oneline multiline fix
+ */
+
+ // Small -> all under each other
+.presort-three-line .presort-disagree-container,
+.presort-three-line .presort-neutral-container,
+.presort-three-line .presort-agree-container  {
+    @extend .col-12;
 }
+
+// Two line setup -> agree disagree top, neutral bottom
+.presort-two-line .presort-disagree-container,
+.presort-two-line .presort-agree-container {
+    @extend .col;
+}
+.presort-two-line .presort-neutral-container {
+    @extend .col-12;
+    @extend .order-last;
+}
+
+ // one line setup -> all in one row
+ .presort-one-line .presort-disagree-container,
+ .presort-one-line .presort-neutral-container,
+ .presort-one-line .presort-agree-container  {
+     @extend .col;
+ }
 
 @include media-breakpoint-down(md) {
     .bottom-statements-row {

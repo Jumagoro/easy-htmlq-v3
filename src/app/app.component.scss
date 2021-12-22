@@ -34,4 +34,10 @@
     #content-wrap {
         border: 1px solid green;
     }
+ }
+
+ @include media-breakpoint-up(xl) {
+    #content-wrap {
+        border: 1px solid yellow;
+    }
  }*/
