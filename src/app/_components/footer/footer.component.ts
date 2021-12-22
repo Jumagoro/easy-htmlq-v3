@@ -20,35 +20,49 @@ export class FooterComponent implements OnInit {
     private exchangeService: ExchangeService
   ) { }
 
+  /** Enables the continue button on the footer */
   public static continueEnabled: boolean = false;
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void { }
 
+
+  /**
+   * Called when the user clicks the help-me-button
+   */
   onHelpMe() {
     
     if(this.modalService.getVisible() == false) {
+
+      // Notify sosci about help click
       this.exchangeService.dispatchSosciPresent(this.stepService.getCurrentStep, "help");
+
       this.modalService.setIsHelp(true);
       this.modalService.setVisible(true);
     }
     
   }
 
+  /* Used to round the progress bar */
   round(toRound: number): number {
     return Math.round(toRound);
   }
 
+  /**
+   * Called when the user clicks the continue button
+   */
   onContinue() {
     FooterComponent.continueEnabled = false;
     this.stepService.nextStep()
   }
 
+  /**
+   * Called when the user clicks the disabled continue button
+   */
   onContinueDisabled() {
     alert(this.getContinueDisabledAlert());
   }
 
+  // Getter / Setter
   public get getContinueEnabled() {
     return FooterComponent.continueEnabled;
   }

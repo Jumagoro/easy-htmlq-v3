@@ -12,14 +12,20 @@ import { Modal } from '../modal/modal';
 })
 export class HomeComponent implements OnInit {
 
-  startModal!: Modal;
 
+  /* Modal utiloty */
+  startModal!: Modal;
   modalLoaded: boolean = false;
+
 
   constructor(
     private stepService: StepService
   ) { }
 
+
+  /**
+   * Retrieve information (config & data) used in this module
+   */
   ngOnInit(): void {
 
     this.stepService.setFurthestStep(-1);
@@ -40,7 +46,6 @@ export class HomeComponent implements OnInit {
           this.modalLoaded = true;
       }
     );
-    
   }
 
 }

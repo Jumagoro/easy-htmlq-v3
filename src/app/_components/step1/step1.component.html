@@ -1,6 +1,6 @@
-<app-modal *ngIf="modalLoaded && stepService.getFurthestStep() == 0" [modal]="introductionModal"></app-modal>
+<app-modal *ngIf="modalLoaded && stepService.getFurthestStep == 0" [modal]="introductionModal"></app-modal>
 
-<app-modal *ngIf="modalLoaded && stepService.getFurthestStep() == 1" [modal]="step1Modal"></app-modal>
+<app-modal *ngIf="modalLoaded && stepService.getFurthestStep == 1" [modal]="step1Modal"></app-modal>
 
 <div class="container-fluid" cdkDropListGroup style="max-width: 1800px;">
 

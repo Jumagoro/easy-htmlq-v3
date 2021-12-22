@@ -40,11 +40,10 @@
     </div>
   </div>
 
-  <!--  && !step1Disabled()-->
-  <!-- Second row containing the pre sorted statements -->
+  <!-- Second row containing the pre sorted statements (if stage1 is not disabled) -->
   <div class="row justify-content-center mt-4 ehq3_presort-row"
       [ngClass]="{'presort-three-line': isMobile(), 'presort-two-line': twoLine, 'presort-one-line' : oneLine }">
-    <div *ngIf="!nextStepAvailable" class="p-0 mb-3 presort-disagree-container">
+    <div *ngIf="!nextStepAvailable && !step1Disabled()" class="p-0 mb-3 presort-disagree-container">
       <p class="text-center mb-1">{{ getLabelDisagree() }}</p>
       <div
           cdkDropList
@@ -54,7 +53,7 @@
           <app-statement *ngFor="let disagree of disagrees" [statement]="disagree" cdkDrag></app-statement>
       </div>
     </div>
-    <div *ngIf="!nextStepAvailable" class="p-0 mb-3 presort-neutral-container">
+    <div *ngIf="!nextStepAvailable && !step1Disabled()" class="p-0 mb-3 presort-neutral-container">
       <p class="text-center mb-1">{{ getLabelNeutral() }}</p>
       <div
           cdkDropList
@@ -64,7 +63,7 @@
           <app-statement *ngFor="let neutral of neutrals" [statement]="neutral" cdkDrag></app-statement>
       </div>
     </div>
-    <div *ngIf="!nextStepAvailable" class="p-0 mb-3 presort-agree-container">
+    <div *ngIf="!nextStepAvailable && !step1Disabled()" class="p-0 mb-3 presort-agree-container">
       <p class="text-center mb-1">{{ getLabelAgree() }}</p>
       <div
           cdkDropList
@@ -76,21 +75,19 @@
     </div>
   </div>
 
-  <!-- && step1Disabled()-->
-  <!--
-  <div *ngIf="!nextStepAvailable" class="row justify-content-center mt-5">
+  <!-- Show raw statements if step1 is disabled -->
+  <div *ngIf="!nextStepAvailable && step1Disabled()" class="row justify-content-center mt-5">
     <div class="row justify-content-center">
       <div id="statements" class="col-12 col-md-8 p-0">
           <div
               cdkDropList
               [cdkDropListData]="statements"
               class="statement-container mx-auto h-100"
-              [cdkDropListEnterPredicate]="noReturnPredicate"
               >
               <app-statement *ngFor="let statement of statements" [statement]="statement" cdkDrag></app-statement>
           </div>
       </div>
     </div>
-  </div>-->
+  </div>
 
 </div>
