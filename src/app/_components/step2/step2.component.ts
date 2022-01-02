@@ -296,6 +296,8 @@ export class Step2Component implements OnInit {
 
     // If step1 disabled, set new color of statement now
     if(this.step1Disabled()) {
+
+      // Dragged item
       let colIndex = this.getColIndexOfCell(event.container.data);
       if(colIndex !== null) {
   
@@ -306,6 +308,19 @@ export class Step2Component implements OnInit {
           event.container.data[0].type = Type.NEUTRAL;
         else if(colValue > 0)
           event.container.data[0].type = Type.AGREE;
+      }
+
+      // Passive item
+      colIndex = this.getColIndexOfCell(event.previousContainer.data);
+      if(colIndex !== null) {
+  
+        let colValue = parseInt(this.colHeadings[colIndex]);      
+        if(colValue < 0)
+          event.previousContainer.data[0].type = Type.DISAGREE;
+        else if(colValue == 0)
+          event.previousContainer.data[0].type = Type.NEUTRAL;
+        else if(colValue > 0)
+          event.previousContainer.data[0].type = Type.AGREE;
       }
     }
     
