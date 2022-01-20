@@ -233,22 +233,4 @@ export class Step4Component implements OnInit {
 
     return "Disagree";
   }
-
-  getIDMostAgree() {
-    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.gridColumns) {
-      let gridColumns = GlobalVars.CONF.getValue().structure.gridColumns;
-      return gridColumns[0].id;
-    }
-
-    return -1;    
-  }
-
-  getIDMostDisagree() {
-    if(GlobalVars.CONF.getValue().structure && GlobalVars.CONF.getValue().structure.gridColumns) {
-      let gridColumns = GlobalVars.CONF.getValue().structure.gridColumns;
-      return gridColumns[gridColumns.length-1].id;
-    }
-
-    return -1;
-  }
 }

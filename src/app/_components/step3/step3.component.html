@@ -1,16 +1,19 @@
 <app-modal *ngIf="modalLoaded" [modal]="step3Modal"></app-modal>
 
-<div class="container-fluid" cdkDropListGroup>
+<div class="container-fluid container-step3" cdkDropListGroup>
     <!-- First row containing disagree, heading and agree -->
     <div class="row justify-content-between">
-      <div class="col-12 text-center">
+      <div class="col-12 text-center mb-3">
         <span [innerHTML]="getTableLabel()"></span>
       </div>
       <div class="col-auto text-start">
-        <span>{{ getLabelDisagree() }}</span>
+          <span class="fw-bold">{{ getLabelDisagree() }}</span>
       </div>
+      <div class="col-auto text-center">
+        <span class="fw-bold">{{ getLabelNeutral() }}</span>
+    </div>
       <div class="col-auto text-end">
-          <span>{{ getLabelAgree() }}</span>
+          <span class="fw-bold">{{ getLabelAgree() }}</span>
       </div>
     </div>
   

@@ -227,7 +227,11 @@ export class Step3Component implements OnInit {
 
       this.cols[index] = [];
       this.colColors[index] = value.color;
-      this.colHeadings[index] = value.id;
+
+      if(value.id > 0)
+        this.colHeadings[index] = '+' + value.id;
+      else
+        this.colHeadings[index] = value.id;
 
       for(let i = 0; i < value.amountCells; i++) {
         this.cols[index][i] = [];
