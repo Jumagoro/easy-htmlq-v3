@@ -1,19 +1,10 @@
 <app-modal *ngIf="modalLoaded" [modal]="step2Modal"></app-modal>
 
 <div class="container-fluid container-step2" cdkDropListGroup>
-  <!-- First row containing disagree, heading and agree -->
+  <!-- First row containing heading -->
   <div class="row justify-content-between">
     <div class="col-12 text-center mb-3">
       <span [innerHTML]="getTableLabel()"></span>
-    </div>
-    <div class="col-auto text-start">
-        <span class="fw-bold">{{ getLabelDisagree() }}</span>
-    </div>
-    <div class="col-auto text-center">
-      <span class="fw-bold">{{ getLabelNeutral() }}</span>
-  </div>
-    <div class="col-auto text-end">
-        <span class="fw-bold">{{ getLabelAgree() }}</span>
     </div>
   </div>
 
@@ -22,6 +13,14 @@
     <div class="col-12">
         <table class="table my-0">
             <thead>
+              <tr>
+                <th class="text-center" scope="col"
+                    *ngFor="let heading of colHeadings; let i = index" >
+                    <div class="text-start" *ngIf="i == 0">{{ getLabelDisagree() }}</div>
+                    <div class="text-end" *ngIf="i == colHeadings.length-1">{{ getLabelAgree() }}</div>
+                    <div *ngIf="i == getIndexOfCenterCol()">{{ getLabelNeutral() }}</div>
+                  </th>
+              </tr>
               <tr>
                 <th class="text-center" scope="col" [style.background-color]="colColors[i]"
                     *ngFor="let heading of colHeadings; let i = index" >{{ heading }}</th>

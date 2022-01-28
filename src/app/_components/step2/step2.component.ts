@@ -535,4 +535,8 @@ export class Step2Component implements OnInit {
   counter(i: number) {
     return new Array(i);
   }
+
+  public getIndexOfCenterCol() {
+    return Math.floor(this.cols.length/2);
+  }
 }
