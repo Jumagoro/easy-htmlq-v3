@@ -253,12 +253,13 @@ export class Step2Component implements OnInit {
   drop(event: CdkDragDrop<Statement[]>) {
     if (event.previousContainer === event.container) {  // Same Container
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
-    } // Swap if there is already a statement in the target container
+      return;
+    } 
+    // Swap if there is already a statement in the target container
     else if(event.container.data.length > 0) {
 
       let otherStatement = event.container.data[0];
       let previousContainer = event.previousContainer.data;
-      delete event.container.data[0];
 
       // Put drag statement into new container
       transferArrayItem(previousContainer,
@@ -281,9 +282,9 @@ export class Step2Component implements OnInit {
       }
 
       // Transfer other statement into previous container
-      transferArrayItem([otherStatement],
+      transferArrayItem(event.container.data,
         previousContainer,
-        0,
+        1,
         0);
 
     } // Different container
@@ -291,7 +292,7 @@ export class Step2Component implements OnInit {
       transferArrayItem(event.previousContainer.data,
                         event.container.data,
                         event.previousIndex,
-                        event.currentIndex);
+                        0);
     }
 
     // If step1 disabled, set new color of statement now
@@ -323,7 +324,6 @@ export class Step2Component implements OnInit {
           event.previousContainer.data[0].type = Type.AGREE;
       }
     }
-    
     
     this.storeProgress();
 
@@ -538,5 +538,13 @@ export class Step2Component implements OnInit {
 
   public getIndexOfCenterCol() {
     return Math.floor(this.cols.length/2);
+  }
+
+
+  /**
+   * Predicate function that doesn't allow items to be dropped into a list.
+   */
+   noReturnPredicate() {
+    return false;
   }
 }
