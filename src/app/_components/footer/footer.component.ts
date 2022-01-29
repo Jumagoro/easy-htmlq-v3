@@ -59,7 +59,12 @@ export class FooterComponent implements OnInit {
    * Called when the user clicks the disabled continue button
    */
   onContinueDisabled() {
-    alert(this.getContinueDisabledAlert());
+    
+    //alert(this.getContinueDisabledAlert());
+    if(confirm(this.getContinueDisabledAlert())) {
+      this.onContinue();
+    }
+   
   }
 
   // Getter / Setter
@@ -80,6 +85,14 @@ export class FooterComponent implements OnInit {
   }
 
   // Reads the label / title for the continue button from the config
+  getContinueDisabledAlert() {
+    if(GlobalVars.CONF.getValue().footer && GlobalVars.CONF.getValue().footer.continueAlert)
+      return GlobalVars.CONF.getValue().footer.continueAlert;
+    else
+      return 'It seems haven\'t filled all fields yet. Do you still want to proceed with the next step (okay) or stay in this step (cancel)?';
+  }
+
+  // Reads the label / title for the continue button from the config
   getHelpMeLabel() {
     if(GlobalVars.CONF.getValue().footer && GlobalVars.CONF.getValue().footer.helpMeButtonText)
       return GlobalVars.CONF.getValue().footer.helpMeButtonText;
@@ -96,10 +109,10 @@ export class FooterComponent implements OnInit {
   }
 
 
-  getContinueDisabledAlert() {
+  /*getContinueDisabledAlert() {
     if(GlobalVars.CONF.getValue().instructions && GlobalVars.CONF.getValue().instructions.unfinishedText)
       return GlobalVars.CONF.getValue().instructions.unfinishedText;
     else
       return 'Please fill all expected fields.'
-  }
+  }*/
 }
