@@ -60,10 +60,12 @@ export class FooterComponent implements OnInit {
    */
   onContinueDisabled() {
     
-    //alert(this.getContinueDisabledAlert());
-    if(confirm(this.getContinueDisabledAlert())) {
-      this.onContinue();
-    }
+    if(this.isForceContinueEnabled()) {
+      if(confirm(this.getForceContinueAlert())) {
+        this.onContinue();
+      }
+    } else
+      alert(this.getContinueDisabledAlert());
    
   }
 
@@ -89,7 +91,13 @@ export class FooterComponent implements OnInit {
     if(GlobalVars.CONF.getValue().footer && GlobalVars.CONF.getValue().footer.continueAlert)
       return GlobalVars.CONF.getValue().footer.continueAlert;
     else
-      return 'It seems haven\'t filled all fields yet. Do you still want to proceed with the next step (okay) or stay in this step (cancel)?';
+      return 'It seems haven\'t filled all fields yet.';
+  }
+
+  // Reads the text for the force continue alert
+  getForceContinueAlert() {
+    if(GlobalVars.CONF.getValue().footer && GlobalVars.CONF.getValue().footer.forceContinueAlert)
+      return GlobalVars.CONF.getValue().footer.forceContinueAlert;
   }
 
   // Reads the label / title for the continue button from the config
@@ -106,6 +114,14 @@ export class FooterComponent implements OnInit {
       return false;
     else
       return true;
+  }
+
+  // Checks if a step can be skipped without complete
+  isForceContinueEnabled() {
+    if(GlobalVars.CONF.getValue().footer && GlobalVars.CONF.getValue().footer.forceContinueAlert && GlobalVars.CONF.getValue().footer.forceContinueAlert !== '')
+      return true;
+    else
+      return false;
   }
 
 
