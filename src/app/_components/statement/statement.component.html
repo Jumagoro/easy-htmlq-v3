@@ -1,6 +1,6 @@
 <div class="statement p-2 statement-border statement-text"
-    [class.bg-agree]="statement?.type === Type.AGREE"
-    [class.bg-neutral]="statement?.type === Type.NEUTRAL"
-    [class.bg-disagree]="statement?.type === Type.DISAGREE">
+    [class.bg-agree]="statement.type === Type.AGREE"
+    [class.bg-neutral]="statement.type === Type.NEUTRAL"
+    [class.bg-disagree]="statement.type === Type.DISAGREE">
     {{ getStatementText() }}
 </div>
